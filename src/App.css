@@ -8,13 +8,6 @@
   src: url("./static/JFOpen.ttf") format("truetype");
 }
 
-.navbar a {
-  margin: 5px;
-  font-family: "JFOpen";
-  font-size: 1.25rem;
-  padding: 6px 10px;
-}
-
 .container {
   margin-top: 100px;
 }
