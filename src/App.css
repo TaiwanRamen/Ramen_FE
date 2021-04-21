@@ -7,9 +7,15 @@
   font-family: "JFOpen";
   src: url("./static/JFOpen.ttf") format("truetype");
 }
-
+html, body {
+  height: 100%;
+  margin: 0;
+}
 .container {
   margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
 }
 
 .thumbnail img {

@@ -8,7 +8,7 @@ import StoreRightCol from "./StoreRightCol";
 
 const Store = () => {
     const { id } = useParams();
-    let store = {city:"台北市"};
+    let store = {city:"台北市", name:"麵屋讚讚"};
     //const { data: blog, error, isLoading} = useFetch(`http://localhost:8000/blogs/${id}`);
     return (
         <div className="row">

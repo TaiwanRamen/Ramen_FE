@@ -41,7 +41,6 @@ const StoreIndex = () => {
                 previousLabel={"上一頁"}
                 nextLabel={"下一頁"}
                 breakLabel={"..."}
-                breakClassName={"break-me"}
                 pageCount={pageCount}
                 marginPagesDisplayed={1}
                 pageRangeDisplayed={3}
