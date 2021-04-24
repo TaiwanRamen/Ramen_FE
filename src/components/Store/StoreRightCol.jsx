@@ -38,7 +38,7 @@ const StoreRightCol = (props) => {
                         show={modalShow}
                         onHide={() => setModalShow(false)}
                     />
-
+                    <h1>{props.store.name}</h1>
                     <Tabs id="controlled-tab-example">
                         <Tab eventKey="home" title="Home">
 

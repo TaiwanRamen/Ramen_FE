@@ -25,7 +25,7 @@ const StoreIndex = () => {
     };
 
     const { status, error, data } = useQuery(
-        ["character", { page: page }],
+        ["stores", { page: page }],
         getStores, {
             keepPreviousData: true,
           }
