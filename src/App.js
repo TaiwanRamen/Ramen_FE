@@ -13,6 +13,7 @@ import { UserProvider } from './Context/UserContext';
 import Loading from "./components/Loading/Loading";
 import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
+import { ReactQueryDevtools } from 'react-query-devtools';
 
 function App() {
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
   }, [])
 
   return (
+  <>
       <UserProvider>
         <Router>
           <div className="App">
@@ -47,6 +49,8 @@ function App() {
           </div>
         </Router>
       </UserProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+      </>
   );
 }
 
