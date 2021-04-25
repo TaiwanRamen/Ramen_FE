@@ -23,7 +23,6 @@ const getStores = async (page: number): Promise<Stores> => {
         throw new Error("Problem fetching data");
     }
     const data = await response.data.data;
-    console.log("data", data);
     return data;
 }
 
@@ -51,8 +50,6 @@ const StoreIndex = () => {
         return <div>{error?.message}</div>;
     }
     if (!stores) return <div>沒有找到店家</div>;
-
-    console.log(stores);
 
     return stores ?
         <div className="App">

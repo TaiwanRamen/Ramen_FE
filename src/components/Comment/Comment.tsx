@@ -8,8 +8,7 @@ import AddComment from "./AddComment";
 import {Button} from "react-bootstrap";
 
 const getComments = async (storeId: string): Promise<IComment[]> => {
-    console.log(process.env.REACT_APP_URL + `/api/v1/comment/${storeId}`);
-    console.log((storeId))
+    //console.log(process.env.REACT_APP_URL + `/api/v1/comment/${storeId}`);
     const response = await axios.get(process.env.REACT_APP_URL + `/api/v1/comment/${storeId}`);
     if (response.status !== 200) {
         throw new Error("Problem fetching data");

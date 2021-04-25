@@ -1,12 +1,10 @@
 import React from 'react';
-import ReactStars from "react-rating-stars-component";
-
+import ReactStars from "../react-rating-stars-component/src/react-stars";
 const ShowRatings = (props) => {
     return (
-        <div>
             <ReactStars
                 count={5}
-                size={22}
+                size={props.size || 25}
                 value={props.ratings}
                 edit={false}
                 isHalf={true}
@@ -15,7 +13,6 @@ const ShowRatings = (props) => {
                 fullIcon={<i className="fa fa-star"></i>}
                 activeColor="#ffd700"
             />
-        </div>
     );
 };
 

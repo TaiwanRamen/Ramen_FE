@@ -1,11 +1,11 @@
-import { useParams } from "react-router";
+import {useParams} from "react-router";
 
 import StoreLeftCol from "./StoreLeftCol";
 import StoreRightCol from "./StoreRightCol";
-import { useQuery } from "react-query";
+import {useQuery} from "react-query";
 import axios from 'axios';
 import Loading from "../Loading/Loading";
-import { IStore } from '../../types/IStore'
+import {IStore} from '../../types/IStore'
 
 
 type StoreResponse = {
@@ -19,9 +19,7 @@ const getStore = async (id: string): Promise<StoreResponse> => {
     if (response.status !== 200) {
         throw new Error("Problem fetching data");
     }
-    const data = await response.data.data;
-    console.log(data)
-    return data;
+    return await response.data.data;
 }
 
 interface ParamTypes {
