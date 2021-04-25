@@ -10,7 +10,6 @@ const StoreLeftCol = (store) => {
 
     const clickCity = (city) => {
         history.push('/');
-
     }
 
     return (

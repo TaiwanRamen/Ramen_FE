@@ -14,6 +14,7 @@ import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
 import { ReactQueryDevtools } from 'react-query-devtools';
 import { QueryClient, QueryClientProvider } from "react-query";
+import Comment from "./components/Comment/Comment";
 
 function App() {
   useEffect(() => {
@@ -34,7 +35,7 @@ function App() {
                     <StoreIndex/>
                   </Route>
                   <Route exact path="/test">
-
+                    <Comment storeId={"5f477e5bee24401e3c8d2036"}/>
                   </Route>
                   <ProtectedRoute path="/create" component={Profile}/>
                   <ProtectedRoute path="/stores/:id" component={Store}/>

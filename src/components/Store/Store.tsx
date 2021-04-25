@@ -15,8 +15,7 @@ type StoreResponse = {
 }
 
 const getStore = async (id: string): Promise<StoreResponse> => {
-    console.log("id:", id)
-    const response = await axios.get(`http://localhost:4000/api/v1/stores/${id}`);
+    const response = await axios.get(process.env.REACT_APP_URL+ `/api/v1/stores/${id}`);
     if (response.status !== 200) {
         throw new Error("Problem fetching data");
     }
@@ -31,7 +30,6 @@ interface ParamTypes {
 const Store = () => {
     const { id } = useParams<ParamTypes>()
     //let store = {city:"台北市", name:"麵屋讚讚"};
-
     const { data: store, status, error } = useQuery<StoreResponse, Error>(
         ['stores', id],
         () => getStore(id),
@@ -52,8 +50,8 @@ const Store = () => {
 
     return store ?
         <div className="row">
-            <StoreLeftCol store={store.store}/>
-            <StoreRightCol store={store.store}/>
+            <StoreLeftCol data={store}/>
+            <StoreRightCol data={store}/>
         </div>
         : null;
 };
