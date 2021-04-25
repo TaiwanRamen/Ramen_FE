@@ -1,4 +1,4 @@
-export interface IStore {
+export type IStore = {
     address: string,
     city: string,
     comments: string[],
@@ -8,7 +8,7 @@ export interface IStore {
     followers: string[],
     imageLarge: string[],
     imageSmall: string[],
-    location: {type: string[], coordinates: number[], formattedAddress: string},
+    location: {type: string, coordinates: number[], formattedAddress: string},
     name: string,
     owners: string[],
     rating: number

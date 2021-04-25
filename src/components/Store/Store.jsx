@@ -18,7 +18,7 @@ async function getStore(params) {
     if (response.status !== 200) {
       throw new Error("Problem fetching data");
     }
-    const data = await response.data;
+    const data = await response.data.data;
     console.log(data)
     return data;
 }

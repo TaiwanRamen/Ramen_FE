@@ -10,7 +10,6 @@ import RamenNavbar from './components/Navbar/RamenNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "./components/Login/Login";
 import { UserProvider } from './Context/UserContext';
-import Loading from "./components/Loading/Loading";
 import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
 import { ReactQueryDevtools } from 'react-query-devtools';
@@ -20,11 +19,8 @@ function App() {
   useEffect(() => {
     document.title = "台灣拉麵倶樂部"
   }, [])
-  const queryClient = new QueryClient();
 
   return (
-
-      <QueryClientProvider client={queryClient}>
         <UserProvider>
           <Router>
             <div className="App">
@@ -36,6 +32,9 @@ function App() {
                   </Route>
                   <Route exact path="/stores">
                     <StoreIndex/>
+                  </Route>
+                  <Route exact path="/test">
+
                   </Route>
                   <ProtectedRoute path="/create" component={Profile}/>
                   <ProtectedRoute path="/stores/:id" component={Store}/>
@@ -52,8 +51,6 @@ function App() {
             </div>
           </Router>
         </UserProvider>
-        </QueryClientProvider>
-
   );
 }
 
