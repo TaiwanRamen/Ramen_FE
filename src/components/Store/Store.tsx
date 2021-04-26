@@ -27,7 +27,6 @@ interface ParamTypes {
 }
 const Store = () => {
     const { id } = useParams<ParamTypes>()
-    //let store = {city:"台北市", name:"麵屋讚讚"};
     const { data: store, status, error } = useQuery<StoreResponse, Error>(
         ['stores', id],
         () => getStore(id),

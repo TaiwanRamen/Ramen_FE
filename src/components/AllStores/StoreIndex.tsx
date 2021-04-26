@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import {useQuery} from 'react-query';
 import axios from "axios";
 import {IStore} from "../../types/IStore";
 import {useState} from "react";
@@ -17,13 +17,12 @@ type Stores = {
 
 
 const getStores = async (page: number): Promise<Stores> => {
-    console.log("page", page)
-    const response = await axios.get(`http://localhost:4000/api/v1/stores?page=${page}`);
+    console.log("page", page);
+    const response = await axios.get(process.env.REACT_APP_URL + `/api/v1/stores?page=${page}`);
     if (response.status !== 200) {
         throw new Error("Problem fetching data");
     }
-    const data = await response.data.data;
-    return data;
+    return await response.data.data;
 }
 
 const StoreIndex = () => {

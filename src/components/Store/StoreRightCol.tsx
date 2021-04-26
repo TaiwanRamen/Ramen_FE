@@ -7,6 +7,8 @@ import DeleteModal from './DeleteModal';
 import { IStore } from '../../types/IStore'
 import Comment from "../Comment/Comment";
 import ShowRatings from "../Ratings/ShowRatings";
+import CarouselImage from "../Carousel/Carousel";
+import Reviews from "../Reviews/Reviews";
 
 
 
@@ -26,18 +28,21 @@ const StoreRightCol = (props:Props) => {
     const storeId = data?.store?._id;
     const storeRating = data?.store?.rating;
     const storeCommentLength = data?.store?.comments.length;
+    const imageUrls = data?.store?.imageLarge;
+    const reviewLength = data?.store?.reviews.length;
     const isStoreOwner = true;
 
     const [modalShow, setModalShow] = useState(false);
 
-
+    console.log()
 
     const followOrUnFollow = () => {
         alert("follow");
     }
 
     return (
-        <div className="col-md-9 h-scroll scrollbar-light-blue">
+        // <div className="col-md-9 h-scroll scrollbar-light-blue">
+        <div className="col-md-9 ">
             <div className="thumbnail">
                 <div className="caption-full">
                     <Button variant="info" className="badge-pill mr-2" as={Link} to={`/stores?search=${storeCity}`} >{storeCity}</Button>
@@ -59,20 +64,21 @@ const StoreRightCol = (props:Props) => {
                         />
                     </Dropdown>}
 
-                    <h1>{storeName}</h1>
+                    <h2 className="mt-2 mb-2 store-name">{storeName}</h2>
 
                     <Link to={`/stores/${storeId}/reviews`} className="rating-link my-2">
-                        <span className="my-2"><strong>{storeRating?.toFixed(1)}</strong></span>
-                        <ShowRatings ratings={storeRating} size={28}/>
-                        <em className="my-2">{`(${storeCommentLength})` || 0 }</em>
+                        <span className="my-2">{storeRating?.toFixed(1)}</span>
+                        <ShowRatings ratings={storeRating} size={25} />
+                        <span className="my-2">{`(${storeCommentLength})` || 0 }</span>
                     </Link>
 
-                    <Tabs id="controlled-tab-example">
-                        <Tab eventKey="home" title="Home">
+                    <Tabs id="controlled-tab" className="my-4 tabs nav-justified">
+                        <Tab eventKey="home" title="簡介">
+                            <CarouselImage imageUrls={imageUrls} />
                             <Comment storeId={storeId}/>
                         </Tab>
-                        <Tab eventKey="profile" title="Profile">
-
+                        <Tab eventKey="profile" title={`食記/評論 (${reviewLength})`}>
+                            <Reviews storeId={storeId}/>
                         </Tab>
                     </Tabs>
                 </div>

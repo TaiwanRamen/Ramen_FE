@@ -26,7 +26,7 @@ const Comment = (props: Props) => {
     const [modalShow, setModalShow] = useState(false);
 
     const { data: comments, status, error } = useQuery<IComment[], Error>(
-        ['stores', props.storeId],
+        ['comments', props.storeId],
         () => getComments(props.storeId),
         {
             keepPreviousData: true,
