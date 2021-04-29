@@ -9,6 +9,7 @@ const drawerWidth = 250;
 
 const useStyles = (props:Props) => makeStyles( () => ({
     drawer: {
+        zIndex: 1200,
         width: drawerWidth,
         flexShrink: 0,
     },

@@ -16,6 +16,7 @@ import SideDrawer from "../Drawer/SideDrawer";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import {Backdrop} from "@material-ui/core";
 
 const navbarHeight = 64;
 const useStyles = makeStyles((theme: Theme) =>
@@ -108,6 +109,10 @@ const useStyles = makeStyles((theme: Theme) =>
         hide: {
             display: 'none',
         },
+        backdrop: {
+            zIndex: 1100,
+            color: '#fff',
+        },
     }),
 );
 
@@ -115,7 +120,7 @@ export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [drawerOpen, setDrawerOpen] = React.useState(true);
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -262,7 +267,7 @@ export default function PrimarySearchAppBar() {
             {renderMobileMenu}
             {renderMenu}
             <SideDrawer isOpen={drawerOpen} navbarHeight={navbarHeight} />
-
+            <Backdrop className={classes.backdrop} open={drawerOpen} onClick={toggleDrawerOpen} />
         </div>
     );
 }

@@ -41,6 +41,7 @@ function App() {
                         </Route>
                         <Route exact path="/test">
                           <Nav/>
+                          <StoreIndex/>
                         </Route>
                         <ProtectedRoute path="/create" component={Profile}/>
                         <ProtectedRoute path="/stores/:id" component={Store}/>
