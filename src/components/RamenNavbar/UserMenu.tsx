@@ -1,13 +1,13 @@
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
-import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import React from "react";
+import React, {useContext} from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import UserInfoAndLogout from './UserInfoAndLogout';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {NotificationContext} from "../../Context/NotificationContext";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 const UserMenu = () => {
+    const { notificationCount } = useContext(NotificationContext);
 
     const classes = useStyles();
 
@@ -79,21 +80,14 @@ const UserMenu = () => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
+
             <MenuItem>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
+                <IconButton aria-label="show new notifications" color="inherit">
+                    <Badge badgeContent={notificationCount} color="secondary">
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
-                <p>Notifications</p>
+                <p>通知</p>
             </MenuItem>
         </Menu>
     );
@@ -103,13 +97,8 @@ const UserMenu = () => {
     return (
         <>
             <div className={classes.sectionDesktop}>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <IconButton aria-label="show 17 new notifications" color="inherit">
-                    <Badge badgeContent={17} color="secondary">
+                <IconButton aria-label="show new notifications" color="inherit">
+                    <Badge badgeContent={notificationCount} color="secondary">
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>

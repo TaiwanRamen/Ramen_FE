@@ -34,7 +34,7 @@ const userSection = (toggleDrawerOpen:()=>void) => {
 
 type Props = {
     isOpen: boolean;
-    toggleDrawerOpen?: () => void;
+    toggleDrawerOpen: () => void;
     navbarHeight?: number;
 }
 
@@ -54,7 +54,7 @@ const SideDrawer = (props: Props) => {
             }}
         >
 
-            { user && userSection }
+            { user && userSection(props.toggleDrawerOpen) }
 
             <DrawerMidSection toggleDrawerOpen={props.toggleDrawerOpen}/>
 

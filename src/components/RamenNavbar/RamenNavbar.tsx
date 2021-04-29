@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,6 +12,8 @@ import Button from '@material-ui/core/Button';
 import {Backdrop} from "@material-ui/core";
 import UserSection from "./UserSection";
 import './RamenNav.css';
+import {NotificationContext} from "../../Context/NotificationContext";
+import Badge from "@material-ui/core/Badge";
 
 const navbarHeight = 64;
 const useStyles = makeStyles((theme: Theme) =>
@@ -60,9 +62,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const RamenNavbar = () => {
     const classes = useStyles();
-
+    const {notificationCount} = useContext(NotificationContext);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
-
     const toggleDrawerOpen = () => {
         setDrawerOpen(!drawerOpen)
     }
@@ -76,15 +77,19 @@ const RamenNavbar = () => {
                 })}
             >
                 <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={toggleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton)}
-                    >
-                        {!drawerOpen ? <MenuIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
+
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={toggleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton)}
+                        >
+                            <Badge badgeContent={notificationCount} variant="dot" color="secondary">
+                                {!drawerOpen ? <MenuIcon /> : <ChevronLeftIcon />}
+                            </Badge>
+                        </IconButton>
+
 
                     <Button size="large" component={RouterLink} className={classes.title}  to="/">
                         <img src="/images/ramen.png" alt="" width="32px" height="32px" className="mx-2"/>

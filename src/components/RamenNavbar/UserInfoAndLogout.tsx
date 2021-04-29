@@ -5,13 +5,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from '@material-ui/icons/Info';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {UserContext} from "../../Context/UserContext";
 import Avatar from '@material-ui/core/Avatar';
-// import { IUser } from '../../types/IUser';
-
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
@@ -46,16 +47,23 @@ const UserInfoAndLogout = () => {
 
     return (
         <div>
-            <IconButton
+
+
+            <Button
                 aria-label="account of current user"
                 aria-controls="primary-search-account-menu"
                 aria-haspopup="true"
                 color="inherit"
                 onClick={handleClick}
             >
-                {user ? <Avatar alt="Remy Sharp" src="" />
-:                    <AccountCircle />}
-            </IconButton>
+                {user && <Box m={2} >
+                    <Typography  variant="button" display="inline" >
+                    {user?.fbName}
+                    </Typography>
+                </Box>}
+                {user ? <Avatar alt="Remy Sharp" src={user?.avatar} /> : <AccountCircle />}
+                <ExpandMoreIcon />
+            </Button>
 
             <StyledMenu
                 id="customized-menu"
