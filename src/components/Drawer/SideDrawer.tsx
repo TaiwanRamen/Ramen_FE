@@ -1,9 +1,11 @@
 import Divider from "@material-ui/core/Divider";
 import { makeStyles} from "@material-ui/core/styles";
 import Drawer from '@material-ui/core/Drawer';
-import DrawerMid from "./DrawerMid";
-import DrawerBottom from "./DrawerBottom";
+import DrawerMidSection from "./DrawerMidSection";
+import DrawerBottomSection from "./DrawerBottomSection";
 import DrawerUser from "./DrawerUser";
+import {useContext} from "react";
+import {UserContext} from "../../Context/UserContext";
 
 const drawerWidth = 250;
 
@@ -21,12 +23,22 @@ const useStyles = (props:Props) => makeStyles( () => ({
     },
 }));
 
+const userSection = () => {
+    return (
+        <>
+            <DrawerUser />
+            <Divider />
+        </>
+    )
+}
+
 type Props = {
     isOpen: boolean;
     navbarHeight?: number;
 }
 
 const SideDrawer = (props: Props) => {
+    const [user] = useContext(UserContext);
     const isDrawerOpen = props.isOpen;
     const classes = useStyles(props)();
 
@@ -41,15 +53,13 @@ const SideDrawer = (props: Props) => {
             }}
         >
 
-            <DrawerUser />
+            { user && userSection}
+
+            <DrawerMidSection />
 
             <Divider />
 
-            <DrawerMid />
-
-            <Divider />
-
-            <DrawerBottom/>
+            <DrawerBottomSection/>
         </Drawer>
 
     );

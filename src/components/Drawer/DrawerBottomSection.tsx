@@ -6,7 +6,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import List from "@material-ui/core/List";
 
 
-const DrawerBottom = () => {
+const DrawerBottomSection = () => {
 
     return (
         <List>
@@ -24,4 +24,4 @@ const DrawerBottom = () => {
     );
 };
 
-export default DrawerBottom;
+export default DrawerBottomSection;

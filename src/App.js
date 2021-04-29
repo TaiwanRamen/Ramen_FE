@@ -6,14 +6,13 @@ import ProtectedRoute from './ProtectedRoute';
 import Profile from './Profile';
 import StoreIndex from './components/AllStores/StoreIndex';
 import { useEffect } from 'react';
-import RamenNavbar from './components/Navbar/RamenNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "./components/Login/Login";
 import { UserProvider } from './Context/UserContext';
 import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
 import 'moment/locale/zh-tw';
-import Nav from './components/Nav/Nav'
+import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
 
 function App() {
@@ -40,8 +39,8 @@ function App() {
                           <StoreIndex/>
                         </Route>
                         <Route exact path="/test">
-                          <Nav/>
                           <StoreIndex/>
+
                         </Route>
                         <ProtectedRoute path="/create" component={Profile}/>
                         <ProtectedRoute path="/stores/:id" component={Store}/>

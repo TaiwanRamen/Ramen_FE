@@ -6,7 +6,7 @@ import List from "@material-ui/core/List";
 import StoreIcon from "@material-ui/icons/Store";
 
 
-const DrawerMid = () => {
+const DrawerMidSection = () => {
     return (
         <List>
             <ListItem button>
@@ -26,4 +26,4 @@ const DrawerMid = () => {
     );
 };
 
-export default DrawerMid;
+export default DrawerMidSection;

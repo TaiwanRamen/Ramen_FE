@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 import UserSection from "./UserSection";
-import "./Navbar.css"
+import "./NavbarOld.css"
 import React from "react";
 const RamenNavbar = () => {
 
