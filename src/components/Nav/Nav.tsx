@@ -261,7 +261,7 @@ export default function PrimarySearchAppBar() {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
-            <SideDrawer isOpen={drawerOpen} navbarHeight={navbarHeight}/>
+            <SideDrawer isOpen={drawerOpen} navbarHeight={navbarHeight} />
 
         </div>
     );
