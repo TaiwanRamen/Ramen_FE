@@ -51,7 +51,7 @@ const StoreIndex = () => {
     if (!stores) return <div>沒有找到店家</div>;
 
     return stores ?
-        <div className="App">
+        <div>
             <StoreCardList  stores={stores.stores}/>
             { stores && <ReactPaginate
                 previousLabel={"上一頁"}
