@@ -3,31 +3,31 @@ import {fade, makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from "clsx";
-import SideDrawer from "./SideDrawer";
+import SideDrawer from "../Drawer/SideDrawer";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-
+import { Link as RouterLink } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 const navbarHeight = 64;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         appBar: {
+            backgroundColor: '#f8f9fa!important',
+            color:theme.palette.text.secondary,
             transition: theme.transitions.create(['margin', 'width'], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
-            zIndex: 1400,
+            zIndex: 1300,
             height: navbarHeight
         },
         appBarShift: {
@@ -38,16 +38,22 @@ const useStyles = makeStyles((theme: Theme) =>
             }),
         },
         menuButton: {
-            marginRight: theme.spacing(2),
+            marginRight: theme.spacing(0),
         },
         grow: {
             flexGrow: 1,
         },
         title: {
+            fontFamily: "JFOpen",
+            fontSize:"1.25rem",
+            color:theme.palette.text.primary,
             display: 'none',
             [theme.breakpoints.up('sm')]: {
                 display: 'block',
             },
+            "&:hover":{
+                color:theme.palette.text.primary,
+            }
         },
         search: {
             position: 'relative',
@@ -74,6 +80,7 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'center',
         },
         inputRoot: {
+            backgroundColor: '#f8f9fa!important',
             color: 'inherit',
         },
         inputInput: {
@@ -210,22 +217,12 @@ export default function PrimarySearchAppBar() {
                     >
                         {!drawerOpen ? <MenuIcon /> : <ChevronLeftIcon />}
                     </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        Material-UI
-                    </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
+
+                    <Button size="large" component={RouterLink} className={classes.title}  to="/">
+                        <img src="/images/ramen.png" alt="" width="32px" height="32px" className="mx-2"/>
+                        台灣拉麵倶樂部
+                    </Button>
+
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 4 new mails" color="inherit">
