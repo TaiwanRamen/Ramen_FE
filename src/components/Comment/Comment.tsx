@@ -22,7 +22,7 @@ type Props = {
 }
 
 const Comment = (props: Props) => {
-    const [user] = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const [modalShow, setModalShow] = useState(false);
 
     const { data: comments, status, error } = useQuery<IComment[], Error>(

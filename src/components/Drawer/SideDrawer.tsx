@@ -39,7 +39,7 @@ type Props = {
 }
 
 const SideDrawer = (props: Props) => {
-    const [user] = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const isDrawerOpen = props.isOpen;
     const classes = useStyles(props)();
 

@@ -21,7 +21,7 @@ function App() {
   }, [])
 
   return (
-        <UserProvider>
+        <UserProvider >
           <Router>
             <div className="App">
               <RamenNavbar />

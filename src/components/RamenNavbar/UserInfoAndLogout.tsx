@@ -33,7 +33,7 @@ const StyledMenu = withStyles({
 ));
 
 const UserInfoAndLogout = () => {
-    const [user] = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {

@@ -5,7 +5,7 @@ import UserMenu from "./UserMenu";
 
 
 const UserSection = () => {
-    const [user] = useContext(UserContext);
+    const {user} = useContext(UserContext);
     console.log(user);
     return (
         <>
