@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,6 +8,10 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from '@material-ui/icons/Info';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {UserContext} from "../../Context/UserContext";
+import Avatar from '@material-ui/core/Avatar';
+// import { IUser } from '../../types/IUser';
+
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
@@ -29,6 +33,7 @@ const StyledMenu = withStyles({
 ));
 
 const UserInfoAndLogout = () => {
+    const [user] = useContext(UserContext);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -48,7 +53,8 @@ const UserInfoAndLogout = () => {
                 color="inherit"
                 onClick={handleClick}
             >
-                <AccountCircle />
+                {user ? <Avatar alt="Remy Sharp" src="" />
+:                    <AccountCircle />}
             </IconButton>
 
             <StyledMenu

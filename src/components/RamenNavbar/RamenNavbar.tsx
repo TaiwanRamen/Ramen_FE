@@ -11,6 +11,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import {Backdrop} from "@material-ui/core";
 import UserSection from "./UserSection";
+import './RamenNav.css';
 
 const navbarHeight = 64;
 const useStyles = makeStyles((theme: Theme) =>
@@ -66,9 +67,6 @@ const RamenNavbar = () => {
         setDrawerOpen(!drawerOpen)
     }
 
-
-
-
     return (
         <div className={classes.grow}>
             <AppBar
@@ -100,7 +98,7 @@ const RamenNavbar = () => {
                 </Toolbar>
             </AppBar>
 
-            <SideDrawer isOpen={drawerOpen} navbarHeight={navbarHeight} />
+            <SideDrawer isOpen={drawerOpen} toggleDrawerOpen={toggleDrawerOpen} navbarHeight={navbarHeight} />
             <Backdrop className={classes.backdrop} open={drawerOpen} onClick={toggleDrawerOpen} />
         </div>
     );

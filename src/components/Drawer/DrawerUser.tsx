@@ -30,17 +30,13 @@ const useStyles = makeStyles((theme:Theme) =>
     inline: {
         display: 'inline',
     },
-
-    link:{
-        fontSize:100,
-        color:theme.palette.text.primary,
-        "&:hover":{
-            color:theme.palette.text.primary,
-        }
-    },
 }));
 
-const DrawerUser = () => {
+type Props = {
+    toggleDrawerOpen?: () => void
+}
+
+const DrawerUser = (props:Props) => {
     const classes = useStyles();
     const [collapseOpen, setCollapseOpen] = React.useState(false);
 
@@ -80,7 +76,7 @@ const DrawerUser = () => {
             </ListItem>
             <Collapse in={collapseOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItem button className={`${classes.nested} ${classes.link}` } component={RouterLink} to="/" key="notification">
+                    <ListItem button className={classes.nested} component={RouterLink} to="/" key="notification">
                         <ListItemIcon>
                             <NotificationsIcon />
                         </ListItemIcon>
@@ -92,19 +88,19 @@ const DrawerUser = () => {
                             color="secondary"
                         />
                     </ListItem>
-                    <ListItem button className={`${classes.nested} ${classes.link}` } component={RouterLink} to="/follow" key="follow">
+                    <ListItem button className={classes.nested} component={RouterLink} onClick={props.toggleDrawerOpen}  to="/follow" key="follow">
                         <ListItemIcon>
                             <BookmarkIcon />
                         </ListItemIcon>
                         <ListItemText classes={{ primary: classes.nestedText }} primary="追蹤清單" />
                     </ListItem>
-                    <ListItem button className={`${classes.nested} ${classes.link}` } component={RouterLink} to="/follow" key="follow">
+                    <ListItem button className={classes.nested} component={RouterLink} onClick={props.toggleDrawerOpen}  to="/follow" key="follow">
                         <ListItemIcon>
                             <PlaylistAddIcon />
                         </ListItemIcon>
                         <ListItemText classes={{ primary: classes.nestedText }} primary="願望清單" />
                     </ListItem>
-                    <ListItem button className={`${classes.nested} ${classes.link}` } component={RouterLink} to="/follow" key="follow">
+                    <ListItem button className={classes.nested} component={RouterLink} onClick={props.toggleDrawerOpen} to="/follow" key="follow">
                         <ListItemIcon>
                             <CommentIcon />
                         </ListItemIcon>

@@ -23,10 +23,10 @@ const useStyles = (props:Props) => makeStyles( () => ({
     },
 }));
 
-const userSection = () => {
+const userSection = (toggleDrawerOpen:()=>void) => {
     return (
         <>
-            <DrawerUser />
+            <DrawerUser toggleDrawerOpen={toggleDrawerOpen}/>
             <Divider />
         </>
     )
@@ -34,6 +34,7 @@ const userSection = () => {
 
 type Props = {
     isOpen: boolean;
+    toggleDrawerOpen?: () => void;
     navbarHeight?: number;
 }
 
@@ -53,13 +54,13 @@ const SideDrawer = (props: Props) => {
             }}
         >
 
-            { user && userSection}
+            { user && userSection }
 
-            <DrawerMidSection />
+            <DrawerMidSection toggleDrawerOpen={props.toggleDrawerOpen}/>
 
             <Divider />
 
-            <DrawerBottomSection/>
+            <DrawerBottomSection toggleDrawerOpen={props.toggleDrawerOpen}/>
         </Drawer>
 
     );

@@ -7,6 +7,7 @@ export const UserProvider = props => {
     const [user, setUser] = useState(userTest);
     const providerUser = useMemo(() => ([ user, setUser ]), [user, setUser]);
 
+    console.log(props.children)
     return (
         <UserContext.Provider value={providerUser}>
             {props.children}

@@ -4,18 +4,22 @@ import MapIcon from "@material-ui/icons/Map";
 import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import StoreIcon from "@material-ui/icons/Store";
+import {Link as RouterLink} from "react-router-dom";
 
+type Props = {
+    toggleDrawerOpen?: () => void
+}
+const DrawerMidSection = (props:Props) => {
 
-const DrawerMidSection = () => {
     return (
         <List>
-            <ListItem button>
+            <ListItem button  component={RouterLink} onClick={props.toggleDrawerOpen} to="/map" key="map">
                 <ListItemIcon>
                     <MapIcon />
                 </ListItemIcon>
                 <ListItemText primary="地圖" />
             </ListItem>
-            <ListItem button>
+            <ListItem button  component={RouterLink} onClick={props.toggleDrawerOpen} to="/stores" key="map">
                 <ListItemIcon>
                     <StoreIcon />
                 </ListItemIcon>
