@@ -4,13 +4,13 @@ import MapAreas from './MetroMapAreas'
 import metroMap from '../../static/routemap2020.png';
 const React = require("react");
 
-function useWindowSize(targetRef) {
+function useWindowSize(targetRef, setMapAreas) {
     const [size, setSize] = useState({width:0, height:0});
     useLayoutEffect(() => {
 
         function updateSize() {
             setSize({width: targetRef.current.offsetWidth, height: targetRef.current.offsetHeight});
-            resize(targetRef.current.offsetWidth);
+            setMapAreas(resize(targetRef.current.offsetWidth));
         }
 
         window.addEventListener('resize', updateSize);
@@ -22,21 +22,22 @@ function useWindowSize(targetRef) {
 
 const resize = (currentWidth) => {
     const factor = currentWidth / 960;
-
-    const areas = MapAreas.areas;
-    areas.forEach(function(part, index) {
-        let coords = this[index].coords;
+    const oldMapAreas = JSON.parse(JSON.stringify(MapAreas.areas));
+    for (let i=0; i<oldMapAreas.length; i++){
+        let coords = oldMapAreas[i].coords;
         coords = coords.map(c => c * factor);
-        this[index].coords = coords;
-    }, areas);
+        oldMapAreas[i].coords = coords;
+    }
+    return {name: "my-map", areas: JSON.parse(JSON.stringify(oldMapAreas))};
 }
 
 const Metro = () => {
     const [ hoveredArea, setHoveredArea ] = useState(null);
     const [msg, setMsg]  = useState(null);
-    const [moveMsg, setMoveMsg]  = useState(null);
+    const [moveMsg, setMoveMsg] = useState(null);
+    const [mapAreas, setMapAreas] = useState(MapAreas);
     const targetRef = useRef();
-    const {width} = useWindowSize(targetRef);
+    const {width} = useWindowSize(targetRef, setMapAreas);
 
 
     const load = () => {
@@ -88,7 +89,7 @@ const Metro = () => {
                 <div style={{ maxWidth: "960px", height:"auto" }} >
                     <ImageMapper
                         src={metroMap}
-                        map={MapAreas}
+                        map={mapAreas}
                         width={width}
                         imageWidth={{width}}
                         onLoad={() => load()}
