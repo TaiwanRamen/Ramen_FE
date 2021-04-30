@@ -1,8 +1,6 @@
 import React from 'react';
 import './StoreCard.css';
-import {Button} from "react-bootstrap";
 import ShowRatings from "../Ratings/ShowRatings";
-import {Route} from "react-router-dom";
 
 const StoreCard = (props) => {
     const store = props.store;
@@ -13,8 +11,8 @@ const StoreCard = (props) => {
         return "this.onerror=null;this.src='https://i.imgur.com/siJp2jE.png"
     }
     const descriptionTrimer = (description) => {
-        if (description.length > 200) {
-            return description.substring(0, 200) + "...";
+        if (description.length > 50) {
+            return description.substring(0, 50) + "...";
         }
         return description;
     }

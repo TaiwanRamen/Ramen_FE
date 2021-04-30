@@ -63,7 +63,7 @@ const Metro = () => {
     };
 
     return (
-        <div className="grid"  style={{ border: "3px #FFAC55 solid" }}>
+        <div className="grid"  style={{ border: "2px #FFAC55 solid" }}>
 
             <div className="presenter" ref={targetRef}>
                 <div style={{ maxWidth: "960px", height:"auto" }} >

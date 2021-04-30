@@ -10,14 +10,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "./components/Login/Login";
 import { UserProvider } from './Context/UserContext';
 import { NotificationProvider } from './Context/NotificationContext';
-
 import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
 import 'moment/locale/zh-tw';
 import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
-// import StoreCards from "./components/StoreCard/StoreCards";
-import Metro from './components/Metro/Metro'
+// import Metro from './components/Metro/Metro'
 
 function App() {
   useEffect(() => {
@@ -44,7 +42,7 @@ function App() {
                           <StoreIndex/>
                         </Route>
                         <Route exact path="/test">
-                          <Metro />
+                          {/*<Metro />*/}
                         </Route>
                         <ProtectedRoute path="/create" component={Profile}/>
                         <ProtectedRoute path="/stores/:id" component={Store}/>
