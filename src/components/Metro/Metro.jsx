@@ -34,7 +34,6 @@ const resize = (currentWidth) => {
 const Metro = () => {
     const [ hoveredArea, setHoveredArea ] = useState(null);
     const [msg, setMsg]  = useState(null);
-    const [moveMsg, setMoveMsg] = useState(null);
     const [mapAreas, setMapAreas] = useState(MapAreas);
     const targetRef = useRef();
     const {width} = useWindowSize(targetRef, setMapAreas);
@@ -45,17 +44,9 @@ const Metro = () => {
     };
 
     const clicked = (area) => {
-        setMsg(`You clicked on ${area.shape} at coords ${JSON.stringify(
+        setMsg(`You clicked on ${area.name} at coords ${JSON.stringify(
             area.coords
         )} !`)
-    };
-    const clickedOutside = (evt) => {
-        const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-        setMsg(`You clicked on the image at coords ${JSON.stringify(coords)} !`);
-    };
-    const moveOnImage = (evt) => {
-        const coords = {x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY};
-        setMoveMsg(`You moved on the image at coords ${JSON.stringify(coords)} !`);
     };
     const enterArea = (area) => {
         setHoveredArea(area);
@@ -65,22 +56,11 @@ const Metro = () => {
 
     };
     const leaveArea = (area) => {
-        setHoveredArea(null);
+        setHoveredArea({name:"no hover"});
         setMsg(`You leaved ${area.shape} ${area.name} at coords ${JSON.stringify(
             area.coords
         )} !`);
     };
-    const moveOnArea = (area, evt) => {
-        const coords = { x: evt.nativeEvent.layerX, y: evt.nativeEvent.layerY };
-        setMoveMsg(`You moved on ${area.shape} ${
-            area.name
-        } at coords ${JSON.stringify(coords)} !`);
-    };
-
-    const getTipPosition = (area) => {
-        return { top: `${area.center[1]}px`, left: `${area.center[0]}px` };
-    };
-
 
     return (
         <div className="grid"  style={{ border: "3px #FFAC55 solid" }}>
@@ -96,26 +76,19 @@ const Metro = () => {
                         onClick={area => clicked(area)}
                         onMouseEnter={area => enterArea(area)}
                         onMouseLeave={area => leaveArea(area)}
-                        onMouseMove={(area, _, evt) => moveOnArea(area, evt)}
-                        onImageClick={evt => clickedOutside(evt)}
-                        onImageMouseMove={evt => moveOnImage(evt)}
-                        lineWidth={4}
+                        lineWidth={0.01}
+                        fillColor={"rgba(0, 0, 0, 0.15)"}
                         strokeColor={"white"}
                     />
                     {hoveredArea && (
-                        <span
-                            className="tooltip"
-                            style={ getTipPosition(hoveredArea) }
-                        >
-                            {hoveredArea && hoveredArea.name}
+                        <span>
+                            {hoveredArea.name}
                         </span>
                     )}
                 </div>
                 <pre className="message">
                     {msg ? msg : null}
                 </pre>
-                <pre>{moveMsg ? moveMsg : null}</pre>
-                <pre>{width}</pre>
             </div>
         </div>
     );
