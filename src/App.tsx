@@ -16,6 +16,8 @@ import Footer from "./components/Footer/Footer";
 import 'moment/locale/zh-tw';
 import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
+// import StoreCards from "./components/StoreCard/StoreCards";
+import Metro from './components/Metro/Metro'
 
 function App() {
   useEffect(() => {
@@ -42,8 +44,7 @@ function App() {
                           <StoreIndex/>
                         </Route>
                         <Route exact path="/test">
-                          <StoreIndex/>
-
+                          <Metro />
                         </Route>
                         <ProtectedRoute path="/create" component={Profile}/>
                         <ProtectedRoute path="/stores/:id" component={Store}/>
