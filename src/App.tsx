@@ -16,7 +16,7 @@ import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
 import TaipeiMetro from "./components/Metro/TaipeiMetro";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
-
+import DrawerMapSelectionTree from './components/Drawer/DrawerMapSelectionTree'
 const useStyles = makeStyles(() =>
     createStyles({
 
@@ -58,7 +58,7 @@ function App() {
                           <StoreIndex/>
                         </Route>
                         <Route exact path="/test">
-                          {/*<TaipeiMetro />*/}
+                          <DrawerMapSelectionTree/>
                         </Route>
                         <Route exact path="/map">
                         </Route>
@@ -66,7 +66,7 @@ function App() {
                           <TaipeiMetro/>
                         </Route>
                         <Route exact path="/map/KaohsiungMetro">
-                          {/*<TaipeiMetro />*/}
+
                         </Route>
 
                         <ProtectedRoute path="/create" component={Profile}/>

@@ -113,13 +113,13 @@ const DrawerUserSection = (props:Props) => {
                         </ListItemIcon>
                         <ListItemText classes={{ primary: classes.nestedText }} primary="追蹤清單" />
                     </ListItem>
-                    <ListItem button className={classes.nested} component={RouterLink} onClick={toggleDrawerOpen}  to="/follow" key="follow">
+                    <ListItem button className={classes.nested} component={RouterLink} onClick={toggleDrawerOpen}  to="/wishList" key="wishList">
                         <ListItemIcon>
                             <PlaylistAddIcon />
                         </ListItemIcon>
                         <ListItemText classes={{ primary: classes.nestedText }} primary="願望清單" />
                     </ListItem>
-                    <ListItem button className={classes.nested} component={RouterLink} onClick={toggleDrawerOpen} to="/follow" key="follow">
+                    <ListItem button className={classes.nested} component={RouterLink} onClick={toggleDrawerOpen} to="/commented" key="commented">
                         <ListItemIcon>
                             <CommentIcon />
                         </ListItemIcon>
