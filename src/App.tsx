@@ -1,5 +1,4 @@
 import './App.css';
-
 import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import NotFound from './NotFound';
 import ProtectedRoute from './ProtectedRoute';
@@ -15,9 +14,26 @@ import Footer from "./components/Footer/Footer";
 import 'moment/locale/zh-tw';
 import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
-// import Metro from './components/Metro/Metro'
+import TaipeiMetro from "./components/Metro/TaipeiMetro";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() =>
+    createStyles({
+
+      container:{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "50vh",
+        maxWidth: "1440px",
+        width: "100%",
+        padding:"0 15px",
+        margin:"100px auto 0 auto"
+      }
+    }),
+);
 
 function App() {
+  const classes = useStyles();
   useEffect(() => {
     document.title = "台灣拉麵倶樂部"
   }, [])
@@ -36,14 +52,23 @@ function App() {
                     <Footer />
                   </Route>
                   <Route>
-                    <div className="container">
+                    <div className={classes.container}>
                       <Switch>
                         <Route exact path="/stores">
                           <StoreIndex/>
                         </Route>
                         <Route exact path="/test">
-                          {/*<Metro />*/}
+                          {/*<TaipeiMetro />*/}
                         </Route>
+                        <Route exact path="/map">
+                        </Route>
+                        <Route path="/map/TaipeiMetro">
+                          <TaipeiMetro/>
+                        </Route>
+                        <Route exact path="/map/KaohsiungMetro">
+                          {/*<TaipeiMetro />*/}
+                        </Route>
+
                         <ProtectedRoute path="/create" component={Profile}/>
                         <ProtectedRoute path="/stores/:id" component={Store}/>
 
@@ -62,6 +87,7 @@ function App() {
             </div>
           </Router>
         </UserProvider>
+
   );
 }
 

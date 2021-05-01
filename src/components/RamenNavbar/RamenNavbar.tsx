@@ -14,6 +14,8 @@ import UserSection from "./UserSection";
 import './RamenNav.css';
 import {NotificationContext} from "../../Context/NotificationContext";
 import Badge from "@material-ui/core/Badge";
+import Divider from "@material-ui/core/Divider";
+import SubCategory from "./SubCategory";
 
 const navbarHeight = 64;
 const useStyles = makeStyles((theme: Theme) =>
@@ -57,6 +59,10 @@ const useStyles = makeStyles((theme: Theme) =>
             zIndex: 1100,
             color: '#fff',
         },
+        divider:{
+            height: 28,
+            margin: 8,
+        }
     }),
 );
 
@@ -95,10 +101,12 @@ const RamenNavbar = () => {
                         <img src="/images/ramen.png" alt="" width="32px" height="32px" className="mx-2"/>
                         台灣拉麵倶樂部
                     </Button>
+                    <Divider className={classes.divider} orientation="vertical" />
+                    <SubCategory />
 
                     <div className={classes.grow} />
 
-                    <UserSection />
+                    <UserSection/>
 
                 </Toolbar>
             </AppBar>

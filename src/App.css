@@ -10,12 +10,11 @@
 html, body {
   height: 100%;
   margin: 0;
+  background: #fffbf6;
 }
-.container {
-  margin-top: 100px;
-  display: flex;
-  flex-direction: column;
-  min-height: 50vh;
+.App {
+  background: #FFFBF6;
+
 }
 
 .thumbnail img {

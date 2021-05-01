@@ -1,7 +1,8 @@
-import {useState, useRef, useLayoutEffect,} from "react";
+import {useState, useRef, useLayoutEffect, useEffect,} from "react";
 import ImageMapper  from "react-image-mapper";
 import MapAreas from './MetroMapAreas'
 import metroMap from '../../static/routemap2020.png';
+import Loading from "../Loading/Loading";
 const React = require("react");
 
 function useWindowSize(targetRef, setMapAreas) {
@@ -31,17 +32,17 @@ const resize = (currentWidth) => {
     return {name: "my-map", areas: JSON.parse(JSON.stringify(oldMapAreas))};
 }
 
-const Metro = () => {
+const TaipeiMetro = () => {
     const [ hoveredArea, setHoveredArea ] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [msg, setMsg]  = useState(null);
     const [mapAreas, setMapAreas] = useState(MapAreas);
     const targetRef = useRef();
     const {width} = useWindowSize(targetRef, setMapAreas);
 
-
-    const load = () => {
-        setMsg("Interact with image !");
-    };
+    useEffect(() => {
+        setIsLoading(false);
+    })
 
     const clicked = (area) => {
         setMsg(`You clicked on ${area.name} at coords ${JSON.stringify(
@@ -65,6 +66,7 @@ const Metro = () => {
     return (
         <div className="grid"  style={{ border: "2px #FFAC55 solid" }}>
 
+            {isLoading && <Loading/>}
             <div className="presenter" ref={targetRef}>
                 <div style={{ maxWidth: "960px", height:"auto" }} >
                     <ImageMapper
@@ -72,7 +74,6 @@ const Metro = () => {
                         map={mapAreas}
                         width={width}
                         imageWidth={{width}}
-                        onLoad={() => load()}
                         onClick={area => clicked(area)}
                         onMouseEnter={area => enterArea(area)}
                         onMouseLeave={area => leaveArea(area)}
@@ -95,4 +96,4 @@ const Metro = () => {
 
 };
 
-export default Metro;
+export default TaipeiMetro;

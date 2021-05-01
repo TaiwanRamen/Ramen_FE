@@ -42,7 +42,7 @@ type Props = {
 
 }
 
-const DrawerUser = (props:Props) => {
+const DrawerUserSection = (props:Props) => {
     const {user} = useContext(UserContext);
     const classes = useStyles();
     const { notificationCount, setNotificationCount } = useContext(NotificationContext);
@@ -131,4 +131,4 @@ const DrawerUser = (props:Props) => {
     );
 };
 
-export default DrawerUser;
+export default DrawerUserSection;

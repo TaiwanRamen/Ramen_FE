@@ -6,11 +6,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
-import IconButton from '@material-ui/core/IconButton';
+//import IconButton from '@material-ui/core/IconButton';
+// import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
+import LocalOfferRoundedIcon from '@material-ui/icons/LocalOfferRounded';
 import LocationOn from '@material-ui/icons/LocationOn';
-import Favorite from '@material-ui/icons/Favorite';
 import Button from '@material-ui/core/Button';
 import {IStore} from "../../types/IStore";
+import Divider from '@material-ui/core/Divider';
 
 
 
@@ -30,9 +32,12 @@ const useStyles = makeStyles((theme:Theme) => ({
         }
     },
     title: {
-
-        maxHeight: "50px",
+        textOverflow: "ellipsis",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        maxHeight: 50,
         marginBottom: 0,
+
     },
     rateValue: {
         marginLeft: 8,
@@ -48,20 +53,24 @@ const useStyles = makeStyles((theme:Theme) => ({
         height: "350px"
     },
     favorite: {
+        margin:"2px",
         color:"#7d7d7d",
-        fontSize:30
+        fontSize:"0.85rem"
     },
     favoriteBg: {
         zIndex: 100,
         position: 'relative',
-        top: 6,
-        left: 6,
-        backgroundColor:"rgba(255,255,255,0.1)",
+        top: 10,
+        left: 10,
+        backgroundColor:"#f8f9fa!important",
         "&:hover":{
             "& $favorite": {
-                color: "#e80036"
+                color: "#ff6600"
             },
-        }
+            boxShadow: '0 3px 7px 2px rgba(0,0,0,0.3)'
+
+        },
+        "&:hover, &.Mui-focusVisible": { backgroundColor: "white" }
     },
     locationIcon: {
         marginLeft: 0,
@@ -85,15 +94,26 @@ const useStyles = makeStyles((theme:Theme) => ({
     readMoreBtn:{
         position: 'absolute',
         bottom: 20,
-        right: 24,
+        right: 40,
     },
     cardBody:{
+        fontSize:"0.875rem",
         flex: "1 1 auto",
-        minHeight: 1,
+        minHeight: "0.875rem",
         padding: "1.25rem",
-        overflowY: "scroll",
-        maxHeight: "150px"
-    }
+        overflow: "hidden",
+        maxHeight: "10rem",
+        textOverflow: "ellipsis",
+        marginBottom: 0,
+        whiteSpace: "normal",
+        display: "-webkit-box",
+        "-webkit-line-clamp": 6,
+        "-webkit-box-orient": "vertical",
+    },
+    divider: {
+        width: 230,
+        margin: "15px 10px",
+    },
 }));
 
 type Props = {
@@ -129,9 +149,11 @@ const ReviewCardDemo = (props: Props) => {
                     className={classes.cardMedia}
                     image={store.imageLarge[0]}
                 >
-                    <IconButton className={classes.favoriteBg}>
-                        <Favorite className={classes.favorite}/>
-                    </IconButton>
+                    <Button size={"medium"} className={classes.favoriteBg}>
+                        <LocalOfferRoundedIcon className={classes.favorite}/>
+                        <span className={classes.favorite}>追蹤</span>
+                    </Button>
+
                 </CardMedia>
 
                 <CardContent className={cx(classes.fadeShadow, classes.content)}>
@@ -156,9 +178,11 @@ const ReviewCardDemo = (props: Props) => {
                         </Typography>
                     </div>
 
+                    <Divider className={classes.divider} orientation="horizontal" />
+
                     <Box mt={2} display={'flex'} justifyContent={'space-between'} alignItems={'center'} className={classes.readMoreBtn}>
                         <Button size={'small'} className={classes.readMoreText}>
-                            顯示更多...
+                            顯示更多
                         </Button>
                     </Box>
                 </CardContent>

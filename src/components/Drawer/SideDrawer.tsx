@@ -3,7 +3,7 @@ import { makeStyles} from "@material-ui/core/styles";
 import Drawer from '@material-ui/core/Drawer';
 import DrawerMidSection from "./DrawerMidSection";
 import DrawerBottomSection from "./DrawerBottomSection";
-import DrawerUser from "./DrawerUser";
+import DrawerUserSection from "./DrawerUserSection";
 import {useContext} from "react";
 import {UserContext} from "../../Context/UserContext";
 
@@ -26,7 +26,7 @@ const useStyles = (props:Props) => makeStyles( () => ({
 const userSection = (toggleDrawerOpen:()=>void) => {
     return (
         <>
-            <DrawerUser toggleDrawerOpen={toggleDrawerOpen}/>
+            <DrawerUserSection toggleDrawerOpen={toggleDrawerOpen}/>
             <Divider />
         </>
     )

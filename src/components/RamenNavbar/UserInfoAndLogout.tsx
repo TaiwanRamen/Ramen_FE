@@ -1,6 +1,4 @@
 import React, {useContext} from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Menu, { MenuProps } from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -13,27 +11,22 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-const StyledMenu = withStyles({
-    paper: {
-        border: '1px solid #d3d4d5',
-    },
-})((props: MenuProps) => (
-    <Menu
-        elevation={0}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-        }}
-        {...props}
-    />
-));
+import StyledMenu from "../StyledMenu/StyledMenu";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles(() =>
+    createStyles({
+        imageIcon: {
+            height: "24px",
+            width:"24px"
+        },
+        listItemIcon: {
+            minWidth: 36,
+        }
+    }),
+);
 const UserInfoAndLogout = () => {
+    const classes = useStyles();
     const {user} = useContext(UserContext);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -47,8 +40,6 @@ const UserInfoAndLogout = () => {
 
     return (
         <div>
-
-
             <Button
                 aria-label="account of current user"
                 aria-controls="primary-search-account-menu"
@@ -73,14 +64,14 @@ const UserInfoAndLogout = () => {
                 onClose={handleClose}
             >
                 <MenuItem>
-                    <ListItemIcon>
-                        <InfoIcon fontSize="small" />
+                    <ListItemIcon className={classes.listItemIcon}>
+                        <InfoIcon className={classes.imageIcon}  />
                     </ListItemIcon>
                     <ListItemText primary="個人資料" />
                 </MenuItem>
                 <MenuItem>
-                    <ListItemIcon>
-                        <ExitToAppIcon fontSize="small" />
+                    <ListItemIcon className={classes.listItemIcon}>
+                        <ExitToAppIcon className={classes.imageIcon}  />
                     </ListItemIcon>
                     <ListItemText primary="登出" />
                 </MenuItem>
