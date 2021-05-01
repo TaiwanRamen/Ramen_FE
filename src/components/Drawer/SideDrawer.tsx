@@ -6,7 +6,8 @@ import DrawerBottomSection from "./DrawerBottomSection";
 import DrawerUserSection from "./DrawerUserSection";
 import {useContext} from "react";
 import {UserContext} from "../../Context/UserContext";
-import DrawerMapSelectionTree from "./DrawerMapSelectionTree";
+
+
 
 const drawerWidth = 250;
 
@@ -62,7 +63,6 @@ const SideDrawer = (props: Props) => {
             <Divider />
 
             <DrawerBottomSection toggleDrawerOpen={props.toggleDrawerOpen}/>
-            <DrawerMapSelectionTree/>
 
         </Drawer>
 

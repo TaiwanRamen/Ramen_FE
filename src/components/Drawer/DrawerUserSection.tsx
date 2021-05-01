@@ -64,6 +64,7 @@ const DrawerUserSection = (props:Props) => {
         return (
             <Box display={notificationBadgeDisplay}>
                 <Chip
+                    variant="outlined"
                     size="small"
                     clickable
                     label={notificationCount}
@@ -99,7 +100,7 @@ const DrawerUserSection = (props:Props) => {
             </ListItem>
             <Collapse in={collapseOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItem button className={classes.nested} component={RouterLink} to="/" key="notification" >
+                    <ListItem button className={classes.nested} component={RouterLink} to="/notification" key="notification" >
                         <ListItemIcon>
                             <NotificationsIcon />
                         </ListItemIcon>
