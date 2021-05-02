@@ -7,8 +7,7 @@ import Loading from "../Loading/Loading";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Popover from "@material-ui/core/Popover";
-// import Button from "@material-ui/core/Button";
-
+import MetroSideDrawer from "./MetroSideDrawer";
 
 function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispatch<any>) {
     const [size, setSize] = useState({width:0, height:0});
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme:Theme) =>
         typography: {
             padding: theme.spacing(2),
         },
-        paper: {
+        popperTip: {
             zIndex:1300,
             overflowX: "unset",
             overflowY: "unset",
@@ -80,7 +79,7 @@ const useStyles = makeStyles((theme:Theme) =>
             width:200,
             height:200,
             borderRadius:10,
-            boxShadow: "2 2 3px 5px rgba(0, 0, 0, 0.1)"
+            boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.1)"
         }
     }),
 );
@@ -94,6 +93,7 @@ const TaipeiMetro = () => {
     // const [popoverHoverOpen, setPopoverHoverOpen] = useState(false);
     const [popoverPosition, setPopoverPosition] = useState({left:800, top:300})
     const [popoverMessage, setPopoverMessage] = useState("")
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const targetRef = useRef<HTMLDivElement>(null)
     const {width} = useWindowSize(targetRef, setMapAreas);
@@ -106,10 +106,11 @@ const TaipeiMetro = () => {
 
     const handleClick = (area:any, evt:any) => {
         const coords = { left: evt.nativeEvent.x, top: evt.nativeEvent.y-20 };
-        setPopoverPosition(coords)
+        setPopoverPosition(coords);
         setMsg(`You clicked on ${area.name} at coords ${JSON.stringify(coords)} !`);
         setPopoverMessage(`You clicked on ${area.name}!`);
         setPopoverOpen(true);
+        setDrawerOpen(true);
         console.log(popoverMessage);
     };
 
@@ -117,6 +118,9 @@ const TaipeiMetro = () => {
         setPopoverOpen(false)
     };
 
+    const toggleDrawerOpen = () => {
+        setDrawerOpen(!drawerOpen)
+    }
 
     return (
         <div className="grid"  style={{ border: "2px #FFAC55 solid" }}>
@@ -148,7 +152,7 @@ const TaipeiMetro = () => {
                         vertical: 'bottom',
                         horizontal: 'center',
                     }}
-                    classes={{ paper: classes.paper }}
+                    classes={{ paper: classes.popperTip }}
                 >
                 </Popover>
                 <Popover
@@ -170,6 +174,7 @@ const TaipeiMetro = () => {
 
 
             </div>
+            <MetroSideDrawer isOpen={drawerOpen} toggleDrawerOpen={toggleDrawerOpen}/>
         </div>
     );
 
