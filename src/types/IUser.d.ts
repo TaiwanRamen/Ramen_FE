@@ -1,6 +1,6 @@
 import UserRole from '../enums/UserRole';
 export type IUser = {
-    avatar: string,
+    avatar?: string,
     isVerified: boolean,
     userRole: UserRole,
     hasStore: string[],
@@ -10,7 +10,7 @@ export type IUser = {
     _id: string,
     fbUid: string,
     fbName: string,
-    email: string,
+    email?: string,
     createdAt: string,
     updatedAt: string,
     __v: number

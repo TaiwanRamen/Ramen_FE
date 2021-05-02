@@ -16,7 +16,7 @@ import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
 import TaipeiMetro from "./components/Metro/TaipeiMetro";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
-import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
+// import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -59,9 +59,6 @@ function App() {
                           <StoreIndex/>
                         </Route>
                         <Route exact path="/test">
-                          <NotificationProvider >
-                            <DrawerUserSelectionTree/>
-                          </NotificationProvider >
 
                         </Route>
                         <Route exact path="/map">
@@ -79,6 +76,7 @@ function App() {
                         <ProtectedRoute path="/following" component={Profile}/>
                         <ProtectedRoute path="/wishlist" component={Profile}/>
                         <ProtectedRoute path="/commented" component={Profile}/>
+                        <ProtectedRoute path="/setting" component={Profile}/>
 
                         <Route path="/user/login">
                           <Login />

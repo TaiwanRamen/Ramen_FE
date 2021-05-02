@@ -1,11 +1,7 @@
-import Divider from "@material-ui/core/Divider";
 import { makeStyles} from "@material-ui/core/styles";
 import Drawer from '@material-ui/core/Drawer';
-import DrawerMidSection from "./DrawerMidSection";
-import DrawerBottomSection from "./DrawerBottomSection";
-import DrawerUserSection from "./DrawerUserSection";
-import {useContext} from "react";
-import {UserContext} from "../../Context/UserContext";
+import DrawerSectionTree from "./DrawerSectionTree";
+
 
 
 
@@ -25,14 +21,7 @@ const useStyles = (props:Props) => makeStyles( () => ({
     },
 }));
 
-const userSection = (toggleDrawerOpen:()=>void) => {
-    return (
-        <>
-            <DrawerUserSection toggleDrawerOpen={toggleDrawerOpen}/>
-            <Divider />
-        </>
-    )
-}
+
 
 type Props = {
     isOpen: boolean;
@@ -41,7 +30,6 @@ type Props = {
 }
 
 const SideDrawer = (props: Props) => {
-    const {user} = useContext(UserContext);
     const isDrawerOpen = props.isOpen;
     const classes = useStyles(props)();
 
@@ -55,15 +43,7 @@ const SideDrawer = (props: Props) => {
                 paper: classes.drawerPaper,
             }}
         >
-
-            { user && userSection(props.toggleDrawerOpen) }
-
-            <DrawerMidSection toggleDrawerOpen={props.toggleDrawerOpen}/>
-
-            <Divider />
-
-            <DrawerBottomSection toggleDrawerOpen={props.toggleDrawerOpen}/>
-
+            <DrawerSectionTree toggleDrawerOpen={props.toggleDrawerOpen}/>
         </Drawer>
 
     );
