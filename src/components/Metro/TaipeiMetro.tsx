@@ -1,11 +1,11 @@
+import React from "react";
 import {useState, useRef, useLayoutEffect, useEffect,} from "react";
-import ImageMapper  from "react-image-mapper";
+import ImageMapper from 'react-img-mapper';
 import MapAreas from './MetroMapAreas'
 import metroMap from '../../static/routemap2020.png';
 import Loading from "../Loading/Loading";
-const React = require("react");
 
-function useWindowSize(targetRef, setMapAreas) {
+function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispatch<any>) {
     const [size, setSize] = useState({width:0, height:0});
     useLayoutEffect(() => {
 
@@ -21,43 +21,43 @@ function useWindowSize(targetRef, setMapAreas) {
     return size;
 }
 
-const resize = (currentWidth) => {
+const resize = (currentWidth:number) => {
     const factor = currentWidth / 960;
     const oldMapAreas = JSON.parse(JSON.stringify(MapAreas.areas));
     for (let i=0; i<oldMapAreas.length; i++){
         let coords = oldMapAreas[i].coords;
-        coords = coords.map(c => c * factor);
+        coords = coords.map((c:number) => c * factor);
         oldMapAreas[i].coords = coords;
     }
     return {name: "my-map", areas: JSON.parse(JSON.stringify(oldMapAreas))};
 }
 
 const TaipeiMetro = () => {
-    const [ hoveredArea, setHoveredArea ] = useState(null);
+    const [ hoveredArea, setHoveredArea ] = useState({name:"no"});
     const [isLoading, setIsLoading] = useState(true);
-    const [msg, setMsg]  = useState(null);
-    const [mapAreas, setMapAreas] = useState(MapAreas);
-    const targetRef = useRef();
+    const [msg, setMsg]  = useState("");
+    const [mapAreas, setMapAreas] = useState<any>(MapAreas);
+    const targetRef = useRef<HTMLDivElement>(null)
     const {width} = useWindowSize(targetRef, setMapAreas);
 
     useEffect(() => {
         setIsLoading(false);
-    })
+    },[])
 
-    const clicked = (area) => {
+    const clicked = (area:any) => {
         setMsg(`You clicked on ${area.name} at coords ${JSON.stringify(
             area.coords
         )} !`)
     };
-    const enterArea = (area) => {
+    const enterArea = (area:any) => {
         setHoveredArea(area);
         setMsg(`You entered ${area.shape} ${area.name} at coords ${JSON.stringify(
             area.coords
         )} !`);
 
     };
-    const leaveArea = (area) => {
-        setHoveredArea({name:"no hover"});
+    const leaveArea = (area:any) => {
+        setHoveredArea({name:"no"});
         setMsg(`You leaved ${area.shape} ${area.name} at coords ${JSON.stringify(
             area.coords
         )} !`);
@@ -73,10 +73,10 @@ const TaipeiMetro = () => {
                         src={metroMap}
                         map={mapAreas}
                         width={width}
-                        imageWidth={{width}}
-                        onClick={area => clicked(area)}
-                        onMouseEnter={area => enterArea(area)}
-                        onMouseLeave={area => leaveArea(area)}
+                        imgWidth={width}
+                        onClick={(event: any) => clicked(event)}
+                        onMouseEnter={(event: any) => enterArea(event)}
+                        onMouseLeave={(event: any) => leaveArea(event)}
                         lineWidth={0.01}
                         fillColor={"rgba(0, 0, 0, 0.15)"}
                         strokeColor={"white"}
