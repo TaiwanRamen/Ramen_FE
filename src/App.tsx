@@ -59,7 +59,6 @@ function App() {
                           <StoreIndex/>
                         </Route>
                         <Route exact path="/test">
-
                         </Route>
                         <Route exact path="/map">
                         </Route>
