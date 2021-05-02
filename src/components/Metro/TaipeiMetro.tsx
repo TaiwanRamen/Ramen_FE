@@ -7,6 +7,7 @@ import Loading from "../Loading/Loading";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Popover from "@material-ui/core/Popover";
+// import Button from "@material-ui/core/Button";
 
 
 function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispatch<any>) {
@@ -38,29 +39,61 @@ const resize = (currentWidth:number) => {
 
 const useStyles = makeStyles((theme:Theme) =>
     createStyles({
+        presenter: {
+            maxWidth: "960px",
+            margin: "auto",
+            display: "flex",
+            justifyContent: "center",
+            alignItems:"center"
+        },
         imageDiv:{
-            maxWidth: "960px", height:"auto",
+            height:"auto",
+            maxWidth: "960px",
             '& > div > map > area:hover': {
                 cursor: "pointer",
-            }
+            },
         },
         typography: {
             padding: theme.spacing(2),
         },
+        paper: {
+            zIndex:1300,
+            overflowX: "unset",
+            overflowY: "unset",
+            width:0,
+            height:0,
+            "&::before": {
+                content: '""',
+                position: "absolute",
+                marginRight: "-1.1em",
+                bottom: 0,
+                right: "50%",
+                width: 20,
+                height: 20,
+                backgroundColor: theme.palette.background.paper,
+                boxShadow: theme.shadows[1],
+                transform: "translate(-50%, 50%) rotate(135deg)",
+                clipPath: "polygon(-5px -5px, calc(100% + 5px) -5px, calc(100% + 5px) calc(100% + 5px))",
+            },
+        },
         popover: {
-            zIndex:1300
+            width:200,
+            height:200,
+            borderRadius:10,
+            boxShadow: "2 2 3px 5px rgba(0, 0, 0, 0.1)"
         }
     }),
 );
 
 const TaipeiMetro = () => {
-    const [ hoveredArea, setHoveredArea ] = useState({name:"no"});
     const [isLoading, setIsLoading] = useState(true);
     const [msg, setMsg]  = useState("");
     const [mapAreas, setMapAreas] = useState<any>(MapAreas);
 
     const [popoverOpen, setPopoverOpen] = useState(false);
-    const [popoverPosition] = useState({ top:100, left:800 })
+    // const [popoverHoverOpen, setPopoverHoverOpen] = useState(false);
+    const [popoverPosition, setPopoverPosition] = useState({left:800, top:300})
+    const [popoverMessage, setPopoverMessage] = useState("")
 
     const targetRef = useRef<HTMLDivElement>(null)
     const {width} = useWindowSize(targetRef, setMapAreas);
@@ -71,70 +104,71 @@ const TaipeiMetro = () => {
         setIsLoading(false);
     },[])
 
-    const handleClick = (area:any) => {
-        console.log(area);
-        setPopoverOpen(true)
-        setMsg(`You clicked on ${area.name} at coords ${JSON.stringify(
-            area.coords
-        )} !`)
+    const handleClick = (area:any, evt:any) => {
+        const coords = { left: evt.nativeEvent.x, top: evt.nativeEvent.y-20 };
+        setPopoverPosition(coords)
+        setMsg(`You clicked on ${area.name} at coords ${JSON.stringify(coords)} !`);
+        setPopoverMessage(`You clicked on ${area.name}!`);
+        setPopoverOpen(true);
+        console.log(popoverMessage);
     };
 
     const handleClose = () => {
         setPopoverOpen(false)
     };
 
-    const enterArea = (area:any) => {
-        setHoveredArea(area);
-        setMsg(`You entered ${area.shape} ${area.name} at coords ${JSON.stringify(
-            area.coords
-        )} !`);
-
-    };
-    const leaveArea = (area:any) => {
-        setHoveredArea({name:"no"});
-        setMsg(`You leaved ${area.shape} ${area.name} at coords ${JSON.stringify(
-            area.coords
-        )} !`);
-    };
 
     return (
         <div className="grid"  style={{ border: "2px #FFAC55 solid" }}>
             {isLoading && <Loading/>}
-            <div className="presenter" ref={targetRef}>
+            <div className={classes.presenter} ref={targetRef}>
                 <div className={classes.imageDiv} >
                     <ImageMapper
                         src={metroMap}
                         map={mapAreas}
                         width={width}
                         imgWidth={width}
-                        onClick={(event: any) => handleClick(event)}
-                        onMouseEnter={(event: any) => enterArea(event)}
-                        onMouseLeave={(event: any) => leaveArea(event)}
+                        onClick={(area:any, _, evt) => handleClick(area, evt)}
                         lineWidth={0.01}
                         fillColor={"rgba(0, 0, 0, 0.15)"}
                         strokeColor={"white"}
                     />
-                    {hoveredArea && (
-                        <span>
-                            {hoveredArea.name}
-                        </span>
-                    )}
+
                 </div>
                 <pre className="message">
                     {msg ? msg : null}
                 </pre>
                 <Popover
+                    id="1"
                     open={popoverOpen}
                     anchorReference="anchorPosition"
-                    anchorPosition={{ top: popoverPosition.top, left: popoverPosition.left }}
+                    anchorPosition={popoverPosition}
                     onClose={handleClose}
                     transformOrigin={{
                         vertical: 'bottom',
                         horizontal: 'center',
                     }}
+                    classes={{ paper: classes.paper }}
                 >
-                    <Typography className={classes.typography}>The content of the Popover.</Typography>
                 </Popover>
+                <Popover
+                    id="2"
+                    open={popoverOpen}
+                    anchorReference="anchorPosition"
+                    anchorPosition={popoverPosition}
+                    onClose={handleClose}
+                    transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    classes={{ paper: classes.popover }}
+                >
+                    <Typography variant="body2" className={classes.typography} >
+                        {popoverMessage}
+                    </Typography>
+                </Popover>
+
+
             </div>
         </div>
     );
