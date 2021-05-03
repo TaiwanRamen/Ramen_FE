@@ -5,8 +5,11 @@ import MapAreas from './MetroMapAreas'
 import metroMap from '../../static/routemap2020.png';
 import Loading from "../Loading/Loading";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Popover from "@material-ui/core/Popover";
+import Popper from "@material-ui/core/Popper";
+import Paper from '@material-ui/core/Paper';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+
 import MetroSideDrawer from "./MetroSideDrawer";
 
 function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispatch<any>) {
@@ -39,6 +42,7 @@ const resize = (currentWidth:number) => {
 const useStyles = makeStyles((theme:Theme) =>
     createStyles({
         presenter: {
+            marginBottom:100,
             maxWidth: "960px",
             margin: "auto",
             display: "flex",
@@ -55,7 +59,8 @@ const useStyles = makeStyles((theme:Theme) =>
         typography: {
             padding: theme.spacing(2),
         },
-        popperTip: {
+
+        arrow: {
             zIndex:1300,
             overflowX: "unset",
             overflowY: "unset",
@@ -69,62 +74,76 @@ const useStyles = makeStyles((theme:Theme) =>
                 right: "50%",
                 width: 20,
                 height: 20,
-                backgroundColor: theme.palette.background.paper,
-                boxShadow: theme.shadows[1],
+                boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.1)",
+                backgroundColor: theme.palette.grey[500],
                 transform: "translate(-50%, 50%) rotate(135deg)",
                 clipPath: "polygon(-5px -5px, calc(100% + 5px) -5px, calc(100% + 5px) calc(100% + 5px))",
             },
         },
-        popover: {
-            width:200,
-            height:200,
-            borderRadius:10,
+        paper: {
+            height:50,
+            maxHeight:"10vh",
+            maxWidth: 150,
+            overflow: 'auto',
             boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.1)"
-        }
+        },
+        popper: {
+            zIndex: 1,
+
+        },
     }),
 );
 
 const TaipeiMetro = () => {
     const [isLoading, setIsLoading] = useState(true);
-    const [msg, setMsg]  = useState("");
+    const [clickedStationName, setClickedStationName]  = useState("");
+    const [hoverStationName, setHoverStationName]  = useState("");
+
     const [mapAreas, setMapAreas] = useState<any>(MapAreas);
 
-    const [popoverOpen, setPopoverOpen] = useState(false);
-    // const [popoverHoverOpen, setPopoverHoverOpen] = useState(false);
     const [popoverPosition, setPopoverPosition] = useState({left:800, top:300})
-    const [popoverMessage, setPopoverMessage] = useState("")
     const [drawerOpen, setDrawerOpen] = useState(false);
-
+    const anchorRef = React.useRef(null);
     const targetRef = useRef<HTMLDivElement>(null)
     const {width} = useWindowSize(targetRef, setMapAreas);
     const classes = useStyles();
+    const [arrowRef] = React.useState(null);
+    const [open, setOpen] = React.useState(false);
 
 
     useEffect(() => {
         setIsLoading(false);
     },[])
 
-    const handleClick = (area:any, evt:any) => {
-        const coords = { left: evt.nativeEvent.x, top: evt.nativeEvent.y-20 };
-        setPopoverPosition(coords);
-        setMsg(`You clicked on ${area.name} at coords ${JSON.stringify(coords)} !`);
-        setPopoverMessage(`You clicked on ${area.name}!`);
-        setPopoverOpen(true);
+    const handleClick = (area:any) => {
+        setClickedStationName(area.name);
         setDrawerOpen(true);
-        console.log(popoverMessage);
     };
 
-    const handleClose = () => {
-        setPopoverOpen(false)
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
     };
 
     const toggleDrawerOpen = () => {
         setDrawerOpen(!drawerOpen)
-    }
+    };
+    const handleEnter = (area: any, targetRef: React.RefObject<any>) => {
+        const centerCoords = {left: area.center[0] + targetRef.current.offsetLeft,  top: area.center[1] + targetRef.current.offsetTop };
+        setHoverStationName(`${area.name}`)
+        setPopoverPosition(centerCoords);
+        setOpen(true);
+    };
+    const handleLeave = (event:React.MouseEvent<any>) => {
+        setHoverStationName("");
+        console.log(event.currentTarget);
+        setOpen(false);
+    };
 
     return (
         <div className="grid"  style={{ border: "2px #FFAC55 solid" }}>
             {isLoading && <Loading/>}
+            <div id="bird" style={{position: 'absolute', left:popoverPosition.left, top:popoverPosition.top -40 , zIndex: 9999}} ref={anchorRef}>
+            </div>
             <div className={classes.presenter} ref={targetRef}>
                 <div className={classes.imageDiv} >
                     <ImageMapper
@@ -132,49 +151,44 @@ const TaipeiMetro = () => {
                         map={mapAreas}
                         width={width}
                         imgWidth={width}
-                        onClick={(area:any, _, evt) => handleClick(area, evt)}
+                        onClick={(area:any) => handleClick(area)}
+                        onMouseEnter={((area, _) => handleEnter(area, targetRef))}
+                        onMouseLeave={((__, _, evt) => handleLeave(evt))}
+                        onImageClick={handleDrawerClose}
                         lineWidth={0.01}
                         fillColor={"rgba(0, 0, 0, 0.15)"}
                         strokeColor={"white"}
                     />
-
                 </div>
-                <pre className="message">
-                    {msg ? msg : null}
-                </pre>
-                <Popover
-                    id="1"
-                    open={popoverOpen}
-                    anchorReference="anchorPosition"
-                    anchorPosition={popoverPosition}
-                    onClose={handleClose}
-                    transformOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
-                    classes={{ paper: classes.popperTip }}
-                >
-                </Popover>
-                <Popover
-                    id="2"
-                    open={popoverOpen}
-                    anchorReference="anchorPosition"
-                    anchorPosition={popoverPosition}
-                    onClose={handleClose}
-                    transformOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
-                    classes={{ paper: classes.popover }}
-                >
-                    <Typography variant="body2" className={classes.typography} >
-                        {popoverMessage}
-                    </Typography>
-                </Popover>
 
+                <Popper
+                    id={'popper-bottom'}
+                    open={open}
+                    anchorEl={anchorRef.current}
+                    placement='top'
+                    className={classes.popper}
+                    modifiers={{
+                        flip: {
+                            enabled: true,
+                        },
+                        preventOverflow: {
+                            enabled: true,
+                            boundariesElement: 'scrollParent',
+                        },
+                        arrow: {
+                            enabled: true,
+                            element: arrowRef,
+                        },
+                    }}
+                >
+                    <span className={classes.arrow} ref={arrowRef} />
+                    <Paper className={classes.paper}>
+                        <DialogTitle>{hoverStationName}</DialogTitle>
+                    </Paper>
+                </Popper>
 
             </div>
-            <MetroSideDrawer isOpen={drawerOpen} toggleDrawerOpen={toggleDrawerOpen}/>
+            <MetroSideDrawer name={clickedStationName} isOpen={drawerOpen} toggleDrawerOpen={toggleDrawerOpen}/>
         </div>
     );
 

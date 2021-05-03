@@ -50,6 +50,7 @@ const useStyles = (props:Props) => makeStyles( (theme:Theme) => ({
 
 
 type Props = {
+    name?:string;
     isOpen: boolean;
     toggleDrawerOpen: () => void;
     navbarHeight?: number;
@@ -72,7 +73,7 @@ const MetroSideDrawer = (props: Props) => {
         >
             <div className={classes.headerRoot}>
                 <Typography variant="h5" className={classes.headerText}>
-                    善導寺站
+                    {props.name}
                 </Typography>
                 <IconButton onClick={toggleDrawerOpen} className={classes.closeButton} >
                     <CloseIcon />
