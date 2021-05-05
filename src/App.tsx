@@ -15,7 +15,9 @@ import 'moment/locale/zh-tw';
 import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
 import TaipeiMetro from "./components/Metro/TaipeiMetro";
+import KaohsiungMetro from "./components/Metro/KaohsiungMetro";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
+import Map from "./components/Map/Map";
 // import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
 
 const useStyles = makeStyles(() =>
@@ -24,7 +26,7 @@ const useStyles = makeStyles(() =>
       container:{
         display: "flex",
         flexDirection: "column",
-        minHeight: "50vh",
+        minHeight: "100vh",
         maxWidth: "1440px",
         width: "100%",
         padding:"0 15px",
@@ -59,14 +61,15 @@ function App() {
                           <StoreIndex/>
                         </Route>
                         <Route exact path="/test">
+                          <Map />
                         </Route>
                         <Route exact path="/map">
                         </Route>
                         <Route path="/map/TaipeiMetro">
                           <TaipeiMetro/>
                         </Route>
-                        <Route exact path="/map/KaohsiungMetro">
-
+                        <Route path="/map/KaohsiungMetro">
+                          <KaohsiungMetro />
                         </Route>
 
                         <ProtectedRoute path="/create" component={Profile}/>

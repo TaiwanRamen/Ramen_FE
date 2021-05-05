@@ -1,16 +1,18 @@
 import React from "react";
 import {useState, useRef, useLayoutEffect, useEffect,} from "react";
 import ImageMapper from 'react-img-mapper';
-import MapAreas from './MetroMapAreas'
-import metroMap from '../../static/routemap2020.png';
+import MapAreas from './TaipeiMetroMapAreas'
+import metroMap from '../../static/TPMetro.png';
 import Loading from "../Loading/Loading";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import Paper from '@material-ui/core/Paper';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-
 import MetroSideDrawer from "./MetroSideDrawer";
+
+const imageWidth = 960;
+
+
 
 function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispatch<any>) {
     const [size, setSize] = useState({width:0, height:0});
@@ -29,7 +31,7 @@ function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispa
 }
 
 const resize = (currentWidth:number) => {
-    const factor = currentWidth / 960;
+    const factor = currentWidth / imageWidth;
     const oldMapAreas = JSON.parse(JSON.stringify(MapAreas.areas));
     for (let i=0; i<oldMapAreas.length; i++){
         let coords = oldMapAreas[i].coords;
@@ -61,7 +63,6 @@ const useStyles = makeStyles((theme:Theme) =>
         },
 
         arrow: {
-            zIndex:1300,
             overflowX: "unset",
             overflowY: "unset",
             width:0,
@@ -88,8 +89,8 @@ const useStyles = makeStyles((theme:Theme) =>
             boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.1)"
         },
         popper: {
-            zIndex: 1,
-
+            zIndex:9999,
+            position: "relative"
         },
     }),
 );
@@ -133,9 +134,8 @@ const TaipeiMetro = () => {
         setPopoverPosition(centerCoords);
         setOpen(true);
     };
-    const handleLeave = (event:React.MouseEvent<any>) => {
+    const handleLeave = () => {
         setHoverStationName("");
-        console.log(event.currentTarget);
         setOpen(false);
     };
 
@@ -152,8 +152,8 @@ const TaipeiMetro = () => {
                         width={width}
                         imgWidth={width}
                         onClick={(area:any) => handleClick(area)}
-                        onMouseEnter={((area, _) => handleEnter(area, targetRef))}
-                        onMouseLeave={((__, _, evt) => handleLeave(evt))}
+                        onMouseEnter={(area, _) => handleEnter(area, targetRef)}
+                        onMouseLeave={() => handleLeave()}
                         onImageClick={handleDrawerClose}
                         lineWidth={0.01}
                         fillColor={"rgba(0, 0, 0, 0.15)"}

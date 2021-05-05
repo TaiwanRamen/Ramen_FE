@@ -69,19 +69,19 @@ const SubCategory = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem component={RouterLink} to="/map">
+                <MenuItem component={RouterLink} to="/map" onClick={handleClose}>
                     <ListItemIcon className={classes.listItemIcon}>
                         <img className={classes.imageIcon} src={TaiwanIcon} alt={"Taiwan icon"}/>
                     </ListItemIcon>
                     <ListItemText primary="臺灣地圖" />
                 </MenuItem>
-                <MenuItem component={RouterLink} to="/map/TaipeiMetro">
+                <MenuItem component={RouterLink} to="/map/TaipeiMetro" onClick={handleClose}>
                     <ListItemIcon className={classes.listItemIcon}>
                         <img className={classes.imageIcon} src={TaipeiMetroIcon} alt={"Taipei Metro icon"}/>
                     </ListItemIcon>
                     <ListItemText primary="臺北捷運地圖" />
                 </MenuItem>
-                <MenuItem component={RouterLink} to="/map/KaohsiungMetro">
+                <MenuItem component={RouterLink} to="/map/KaohsiungMetro" onClick={handleClose}>
                     <ListItemIcon className={classes.listItemIcon}>
                         <img className={classes.imageIcon} src={KaohsiungMetroIcon} alt={"Kaohsiung Metro icon"}/>
                     </ListItemIcon>
