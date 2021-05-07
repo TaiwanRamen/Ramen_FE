@@ -7,7 +7,6 @@ const Loading = () => {
             <img className="spinner" src={loadingSpinner}  />
             <p className="loading-message">載入中，請稍等</p>
         </div>
-
     );
 };
 

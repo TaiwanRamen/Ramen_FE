@@ -4,12 +4,11 @@ import './Login.css';
 import axios from 'axios';
 import cookies from 'js-cookie';
 import {useUser} from "../../Context/UserContext";
+import Loading from "../Loading/Loading";
 const Login = () => {
-    const [accessToken, setAccessToken] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    // const [user, setUser] = useState(null);
-    const { user } = useUser();
-    const url = "http://localhost:4000/api/v1/user/oauth/facebook"
+    const { user, setUser } = useUser();
+    const url = `${process.env.REACT_APP_URL}/api/v1/user/oauth/facebook`;
     const componentClicked = () => {
         setIsLoading(true);
     };
@@ -18,7 +17,6 @@ const Login = () => {
         try {
             console.log(response);
             setIsLoading(false);
-            setAccessToken(response.accessToken);
             let payload = { "access_token": response.accessToken };
             let options = {
                 method: 'post',
@@ -27,20 +25,12 @@ const Login = () => {
                 config: { headers: {'Content-Type': 'application/json' }}
             };
             let serverRes = await axios(options);
-            console.log(serverRes.data)
             let loginUser = serverRes.data.user;
-
-            console.log(loginUser);
-
-            console.log("true user:", user)
-
+            setUser(loginUser);
             cookies.set('access_token', serverRes.data.token);
         } catch (e) {
             console.log("error:", e)
         }
-
-
-
     };
 
     const onFailure = () => {
@@ -50,27 +40,23 @@ const Login = () => {
     const buttonOnClick = async () => {
         let options = {
             method: 'get',
-            url: "http://localhost:4000/api/v1/user/profile",
+            url: `${process.env.REACT_APP_URL}/api/v1/user/profile`,
             withCredentials: true
         };
         let serverRes = await axios(options);
-        console.log(serverRes);
+        console.log(serverRes.data)//user profile
     }
 
     const fields = 'id, name, gender, picture.type(large), email';
 
     return (
         <div>
-            React Facebook Login
+
             <br />
-            User Short-Lived Access Token:
-            <br />
-            {accessToken}
-            <br />
-            {isLoading && <div>Loading!</div>}
+            {isLoading && <Loading/>}
             <br/>
-            {user && user.fbUid}
-            <FacebookLogin
+
+            {!isLoading && <FacebookLogin
                 appId="315819223006532"
                 autoLoad={false}
                 fields={fields}
@@ -82,8 +68,10 @@ const Login = () => {
                 cssClass="btn btn-lg btn-primary mb-4"
                 version="10.0"
                 icon="fab fa-facebook-f"
-            />
+            />}
+
             <button onClick={buttonOnClick}>click me</button>
+            {user && <div>user FB ID:{user.fbUid}</div>}
         </div>
     );
 };
