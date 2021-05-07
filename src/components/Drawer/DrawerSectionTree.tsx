@@ -12,7 +12,6 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import CommentIcon from "@material-ui/icons/Comment";
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import {UserContext} from "../../Context/UserContext";
 import {NotificationContext} from "../../Context/NotificationContext";
 import {Link as RouterLink} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -23,6 +22,7 @@ import TaipeiMetroIcon from "../../static/taipei-metro-logo.svg";
 import KaohsiungMetroIcon from "../../static/kaohsiung-metro-logo.svg";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Divider from "@material-ui/core/Divider";
+import {useUser} from "../../Context/UserContext";
 
 const useTreeItemStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -277,7 +277,7 @@ type Props = {
 
 export default function CustomTreeView(props:Props) {
     const classes = useStyles();
-    const {user} = useContext(UserContext);
+    const { user } = useUser()!;
     const { notificationCount, setNotificationCount } = useContext(NotificationContext);
     const toggleDrawerOpen = props.toggleDrawerOpen;
 
@@ -288,7 +288,7 @@ export default function CustomTreeView(props:Props) {
             defaultExpandIcon={<ArrowRightIcon />}
         >
 
-            { user && <>
+            { !!user && <>
                 <StyledTreeUserHead
                     nodeId="0"
                     labelText={user?.fbName}

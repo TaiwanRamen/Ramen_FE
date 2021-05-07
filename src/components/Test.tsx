@@ -1,7 +1,7 @@
-import {useTheme} from "../Context/testContextProvider";
+import {useUser} from "../Context/UserContext";
 
 const Test = () => {
-    const { user, setUser } = useTheme()!;
+    const { user, setUser } = useUser()!;
     const userAfter = {
         avatar: "https://graph.facebook.com/v2.6/3694920833893412/picture?type=large",
         isVerified: true,
@@ -27,7 +27,7 @@ const Test = () => {
             <button  onClick={handleMouseClick}>
                 clickme
             </button>
-            <span>{user.fbName}</span>
+            <span>{user?.fbName}</span>
         </div>
     );
 };

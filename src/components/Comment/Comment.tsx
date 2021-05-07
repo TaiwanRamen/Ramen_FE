@@ -2,10 +2,10 @@ import {useQuery} from "react-query";
 import axios from "axios";
 import {IComment} from "../../types/IComment";
 import Loading from "../Loading/Loading";
-import {useContext, useState} from "react";
-import {UserContext} from "../../Context/UserContext";
+import { useState} from "react";
 import AddComment from "./AddComment";
 import {Button} from "react-bootstrap";
+import {useUser} from "../../Context/UserContext";
 
 const getComments = async (storeId: string): Promise<IComment[]> => {
     //console.log(process.env.REACT_APP_URL + `/api/v1/comment/${storeId}`);
@@ -22,7 +22,7 @@ type Props = {
 }
 
 const Comment = (props: Props) => {
-    const {user} = useContext(UserContext);
+    const { user } = useUser()!;
     const [modalShow, setModalShow] = useState(false);
 
     const { data: comments, status, error } = useQuery<IComment[], Error>(

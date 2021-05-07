@@ -1,11 +1,10 @@
-import {UserContext} from "../../Context/UserContext";
-import  {useContext} from "react";
 import LoginAndRegisterBtn from "./LoginAndRegisterBtn";
 import UserInfoAndLogout from "./UserInfoAndLogout";
+import {useUser} from "../../Context/UserContext";
 
 
 const UserSection = () => {
-    const {user} = useContext(UserContext);
+    const { user } = useUser()! ;
     return (
         <>
             { !user && <LoginAndRegisterBtn/>}

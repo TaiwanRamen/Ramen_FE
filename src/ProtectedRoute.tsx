@@ -1,9 +1,9 @@
 import { Route, Redirect,  } from 'react-router-dom';
-import {useContext} from "react";
-import {UserContext} from "./Context/UserContext";
 
-const ProtectedRoute = ({ component:Component, ...rest }) => {
-    const {user} = useContext(UserContext);
+import {useUser} from "./Context/UserContext";
+
+const ProtectedRoute = ({ component:Component, ...rest } : any) => {
+    const { user } = useUser()!;
     return (
         <Route {...rest} render={(props) => {
             if (user) {

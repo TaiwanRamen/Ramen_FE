@@ -1,11 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import InfoIcon from '@material-ui/icons/Info';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import {UserContext} from "../../Context/UserContext";
 import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -13,6 +12,7 @@ import Box from "@material-ui/core/Box";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import StyledMenu from "../StyledMenu/StyledMenu";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
+import {useUser} from "../../Context/UserContext";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() =>
 );
 const UserInfoAndLogout = () => {
     const classes = useStyles();
-    const {user} = useContext(UserContext);
+    const { user } = useUser()!;
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {

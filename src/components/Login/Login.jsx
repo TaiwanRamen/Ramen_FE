@@ -1,17 +1,16 @@
 import FacebookLogin from "react-facebook-login";
-import {useContext, useState} from "react";
+import { useState} from "react";
 import './Login.css';
 import axios from 'axios';
 import cookies from 'js-cookie';
-import {UserContext} from "../../Context/UserContext";
+import {useUser} from "../../Context/UserContext";
 const Login = () => {
     const [accessToken, setAccessToken] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     // const [user, setUser] = useState(null);
-    const {user, setUser} = useContext(UserContext);
-    const abortCont = new AbortController(); //when update state, when no state to update, abort
+    const { user } = useUser();
     const url = "http://localhost:4000/api/v1/user/oauth/facebook"
-    const componentClicked = data => {
+    const componentClicked = () => {
         setIsLoading(true);
     };
 
@@ -32,25 +31,7 @@ const Login = () => {
             let loginUser = serverRes.data.user;
 
             console.log(loginUser);
-            const test2 = {
-                //avatar: "https://graph.facebook.com/v2.6/3694920833893412/picture?type=large",
-                //isVerified: true,
-                userRole: 4,
-                //hasStore: [ "5f477e32ee24401e3c8d200f" ],
-                //notifications: ["607c0ae9ad31635df6fbebcc", "sfd", "99999" ],
-                //followedStore: [],
-               // reviews: [],
-                _id: "607b3025844b5c2aa56ac12a",
-                //fbUid: "3694920833893412",
-                //fbName: "wrong Julian",
-                //email: "sres3416@gmail.com",
-                //createdAt: "2021-04-17T18:59:49.843Z",
-                updatedAt: "2021-04-29T16:59:38.102Z",
-                __v: 1
-            }
 
-
-            setUser(test2);
             console.log("true user:", user)
 
             cookies.set('access_token', serverRes.data.token);
