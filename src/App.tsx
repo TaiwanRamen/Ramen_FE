@@ -7,7 +7,7 @@ import StoreIndex from './components/AllStores/StoreIndex';
 import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "./components/Login/Login";
-import { UserProvider } from './Context/UserContext';
+import { GlobalUserProvider } from './Context/UserContext';
 import { NotificationProvider } from './Context/NotificationContext';
 import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
@@ -17,7 +17,10 @@ import Landing from "./components/Landing/Landing";
 import TaipeiMetro from "./components/Metro/TaipeiMetro";
 import KaohsiungMetro from "./components/Metro/KaohsiungMetro";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
-import Map from "./components/Map/Map";
+// import Map from "./components/Map/Map";
+import Test from "./components/Test";
+import {ThemeProvider} from "./Context/testContextProvider";
+
 // import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
 
 const useStyles = makeStyles(() =>
@@ -42,7 +45,7 @@ function App() {
   }, [])
 
   return (
-        <UserProvider >
+        <GlobalUserProvider >
           <Router>
             <div className="App">
               <NotificationProvider >
@@ -60,9 +63,16 @@ function App() {
                         <Route exact path="/stores">
                           <StoreIndex/>
                         </Route>
+
                         <Route exact path="/test">
-                          <Map />
+                          {/*<Map />*/}
+                          <ThemeProvider>
+
+                            <Test />
+                          </ThemeProvider>
+
                         </Route>
+
                         <Route exact path="/map">
                         </Route>
                         <Route path="/map/TaipeiMetro">
@@ -94,7 +104,7 @@ function App() {
 
             </div>
           </Router>
-        </UserProvider>
+        </GlobalUserProvider>
 
   );
 }

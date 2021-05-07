@@ -1,19 +1,12 @@
-import {useState, createContext, useMemo, PropsWithChildren} from 'react';
+import {useState, ReactNode, SetStateAction, Dispatch, createContext} from 'react';
 import {IUser} from "../types/IUser";
 
-export type UserContent = {
+type Context = {
     user?: IUser | null,
-    setUser: (user:IUser) => void
+    setUser: Dispatch<SetStateAction<Context>>
 }
-
-export const UserContext = createContext<UserContent>({
-    user: null,
-    setUser: () => {}
-});
-
-export const UserProvider = (props:PropsWithChildren<any>) => {
-
-    const userTest = {
+const initialContext: Context = {
+    user:{
         avatar: "https://graph.facebook.com/v2.6/3694920833893412/picture?type=large",
         isVerified: true,
         userRole: 4,
@@ -28,15 +21,29 @@ export const UserProvider = (props:PropsWithChildren<any>) => {
         createdAt: "2021-04-17T18:59:49.843Z",
         updatedAt: "2021-04-29T16:59:38.102Z",
         __v: 1
+    },
+    setUser: ():void => {
+        throw new Error("setContext must be overiden");
     }
-    const [user, setUser] = useState<IUser>(userTest);
+}
+const UserContext = createContext<Context>(initialContext);
+
+type Props = {
+    children?: ReactNode;
+}
+
+const GlobalUserProvider = ({children}: Props): JSX.Element => {
+
+    const [user, setUser] = useState<Context>(initialContext);
 
     //const [user, setUser] = useState<IUser>();
-    const providerUser = useMemo(() => ({ user, setUser }), [user, setUser]);
+    // const providerUser = useMemo(() => ({ user, setUser }), [user, setUser]);
 
     return (
-        <UserContext.Provider value={providerUser}>
-            {props.children}
+        <UserContext.Provider value={{...user, setUser}}>
+            {children}
         </UserContext.Provider>
     );
 };
+
+export {UserContext, GlobalUserProvider}

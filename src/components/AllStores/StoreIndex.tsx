@@ -48,7 +48,10 @@ const useStyles = makeStyles((theme:Theme) =>
             margin: 4,
         },
         pagination:{
-            backgroundColor:"white"
+            backgroundColor:"transparent",
+            "& ul > li > button": {
+                backgroundColor: "white"
+            }
         }
     }),
 );
