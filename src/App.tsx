@@ -6,7 +6,6 @@ import Profile from './Profile';
 import StoreIndex from './components/AllStores/StoreIndex';
 import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from "./components/Login/Login";
 import { UserProvider } from './Context/UserContext';
 // import { NotificationProvider } from './Context/NotificationContext';
 import Store from "./components/Store/Store";
@@ -17,8 +16,8 @@ import Landing from "./components/Landing/Landing";
 import TaipeiMetro from "./components/Metro/TaipeiMetro";
 import KaohsiungMetro from "./components/Metro/KaohsiungMetro";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
-// import Map from "./components/Map/Map";
-import Test from "./components/Test";
+import Map from "./components/Map/Map";
+import LoginPage from "./components/Login/LoginPage";
 
 // import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
 
@@ -64,8 +63,7 @@ function App() {
                         </Route>
 
                         <Route exact path="/test">
-                          {/*<Map />*/}
-                            <Test />
+                          <Map />
                         </Route>
 
                         <Route exact path="/map">
@@ -77,6 +75,10 @@ function App() {
                           <KaohsiungMetro />
                         </Route>
 
+                        <Route path="/login">
+                          <LoginPage />
+                        </Route>
+
                         <ProtectedRoute path="/create" component={Profile}/>
                         <ProtectedRoute path="/stores/:id" component={Store}/>
                         <ProtectedRoute path="/notification" component={Profile}/>
@@ -85,9 +87,7 @@ function App() {
                         <ProtectedRoute path="/commented" component={Profile}/>
                         <ProtectedRoute path="/setting" component={Profile}/>
 
-                        <Route path="/login">
-                          <Login />
-                        </Route>
+
                         <Route exact path="/404" component={NotFound} />
                         <Redirect from='*' to="/404" />
                       </Switch>

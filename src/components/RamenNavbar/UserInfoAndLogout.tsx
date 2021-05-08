@@ -13,6 +13,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import StyledMenu from "../StyledMenu/StyledMenu";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import {useUser} from "../../Context/UserContext";
+import {useHistory} from "react-router-dom";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -27,7 +29,8 @@ const useStyles = makeStyles(() =>
 );
 const UserInfoAndLogout = () => {
     const classes = useStyles();
-    const { user } = useUser()!;
+    const history = useHistory();
+    const { user, setUser } = useUser();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -37,6 +40,12 @@ const UserInfoAndLogout = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleLogout = async() => {
+        setUser(null);
+        await Cookies.remove('access_token', { path: '', domain: process.env.REACT_APP_DOMAIN });
+        history.push("/");
+    }
 
     return (
         <div>
@@ -69,11 +78,11 @@ const UserInfoAndLogout = () => {
                     </ListItemIcon>
                     <ListItemText primary="個人資料" />
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={handleLogout}>
                     <ListItemIcon className={classes.listItemIcon}>
                         <ExitToAppIcon className={classes.imageIcon}  />
                     </ListItemIcon>
-                    <ListItemText primary="登出" />
+                    <ListItemText primary="登出"/>
                 </MenuItem>
             </StyledMenu>
         </div>

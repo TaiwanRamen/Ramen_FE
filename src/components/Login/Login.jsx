@@ -15,7 +15,7 @@ const Login = (props: Props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isLoginFail, setIsLoginFail] = useState(false);
 
-    const { setUser } = useUser();
+    const { user, setUser } = useUser();
     const url = `${process.env.REACT_APP_URL}/api/v1/user/oauth/facebook`;
 
     const componentClicked = () => {
@@ -36,6 +36,7 @@ const Login = (props: Props) => {
             let loginUser = serverRes.data.user;
             setUser(loginUser);
             Cookies.set('access_token', serverRes.data.token);
+
         } catch (e) {
             console.log("error:", e);
             setIsLoginFail(true);
@@ -52,21 +53,15 @@ const Login = (props: Props) => {
     const handleFailure = () => {
         setIsLoginFail(false);
     };
-    // const buttonOnClick = async () => {
-    //     let options = {
-    //         method: 'get',
-    //         url: `${process.env.REACT_APP_URL}/api/v1/user/profile`,
-    //         withCredentials: true
-    //     };
-    //     let serverRes = await axios(options);
-    //     console.log(serverRes.data)//user profile
-    // }
 
     const fields = 'id, name, gender, picture.type(large), email';
 
-    return (
-        <div>
+    if(user){
+        return <></>
+    }
 
+    return (
+        <div className="m-3">
             {isLoading && <div className="m-2">
                 <LoadingIcon/>
                 <span>登入中，請稍等</span>
@@ -87,7 +82,7 @@ const Login = (props: Props) => {
                 onClick={componentClicked}
                 callback={loginToOurServer}
                 onFailure={onFailure}
-                cssClass="btn btn-outline-primary m-2"
+                cssClass="btn btn-lg btn-outline-primary m-2"
                 version="10.0"
                 icon="fab fa-facebook-f"
                 isDisabled={props.disabled && !isLoading}
