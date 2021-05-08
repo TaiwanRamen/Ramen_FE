@@ -2,7 +2,7 @@ import FacebookLogin from "react-facebook-login";
 import { useState} from "react";
 import './Login.css';
 import axios from 'axios';
-import cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import {useUser} from "../../Context/UserContext";
 import LoadingIcon from "../Loading/LoadingIcon";
 import {Button} from "react-bootstrap";
@@ -35,7 +35,7 @@ const Login = (props: Props) => {
             let serverRes = await axios(options);
             let loginUser = serverRes.data.user;
             setUser(loginUser);
-            cookies.set('access_token', serverRes.data.token);
+            Cookies.set('access_token', serverRes.data.token);
         } catch (e) {
             console.log("error:", e);
             setIsLoginFail(true);

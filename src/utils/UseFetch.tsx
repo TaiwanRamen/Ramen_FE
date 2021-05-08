@@ -1,8 +1,8 @@
-// import {useUser} from "../Context/UserContext";
-
 import {useQuery} from "react-query";
 import axios from "axios";
 import {useUser} from "../Context/UserContext";
+import Cookies from 'js-cookie';
+import { useHistory } from "react-router-dom";
 
 type Props = {
     key:string
@@ -11,20 +11,25 @@ type Props = {
 }
 
 export default function useFetch<T>(props: Props) {
+    const history = useHistory();
     const { setUser } = useUser();
     const key = props.key;
     const queryParams = props.queryParams;
     const url = props.url;
 
     const getStores = async (url:string ,params:Object): Promise<T> => {
-        const response = await axios.get(url, { params:params, withCredentials:true});
-        if(response.status === 401) {
-            setUser(null);
-        }
-        if (response.status !== 200) {
+        try {
+            const response = await axios.get(url, { params:params, withCredentials:true});
+            console.log("response", response.status)
+            return await response.data.data;
+        } catch (error) {
+            if(error.response.status === 401) {
+                setUser(null);
+                await Cookies.remove('access_token', { path: '', domain: process.env.REACT_APP_DOMAIN });
+                history.push("/login");
+            }
             throw new Error("Problem fetching data");
         }
-        return await response.data.data;
     }
 
     const { data, status, error } = useQuery<T, Error>(
