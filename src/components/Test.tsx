@@ -1,34 +1,39 @@
-import {useUser} from "../Context/UserContext";
+import useFetch from "../utils/UseFetch";
+import {IStore} from "../types/IStore";
 
 const Test = () => {
-    const { user, setUser } = useUser()!;
-    const userAfter = {
-        avatar: "https://graph.facebook.com/v2.6/3694920833893412/picture?type=large",
-        isVerified: true,
-        userRole: 0,
-        hasStore: [ "5f477e32ee24401e3c8d200f" ],
-        notifications: ["607c0ae9ad31635df6fbebcc", "sfd", "99999" ],
-        followedStore: [],
-        reviews: [],
-        _id: "607b3025844b5c2aa56ac12a",
-        fbUid: "3694920833893412",
-        fbName: "test Julian",
-        email: "sres3416@gmail.com",
-        createdAt: "2021-04-17T18:59:49.843Z",
-        updatedAt: "2021-04-29T16:59:38.102Z",
-        __v: 1
-    }
-    const handleMouseClick = () => {
-        setUser(userAfter)
+    const options = {
+        key:"stores",
+        url: process.env.REACT_APP_URL + "/api/v1/stores",
+        queryParams: {
+            page:1,
+            search:"拉麵"
+        }
     }
 
-    return (
-        <div>
-            <button  onClick={handleMouseClick}>
-                clickme
-            </button>
-            <span>{user?.fbName}</span>
-        </div>
-    );
+    type Stores = {
+        current: number;
+        mapboxAccessToken: string;
+        pages: number;
+        search: boolean;
+        stores: IStore[]
+    };
+
+    const { data, status, error } = useFetch<Stores>(options);
+
+    if (status === "loading"){
+        console.log("loading...")
+    }
+    if(status === "error"){
+        console.log(error?.message);
+    }
+    if(data){
+        console.log(data)
+    }
+
+    return <div>
+        test
+    </div>
+
 };
 export default Test;

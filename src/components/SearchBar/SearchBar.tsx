@@ -44,7 +44,6 @@ const SearchBar = (props:Props) => {
         const target = event.target as typeof event.target & {
             search: { value: string };
         };
-        console.log(target.search.value)
         props.setSearchInput(target.search.value);
     };
 

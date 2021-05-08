@@ -85,7 +85,7 @@ function App() {
                         <ProtectedRoute path="/commented" component={Profile}/>
                         <ProtectedRoute path="/setting" component={Profile}/>
 
-                        <Route path="/user/login">
+                        <Route path="/login">
                           <Login />
                         </Route>
                         <Route exact path="/404" component={NotFound} />

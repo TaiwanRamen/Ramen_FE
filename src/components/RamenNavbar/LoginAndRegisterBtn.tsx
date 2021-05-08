@@ -1,19 +1,34 @@
-import {Button, DialogActions, Divider, Checkbox} from '@material-ui/core';
+import {Button, DialogActions, Divider, Checkbox, FormControlLabel} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import Login from '../../components/Login/Login'
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {ChangeEvent, useState} from "react";
 
 const useStyles = makeStyles((theme:Theme) =>
     createStyles({
+        actions:{
+            justifyContent: "space-between"
+        },
+        dialogTitle: {
+            textAlign:"center",
+            fontSize:"2rem",
+            fontWeight:700,
+        },
+        dialogContent: {
+            maxHeight: 500
+        },
         login:{
             color:theme.palette.text.secondary,
             "&:hover":{
                 color:theme.palette.text.primary,
             }
         },
+        checkBox: {
+            margin:10
+        }
     }));
 const LoginAndRegisterBtn = () => {
     const classes = useStyles();
@@ -37,6 +52,7 @@ type Props = {
     onClose: () => void;
 }
 const LoginModal = (props: Props) => {
+    const classes = useStyles();
     const [checked, setChecked] = useState(false);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,20 +64,52 @@ const LoginModal = (props: Props) => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             fullWidth={true}
-            maxWidth={"xs"}
+            maxWidth={"sm"}
         >
-            <DialogTitle id="alert-dialog-title" >登入</DialogTitle>
+
+            <DialogTitle id="alert-dialog-title" disableTypography className={classes.dialogTitle}>
+                <span>登入</span>
+            </DialogTitle>
             <Divider/>
-            <DialogContent>
-                使用者登入即代表同意本網站之使用者規範
-                <Checkbox
-                    checked={checked}
-                    onChange={handleChange}
-                    inputProps={{ 'aria-label': 'primary checkbox' }}
-                />
+            <DialogContent >
+                <DialogContentText
+                    id="scroll-dialog-description"
+                    tabIndex={-1}
+                    className={classes.dialogContent}
+                >
+                    使用者登入即代表同意本網站之使用者規範
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+                    1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入1. 請先加入
+
+                </DialogContentText>
             </DialogContent>
-            <DialogActions>
-                {checked && <Login/>}
+            <Divider/>
+            <DialogActions className={classes.actions}>
+                <FormControlLabel
+                    value="checkbox"
+                    control={<Checkbox
+                        color="primary"
+                        checked={checked}
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                        onChange={handleChange}
+                    />}
+                    label="我同意以上使用者條款"
+                    labelPlacement="end"
+                    className={classes.checkBox}
+                />
+                <Login disabled={!checked}/>
             </DialogActions>
 
 

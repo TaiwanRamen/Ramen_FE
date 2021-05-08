@@ -1,4 +1,4 @@
-import { Route, Redirect,  } from 'react-router-dom';
+import { Route, Redirect  } from 'react-router-dom';
 
 import {useUser} from "./Context/UserContext";
 
@@ -9,7 +9,7 @@ const ProtectedRoute = ({ component:Component, ...rest } : any) => {
             if (user) {
                 return <Component />;
             } else {
-                return ( <Redirect to ={ { pathname:'/', state: {from: props.location} }}/> );
+                return ( <Redirect to ={ { pathname:'/login', state: {from: props.location} }}/> );
             }
         }}/>
     );

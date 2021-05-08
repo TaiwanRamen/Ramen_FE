@@ -1,6 +1,4 @@
 import {ChangeEvent} from 'react';
-import {useQuery} from 'react-query';
-import axios from "axios";
 import {IStore} from "../../types/IStore";
 import {useState} from "react";
 import Loading from "../Loading/Loading";
@@ -14,15 +12,9 @@ import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import {Button} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
+import useFetch from "../../utils/UseFetch";
 
 
-type Stores = {
-    current: number;
-    mapboxAccessToken: string;
-    pages: number;
-    search: boolean;
-    stores: IStore[]
-};
 const useStyles = makeStyles((theme:Theme) =>
     createStyles({
         root: {
@@ -56,16 +48,13 @@ const useStyles = makeStyles((theme:Theme) =>
     }),
 );
 
-const getStores = async (page: number, search: string|null): Promise<Stores> => {
-    const url = process.env.REACT_APP_URL + `/api/v1/stores?page=${page}` + (search ? `&search=${search}` : "");
-    console.log(url);
-    const response = await axios.get(url);
-    if (response.status !== 200) {
-        throw new Error("Problem fetching data");
-    }
-    return await response.data.data;
-}
-
+type Stores = {
+    current: number;
+    mapboxAccessToken: string;
+    pages: number;
+    search: boolean;
+    stores: IStore[]
+};
 const StoreIndex = () => {
     const [page, setPage] = useState<number>(1);
     const [searchInput, setSearchInput] = useState<string | null>(null);
@@ -76,13 +65,17 @@ const StoreIndex = () => {
         setPage(value);
     };
 
-    const { data: stores, status, error } = useQuery<Stores, Error>(
-        ['stores', page, searchInput],
-            () => getStores(page, searchInput),
-            {
-                keepPreviousData: true,
-            }
-    );
+    const options = {
+        key:"stores",
+        url: process.env.REACT_APP_URL + "/api/v1/stores",
+        queryParams: {
+            page:page,
+            search:searchInput
+        }
+    }
+
+    const { data:stores, status, error } = useFetch<Stores>(options);
+
 
     if (status === "loading") {
         return <Loading />;
