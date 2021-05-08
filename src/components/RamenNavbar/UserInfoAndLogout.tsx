@@ -30,7 +30,7 @@ const useStyles = makeStyles(() =>
 const UserInfoAndLogout = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { user, setUser } = useUser();
+    const { user, setUser } = useUser()!;
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -44,6 +44,7 @@ const UserInfoAndLogout = () => {
     const handleLogout = async() => {
         setUser(null);
         await Cookies.remove('access_token', { path: '', domain: process.env.REACT_APP_DOMAIN });
+        window.sessionStorage.removeItem("current_user");
         history.push("/");
     }
 

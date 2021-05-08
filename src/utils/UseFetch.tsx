@@ -12,7 +12,7 @@ type Props = {
 
 export default function useFetch<T>(props: Props) {
     const history = useHistory();
-    const { setUser } = useUser();
+    const { setUser } = useUser()!;
     const key = props.key;
     const queryParams = props.queryParams;
     const url = props.url;
@@ -25,6 +25,7 @@ export default function useFetch<T>(props: Props) {
         } catch (error) {
             if(error.response.status === 401) {
                 setUser(null);
+                window.sessionStorage.removeItem("current_user");
                 await Cookies.remove('access_token', { path: '', domain: process.env.REACT_APP_DOMAIN });
                 history.push("/login");
             }

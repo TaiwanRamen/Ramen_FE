@@ -6,7 +6,7 @@ import Profile from './Profile';
 import StoreIndex from './components/AllStores/StoreIndex';
 import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { UserProvider } from './Context/UserContext';
+import {UserProvider, useUser} from './Context/UserContext';
 // import { NotificationProvider } from './Context/NotificationContext';
 import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
@@ -39,7 +39,7 @@ const useStyles = makeStyles(() =>
 function App() {
   const classes = useStyles();
   useEffect(() => {
-    document.title = "台灣拉麵倶樂部"
+    document.title = "台灣拉麵倶樂部";
   }, [])
 
   return (
@@ -96,7 +96,6 @@ function App() {
                     </div>
                   </Route>
                 </Switch>
-
             </div>
           </Router>
         </UserProvider>

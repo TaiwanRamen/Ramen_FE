@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => ({
 }));
 const LoginPage = () => {
     const history = useHistory();
-    const { user } = useUser();
+    const { user } = useUser()!;
 
     const classes = useStyles();
     const [checked, setChecked] = useState(false);
