@@ -6,11 +6,8 @@ import StoreCardList from "../StoreCard/StoreCardList";
 import './StoreIndex.css';
 import Pagination from '@material-ui/lab/Pagination';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
-// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-// import {faAngleDoubleLeft} from "@fortawesome/free-solid-svg-icons";
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import {Button} from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import useFetch from "../../utils/UseFetch";
 
@@ -59,7 +56,6 @@ const StoreIndex = () => {
     const [page, setPage] = useState<number>(1);
     const [searchInput, setSearchInput] = useState<string | null>(null);
     const classes = useStyles();
-    const history = useHistory();
 
     const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
         setPage(value);
@@ -87,9 +83,9 @@ const StoreIndex = () => {
     if (stores?.stores?.length === 0) {
         return searchInput? <div>
             {`搜尋\"${searchInput}\"沒有找到店家`}
-            <Button variant="outline-primary" className="goBack-btn" onClick={() => history.go(-1)}>
+            <Button variant="outline-primary" className="goBack-btn" onClick={() => setSearchInput(null)}>
                 <ArrowLeftIcon />
-                返回上一頁
+                返回店家列表
             </Button>
         </div> : <div>沒有找到店家</div>
     }

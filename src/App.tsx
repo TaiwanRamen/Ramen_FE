@@ -6,8 +6,9 @@ import Profile from './Profile';
 import StoreIndex from './components/AllStores/StoreIndex';
 import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {UserProvider, useUser} from './Context/UserContext';
-// import { NotificationProvider } from './Context/NotificationContext';
+import {UserProvider} from './Context/UserContext';
+import {NotificationProvider} from './Context/NotificationContext';
+
 import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
 import 'moment/locale/zh-tw';
@@ -46,9 +47,9 @@ function App() {
         <UserProvider>
           <Router>
             <div className="App">
-              {/*<NotificationProvider >*/}
+              <NotificationProvider >
                 <RamenNavbar />
-              {/*</NotificationProvider >*/}
+              </NotificationProvider >
                 <Switch>
                   {/* landing page only */}
                   <Route exact path="/">

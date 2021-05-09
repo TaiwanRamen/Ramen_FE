@@ -17,10 +17,10 @@ export default function useFetch<T>(props: Props) {
     const queryParams = props.queryParams;
     const url = props.url;
 
-    const getStores = async (url:string ,params:Object): Promise<T> => {
+
+    const getData = async (url:string ,params:Object): Promise<T> => {
         try {
             const response = await axios.get(url, { params:params, withCredentials:true});
-            console.log("response", response.status)
             return await response.data.data;
         } catch (error) {
             if(error.response.status === 401) {
@@ -35,7 +35,7 @@ export default function useFetch<T>(props: Props) {
 
     const { data, status, error } = useQuery<T, Error>(
         [key, url, queryParams],
-        () => getStores(url, queryParams),
+        () => getData(url, queryParams),
         {
             keepPreviousData: true,
         }

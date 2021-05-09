@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem, { TreeItemProps } from '@material-ui/lab/TreeItem';
@@ -12,7 +12,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import CommentIcon from "@material-ui/icons/Comment";
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import {NotificationContext} from "../../Context/NotificationContext";
+import { useNotification} from "../../Context/NotificationContext";
 import {Link as RouterLink} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faMapMarkedAlt} from "@fortawesome/free-solid-svg-icons";
@@ -278,7 +278,7 @@ type Props = {
 export default function CustomTreeView(props:Props) {
     const classes = useStyles();
     const { user } = useUser()!;
-    const { notificationCount, setNotificationCount } = useContext(NotificationContext);
+    const { notificationCount, setNotificationCount } = useNotification()!;
     const toggleDrawerOpen = props.toggleDrawerOpen;
 
     return (

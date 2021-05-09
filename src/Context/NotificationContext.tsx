@@ -1,28 +1,26 @@
-import {useState, createContext, useMemo, PropsWithChildren} from 'react';
-import {useUser} from "./UserContext";
+import {createContext, useContext, useState, ReactNode} from "react";
 
-export type NotificationContent = {
-    notificationCount?: number | null,
-    setNotificationCount: (count:number) => void
-}
+type NotificationContextType = {
+    notificationCount: number;
+    setNotificationCount: (value: number) => void;
+};
+export const NotificationContext = createContext<NotificationContextType | undefined>(
+    undefined
+);
 
-export const NotificationContext = createContext<NotificationContent>({
-    notificationCount: null,
-    setNotificationCount: () => {}
-});
 
-export const NotificationProvider = (props:PropsWithChildren<any>) => {
+type Props = {
+    children: ReactNode;
+};
 
-    const { user } = useUser()!;
-
-    const [notificationCount, setNotificationCount] = useState<number | null | undefined>(user?.notifications.length);
-
-    //const [user, setUser] = useState<IUser>();
-    const providerUser = useMemo(() => ({ notificationCount, setNotificationCount }), [notificationCount, setNotificationCount]);
+export const NotificationProvider = ({ children }: Props) => {
+    const [notificationCount, setNotificationCount] = useState<number>(0);
 
     return (
-        <NotificationContext.Provider value={providerUser}>
-            {props.children}
+        <NotificationContext.Provider value={{ notificationCount, setNotificationCount }}>
+            {children}
         </NotificationContext.Provider>
     );
 };
+export const useNotification = () => useContext(NotificationContext);
+

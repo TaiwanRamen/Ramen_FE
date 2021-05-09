@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,11 +12,12 @@ import Button from '@material-ui/core/Button';
 import {Backdrop} from "@material-ui/core";
 import UserSection from "./UserSection";
 import './RamenNav.css';
-import {NotificationContext} from "../../Context/NotificationContext";
+import {useNotification} from "../../Context/NotificationContext";
 import Badge from "@material-ui/core/Badge";
 import Divider from "@material-ui/core/Divider";
 import SubCategory from "./SubCategory";
 import {useUser} from "../../Context/UserContext";
+import axios from "axios";
 
 const navbarHeight = 64;
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const RamenNavbar = () => {
     const classes = useStyles();
     const {setUser} = useUser()!;
-    const {notificationCount} = useContext(NotificationContext);
+    const {notificationCount, setNotificationCount} = useNotification()!;
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const toggleDrawerOpen = () => {
         setDrawerOpen(!drawerOpen)
@@ -79,11 +80,26 @@ const RamenNavbar = () => {
     useEffect(()=>{
 
         const sessionUserString = window.sessionStorage.getItem("current_user");
-        if(!!sessionUserString) {
-          const sessionUser = JSON.parse(sessionUserString);
-          setUser(sessionUser);
+
+        if(sessionUserString != null && sessionUserString !== "null" && sessionUserString !== "undefined") {
+            const sessionUser = JSON.parse(sessionUserString);
+            setUser(sessionUser);
         }
     },[])
+
+
+    //fetch for notification update every 1 minute
+    useEffect(() => {
+        try {
+            setInterval(async () => {
+                const url = process.env.REACT_APP_URL + "/api/v1/user/unReadNotificationCount";
+                const response = await axios.get(url, { withCredentials:true});
+                setNotificationCount(response.data.data);
+            }, 1000 * 10);
+        } catch (e) {
+            console.log(e)
+        }
+    }, [])
 
     return (
         <div className={classes.grow}>
