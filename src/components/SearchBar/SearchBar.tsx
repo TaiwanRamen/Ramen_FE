@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme:Theme) =>
     }),
 );
 type Props = {
-    setPage:(number:number)=>void,
+    setPage?:(number:number)=>void,
     setSearchInput:(input:string)=>void,
 }
 
@@ -39,7 +39,7 @@ const SearchBar = (props:Props) => {
     const classes = useStyles();
 
     const handleSubmit = (event: SyntheticEvent) => {
-        props.setPage(1);
+        if(props.setPage) props.setPage(1);
         event.preventDefault();
         const target = event.target as typeof event.target & {
             search: { value: string };

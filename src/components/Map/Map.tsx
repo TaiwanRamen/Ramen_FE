@@ -4,6 +4,7 @@ import ramenIcon from '../../static/ramen.svg';
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import {useState, useEffect} from "react";
 import Button from "@material-ui/core/Button";
+import SearchBar from "../SearchBar/SearchBar";
 
 
 
@@ -36,6 +37,7 @@ const useStyles = makeStyles(() =>
 
 const Map = () => {
     const classes = useStyles();
+    const [searchInput, setSearchInput] = useState<string | null>(null);
 
     const geolocateControlStyle= {
         right: 10,
@@ -70,14 +72,12 @@ const Map = () => {
                 zoom: 16
             });
         });
-
-
     }, []);
 
     return (
         <div className={classes.mapOuter}>
             <Button onClick={setUserLocation}>user loc</Button>
-
+            <p>{searchInput}</p>
             <ReactMapGL
                 {...viewport}
                 onViewportChange={setViewport}
@@ -86,6 +86,7 @@ const Map = () => {
                 className={classes.map}
 
             >
+                <SearchBar setSearchInput={setSearchInput}/>
                 <GeolocateControl
                     style={geolocateControlStyle}
                     positionOptions={{enableHighAccuracy: true}}
