@@ -5,18 +5,20 @@ import Cookies from 'js-cookie';
 import { useHistory } from "react-router-dom";
 
 type Props = {
-    key:string
+    enabled?:boolean,
+    key:string,
     url:string,
     queryParams: Object
 }
 
+
 export default function useFetch<T>(props: Props) {
     const history = useHistory();
     const { setUser } = useUser()!;
+    const enabled = (props.enabled !== null) ? props.enabled : true;
     const key = props.key;
     const queryParams = props.queryParams;
     const url = props.url;
-
 
     const getData = async (url:string ,params:Object): Promise<T> => {
         try {
@@ -38,6 +40,7 @@ export default function useFetch<T>(props: Props) {
         () => getData(url, queryParams),
         {
             keepPreviousData: true,
+            enabled: enabled
         }
     );
     return { data, status, error }

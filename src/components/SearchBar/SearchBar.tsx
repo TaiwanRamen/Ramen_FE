@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme:Theme) =>
         searchRoot: {
             padding: '2px 4px',
             display: 'flex',
-            width: 400,
+            width:"25vw",
+            maxWidth: 350,
         },
         input: {
             marginLeft: theme.spacing(1),

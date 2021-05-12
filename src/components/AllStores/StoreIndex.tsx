@@ -9,7 +9,7 @@ import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import {Button} from "react-bootstrap";
 import SearchBar from "../SearchBar/SearchBar";
-import useFetch from "../../utils/UseFetch";
+import useFetch from "../../customHooks/UseFetch";
 
 
 const useStyles = makeStyles((theme:Theme) =>
