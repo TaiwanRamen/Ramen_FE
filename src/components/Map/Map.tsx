@@ -3,6 +3,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import {makeStyles} from "@material-ui/core/styles";
 import {useState} from "react";
 import MapContent from "./MapContent";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles( () => ({
 
@@ -19,6 +20,19 @@ const useStyles = makeStyles( () => ({
         right: 30,
         bottom: 30,
     },
+    reSearchBtn: {
+        backgroundColor:"white",
+        color:"#4e8fff",
+        position: "absolute",
+        top: "40px",
+        width:"200px",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        zIndex:1400,
+        "&:hover":{
+            backgroundColor:"#f8f8f8",
+        }
+    },
 }));
 
 type MapBound = {
@@ -29,20 +43,33 @@ type MapBound = {
 const Map = () => {
     const classes = useStyles();
     const [map, setMap] = useState<any>();
-    const [mapBound, setMapBound] = useState<MapBound>({N:25.046, S:25.045, E:121.5178, W:121.5177});
-    const [maxSeenBound, setMaxSeenBound] = useState<MapBound>({N:-90,S:90,E:-180,W:180})
-    const [viewport, setViewport] = useState({width:"100%",height:"100%",latitude: 25.046,longitude: 121.5178,zoom: 16});
+    const [mapBound, setMapBound] = useState<MapBound | null>(null);
+    const [maxSeenBound, setMaxSeenBound] = useState<MapBound>({N:-90,S:90,E:-180,W:180});
+    const [searchBtnShow, setSearchBtnShow] = useState<boolean>(false);
+    const defaultViewport = {width:"100%",height:"100%",latitude: 25.046,longitude: 121.5178,zoom: 14};
+    const [viewport, setViewport] = useState(defaultViewport);
+    const [flag, setFlag] = useState<boolean>(true);
     const geolocateControlStyle= {
         right: 10,
         top: 10
     };
 
-    const handleInteract = () => {
-        const currentMapBound = {
+    const getCurrentMapBound = () => {
+        return {
             N: map?.getBounds()._ne.lat, S: map?.getBounds()._sw.lat,
             E: map?.getBounds()._ne.lng, W: map?.getBounds()._sw.lng,
         }
-        resetMaxSeenBound(maxSeenBound, currentMapBound);
+    }
+
+    const handleInteract = () => {
+        resetMaxSeenBound(maxSeenBound, getCurrentMapBound());
+    }
+
+    const handleViewportChange = (viewport:any) => {
+        setViewport(viewport);
+        handleInteract();
+        flag && setMapBound(maxSeenBound);
+        setFlag(false);
     }
 
     const resetMaxSeenBound = (previousMax: MapBound, current: MapBound) =>  {
@@ -53,15 +80,20 @@ const Map = () => {
             result.S = current.S < previousMax.S ? current.S : previousMax.S;
             result.W = current.W < previousMax.W ? current.W : previousMax.W;
             setMaxSeenBound(result);
-            setMapBound(current)
+            if(!(JSON.stringify(viewport) === JSON.stringify(defaultViewport))){
+                setSearchBtnShow(true);
+            }
         }
     }
-
+    const handleSearchBtnClick =  () => {
+        setSearchBtnShow(false);
+        setMapBound(maxSeenBound);
+    }
     return (
         <div className={classes.mapOuter}>
             <ReactMapGL
                 {...viewport}
-                onViewportChange={setViewport}
+                onViewportChange={handleViewportChange}
                 onInteractionStateChange={handleInteract}
                 mapStyle="mapbox://styles/mapbox/streets-v10"
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
@@ -76,8 +108,10 @@ const Map = () => {
                     auto
                 />
                 <NavigationControl className={classes.navControlStyle} />
-
-                <MapContent mapBound={mapBound}/>
+                {searchBtnShow && <Button variant="contained" className={classes.reSearchBtn}
+                                          onClick={handleSearchBtnClick}> 搜尋這個區域
+                </Button>}
+                <MapContent mapBound={mapBound!}/>
 
             </ReactMapGL>
         </div>

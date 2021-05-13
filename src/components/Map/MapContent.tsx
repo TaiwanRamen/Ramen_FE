@@ -1,27 +1,29 @@
 import SearchBar from "../SearchBar/SearchBar";
-import Button from "@material-ui/core/Button";
-import MapMarkers from "./MapMarkers";
 import {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import useFetch from "../../customHooks/UseFetch";
-import Loading from "../Loading/Loading";
+import MarkersAndModal from "./MarkersAndModal";
 
 const useStyles = makeStyles( () => ({
+    mapComponent: {
+      position:"relative"
+    },
     reSearchBtn: {
         backgroundColor:"white",
         color:"#4e8fff",
-        position: "absolute",
+        position:"relative",
         top: "40px",
         width:"200px",
         left: "50%",
         transform: "translate(-50%, -50%)",
+        zIndex:1400,
         "&:hover":{
             backgroundColor:"#f8f8f8",
         }
     },
 }))
 
-type Stores = {
+type Store = {
     _id: string,
     name: string,
     city: string,
@@ -42,58 +44,29 @@ type MapBound = {
 }
 
 type Props = {
-    mapBound: MapBound
+    mapBound?: MapBound
 }
 
 const MapContent = (props:Props) => {
     const classes = useStyles();
     const [searchInput, setSearchInput] = useState<string | null>(null);
-    const [searchBtnShow, setSearchBtnShow] = useState<boolean>(false);
-
-    const handleSearchBtnClick =  () => {
-        setSearchBtnShow(false);
-    }
-    const defaultMapBound = {N:25.046, S:25.045, E:121.5178, W:121.5177}
+    const mapBound = props.mapBound!;
 
     const options = {
-        enabled: false,
+        enabled: !!mapBound,
         key:"mapStores",
         url: process.env.REACT_APP_URL + "/api/v1/map/get-store",
-        queryParams: props.mapBound
+        queryParams: {...mapBound, search: searchInput}
     }
 
-    if (!(JSON.stringify(props.mapBound) === JSON.stringify(defaultMapBound))) {
-        options.enabled = true;
-    }
+    const { data:stores, status, error } = useFetch<Store[]>(options);
 
-    const { data:stores, status, error } = useFetch<Stores[]>(options);
-
-    if (status === "loading") {
-        return <div style={{ backgroundColor: "rgba(255,255,255,0.7)", padding: "15px" }}>
-            <Loading />
-        </div>;
-    }
-
-    if (status === "error") {
-        return <div style={{ backgroundColor: "rgba(255,255,255,0.7)", padding: "15px" }}>
-            {error?.message}
-        </div>;
-    }
-    if(status === "success") {
-
-    }
 
     return (
-        <>
-            <p>{searchInput}</p>
+        <div className={classes.mapComponent}>
             <SearchBar setSearchInput={setSearchInput}/>
-
-            {searchBtnShow && <Button variant="contained" className={classes.reSearchBtn}
-                                      onClick={handleSearchBtnClick}> 搜尋這個區域
-            </Button>}
-
-            <MapMarkers stores={stores}/>
-        </>
+            <MarkersAndModal stores={stores} status={status} error={error!}/>
+        </div>
     );
 };
 

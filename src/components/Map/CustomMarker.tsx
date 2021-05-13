@@ -1,8 +1,7 @@
-// import useFetch from "../../customHooks/UseFetch";
-// import Loading from "../Loading/Loading";
 import {Marker} from "react-map-gl";
 import {makeStyles} from "@material-ui/core/styles";
 import ramenIcon from "../../static/ramen.svg";
+
 
 const useStyles = makeStyles( () => ({
     marker: {
@@ -12,10 +11,11 @@ const useStyles = makeStyles( () => ({
         height: "45px",
         borderRadius: "50%",
         cursor: "pointer",
+        zIndex:0
     },
 }))
 
-type Stores = {
+type Store = {
     _id: string,
     name: string,
     city: string,
@@ -30,24 +30,26 @@ type Stores = {
     reviewsCount: number,
 };
 
-
-
 type Props = {
-    stores?: Stores[],
+    index:number,
+    store:Store,
+    openPopup: Function
 }
 
-const MapMarkers = (props:Props) => {
-    const stores = props.stores;
+const CustomMarker = (props: Props) => {
+    const store = props.store;
+    const index = props.index;
+    const openPopup = props.openPopup;
+
     const classes = useStyles();
+    return (
+        <Marker
+            longitude={store?.location?.coordinates[0]}
+            latitude={store?.location?.coordinates[1]}>
+            <div className={classes.marker} onClick={() => openPopup(index)}>
+            </div>
+        </Marker>
+    )
+};
 
-    return <>
-        {   stores && stores.map(store =>
-            <Marker longitude={store?.location?.coordinates[0]} latitude={store?.location?.coordinates[1]} key={store?._id}>
-                <div className={classes.marker} onClick={() => alert(1)}/>
-            </Marker>)
-        }
-    </>
-
-}
-
-export default MapMarkers;
+export default CustomMarker;

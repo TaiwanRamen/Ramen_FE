@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme:Theme) =>
     createStyles({
         searchBar:{
             margin:16,
+            zIndex: 1300
         },
         searchRoot: {
             padding: '2px 4px',

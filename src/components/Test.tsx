@@ -5,7 +5,7 @@ import {createStyles, makeStyles} from "@material-ui/core/styles";
 import {useState, useEffect} from "react";
 // import Button from "@material-ui/core/Button";
 import SearchBar from "./SearchBar/SearchBar";
-// import MapModal from "./MapModal";
+// import Popups from "./Popups";
 // import {IStore} from "../../types/IStore";
 // import useFetch from "../../customHooks/UseFetch";
 
@@ -70,21 +70,6 @@ const Map = () => {
     }, []);
 
 
-    // const options = {
-    //     key:"mapStores",
-    //     url: process.env.REACT_APP_URL + `/api/v1/map/search-store?input=${searchInputValue}`,
-    //     queryParams: {
-    //         page:page,
-    //         search:searchInput
-    //     }
-    // }
-
-    // const { data:stores, status, error } = useFetch<Stores>(options);
-    //
-    //
-    // const handleMarkerClick = (store) => {
-    //
-    // }
 
     return (
         <div className={classes.mapOuter}>
@@ -121,7 +106,7 @@ const Map = () => {
                 {/*    closeOnClick={false}*/}
                 {/*    onClose={() => setShowPopup(false)}*/}
                 {/*    anchor="bottom" >*/}
-                {/*    <MapModal />*/}
+                {/*    <Popups />*/}
                 {/*</Popup>}*/}
             </ReactMapGL>
         </div>
