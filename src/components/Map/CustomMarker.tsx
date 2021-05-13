@@ -33,20 +33,29 @@ type Store = {
 type Props = {
     index:number,
     store:Store,
-    openPopup: Function
+    openPopup: Function,
+    flyTo: Function
 }
 
 const CustomMarker = (props: Props) => {
     const store = props.store;
     const index = props.index;
     const openPopup = props.openPopup;
-
+    const flyTo = props.flyTo;
+    const lng = store?.location?.coordinates[0];
+    const lat = store?.location?.coordinates[1];
     const classes = useStyles();
+
+    const handleMarkerClick = () => {
+        flyTo(lng, lat);
+        openPopup(index);
+
+    }
     return (
         <Marker
-            longitude={store?.location?.coordinates[0]}
-            latitude={store?.location?.coordinates[1]}>
-            <div className={classes.marker} onClick={() => openPopup(index)}>
+            longitude={lng}
+            latitude={lat}>
+            <div className={classes.marker} onClick={handleMarkerClick}>
             </div>
         </Marker>
     )

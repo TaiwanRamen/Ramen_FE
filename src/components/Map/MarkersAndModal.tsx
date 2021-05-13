@@ -1,7 +1,7 @@
 import Loading from "../Loading/Loading";
 import {makeStyles} from "@material-ui/core/styles";
 import ramenIcon from "../../static/ramen.svg";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import CustomMarker from "./CustomMarker";
 import CustomPopup from "./CustomPopup";
 
@@ -48,6 +48,7 @@ type Props = {
     status?:string,
     error?:Error,
     stores?: Store[],
+    flyTo:Function
 }
 
 const MarkersAndModal = (props:Props) => {
@@ -56,8 +57,13 @@ const MarkersAndModal = (props:Props) => {
     const status = props?.status;
     const classes = useStyles();
     const [index, setIndex] = useState<number | null>(null);
+
+    useEffect(() => {
+       closePopup()
+    },[stores])
+
     const openPopup = (index: number) => {
-        setIndex(index)
+        setIndex(index);
     }
     const closePopup = () => {
         setIndex(null)
@@ -83,6 +89,7 @@ const MarkersAndModal = (props:Props) => {
                         index={index}
                         store={store}
                         openPopup={openPopup}
+                        flyTo={props?.flyTo}
                     />
                 )
             })

@@ -1,4 +1,4 @@
-import ReactMapGL, {GeolocateControl, NavigationControl} from 'react-map-gl';
+import ReactMapGL, {GeolocateControl, NavigationControl, FlyToInterpolator} from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {makeStyles} from "@material-ui/core/styles";
 import {useState} from "react";
@@ -47,7 +47,7 @@ const Map = () => {
     const [maxSeenBound, setMaxSeenBound] = useState<MapBound>({N:-90,S:90,E:-180,W:180});
     const [searchBtnShow, setSearchBtnShow] = useState<boolean>(false);
     const defaultViewport = {width:"100%",height:"100%",latitude: 25.046,longitude: 121.5178,zoom: 14};
-    const [viewport, setViewport] = useState(defaultViewport);
+    const [viewport, setViewport] = useState<any>(defaultViewport);
     const [flag, setFlag] = useState<boolean>(true);
     const geolocateControlStyle= {
         right: 10,
@@ -89,6 +89,18 @@ const Map = () => {
         setSearchBtnShow(false);
         setMapBound(maxSeenBound);
     }
+
+    const flyTo = (lng: number, lat:number)  => {
+        setViewport({
+            ...viewport,
+            longitude: lng,
+            latitude: lat,
+            zoom: 14,
+            transitionDuration: 1000,
+            transitionInterpolator: new FlyToInterpolator(),
+        });
+    }
+
     return (
         <div className={classes.mapOuter}>
             <ReactMapGL
@@ -111,7 +123,7 @@ const Map = () => {
                 {searchBtnShow && <Button variant="contained" className={classes.reSearchBtn}
                                           onClick={handleSearchBtnClick}> 搜尋這個區域
                 </Button>}
-                <MapContent mapBound={mapBound!}/>
+                <MapContent mapBound={mapBound!} flyTo={flyTo}/>
 
             </ReactMapGL>
         </div>

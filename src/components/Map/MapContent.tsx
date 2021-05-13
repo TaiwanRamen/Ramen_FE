@@ -44,7 +44,8 @@ type MapBound = {
 }
 
 type Props = {
-    mapBound?: MapBound
+    mapBound?: MapBound,
+    flyTo: Function
 }
 
 const MapContent = (props:Props) => {
@@ -65,7 +66,7 @@ const MapContent = (props:Props) => {
     return (
         <div className={classes.mapComponent}>
             <SearchBar setSearchInput={setSearchInput}/>
-            <MarkersAndModal stores={stores} status={status} error={error!}/>
+            <MarkersAndModal stores={stores} status={status} error={error!} flyTo={props.flyTo} />
         </div>
     );
 };
