@@ -1,18 +1,18 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
-import TreeItem, { TreeItemProps } from '@material-ui/lab/TreeItem';
+import TreeItem, {TreeItemProps} from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { SvgIconProps } from '@material-ui/core/SvgIcon';
+import {SvgIconProps} from '@material-ui/core/SvgIcon';
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import CommentIcon from "@material-ui/icons/Comment";
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import { useNotification} from "../../Context/NotificationContext";
+import {useNotification} from "../../Context/NotificationContext";
 import {Link as RouterLink} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faMapMarkedAlt} from "@fortawesome/free-solid-svg-icons";
@@ -24,10 +24,9 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import Divider from "@material-ui/core/Divider";
 import {useUser} from "../../Context/UserContext";
 
-const useTreeItemStyles = makeStyles((theme: Theme) =>
-    createStyles({
+const useTreeItemStyles = makeStyles((theme: Theme) => ({
         root: {
-            marginTop:"10px",
+            marginTop: "10px",
             color: theme.palette.text.secondary,
             '&:hover > $content': {
                 backgroundColor: theme.palette.action.hover,
@@ -41,8 +40,8 @@ const useTreeItemStyles = makeStyles((theme: Theme) =>
             },
         },
         content: {
-            padding:3,
-            margin:"1px 0",
+            padding: 3,
+            margin: "1px 0",
             color: theme.palette.text.secondary,
             borderTopRightRadius: theme.spacing(2),
             borderBottomRightRadius: theme.spacing(2),
@@ -58,25 +57,24 @@ const useTreeItemStyles = makeStyles((theme: Theme) =>
                 paddingLeft: theme.spacing(2),
             },
         },
-        expanded: {
-        },
+        expanded: {},
         selected: {},
         label: {
             fontWeight: 'inherit',
             color: 'inherit',
-            "&:hover":{
+            "&:hover": {
                 color: '#1a73e8',
                 textDecoration: "none",
             }
         },
         labelRoot: {
-            margin:"5px 0",
+            margin: "5px 0",
             display: 'flex',
             alignItems: 'center',
-            color:theme.palette.text.secondary,
-            fontSize:'0.9rem',
+            color: theme.palette.text.secondary,
+            fontSize: '0.9rem',
             padding: theme.spacing(0.5, 0),
-            "&:hover":{
+            "&:hover": {
                 color: '#1a73e8',
                 textDecoration: "none",
             }
@@ -87,7 +85,7 @@ const useTreeItemStyles = makeStyles((theme: Theme) =>
             marginRight: theme.spacing(2),
         },
         labelText: {
-            fontSize:'0.9rem',
+            fontSize: '0.9rem',
             fontWeight: 500,
             flexGrow: 1,
         },
@@ -97,27 +95,27 @@ const useTreeItemStyles = makeStyles((theme: Theme) =>
 
 type StyledTreeItemProps = TreeItemProps & {
     labelIcon?: React.ElementType<SvgIconProps> | string;
-    labelIconFA?:  IconProp;
+    labelIconFA?: IconProp;
     labelIconSVG?: string;
     labelInfo?: string | number | null;
     labelText: string;
     avatar?: string;
-    to:string;
+    to: string;
 };
 
 function StyledTreeItem(props: StyledTreeItemProps) {
     const classes = useTreeItemStyles();
-    const { labelIconSVG, labelIconFA, labelText, labelIcon: LabelIcon, labelInfo, to, ...other } = props;
+    const {labelIconSVG, labelIconFA, labelText, labelIcon: LabelIcon, labelInfo, to, ...other} = props;
 
     // @ts-ignore
     return (
         <TreeItem
             label={
-                <RouterLink className={classes.labelRoot}  to={to}>
-                    {LabelIcon && <LabelIcon color="inherit" className={classes.labelIcon} />}
+                <RouterLink className={classes.labelRoot} to={to}>
+                    {LabelIcon && <LabelIcon color="inherit" className={classes.labelIcon}/>}
                     {labelIconFA && <FontAwesomeIcon icon={labelIconFA} color="inherit" className={classes.labelIcon}/>}
                     {labelIconSVG && <img className={classes.labelIcon} src={labelIconSVG} alt="alt"/>}
-                    <Typography  className={classes.labelText}>
+                    <Typography className={classes.labelText}>
                         {labelText}
                     </Typography>
                     {!!labelInfo && <Chip
@@ -142,25 +140,24 @@ function StyledTreeItem(props: StyledTreeItemProps) {
     );
 }
 
-const useTreeItemStylesForHead = makeStyles((theme: Theme) =>
-    createStyles({
+const useTreeItemStylesForHead = makeStyles((theme: Theme) => ({
         avatar: {
             marginRight: theme.spacing(2),
         },
         headLabel: {
-            margin:"5px 0",
+            margin: "5px 0",
             display: 'flex',
             alignItems: 'center',
-            color:theme.palette.text.secondary,
-            fontSize:'0.9rem',
+            color: theme.palette.text.secondary,
+            fontSize: '0.9rem',
             padding: theme.spacing(0.5, 0),
-            "&:hover":{
+            "&:hover": {
                 color: '#1a73e8',
                 textDecoration: "none",
             }
         },
         labelText: {
-            fontSize:'1rem',
+            fontSize: '1rem',
             fontWeight: 500,
             flexGrow: 1,
         },
@@ -177,7 +174,7 @@ type StyledTreeUserHeadProps = TreeItemProps & {
 function StyledTreeUserHead(props: StyledTreeUserHeadProps) {
     const classes = useTreeItemStyles();
     const classesForHead = useTreeItemStylesForHead();
-    const { avatar, labelText, labelIcon: LabelIcon, labelInfo, ...other } = props;
+    const {avatar, labelText, labelIcon: LabelIcon, labelInfo, ...other} = props;
 
     // @ts-ignore
     return (
@@ -185,7 +182,7 @@ function StyledTreeUserHead(props: StyledTreeUserHeadProps) {
             label={
                 <div className={classesForHead.headLabel}>
                     <Avatar alt="avatar" src={avatar} className={classesForHead.avatar}/>
-                    {LabelIcon && <LabelIcon color="inherit" className={classes.labelIcon} />}
+                    {LabelIcon && <LabelIcon color="inherit" className={classes.labelIcon}/>}
                     <Typography variant="body2" className={classesForHead.labelText}>
                         {labelText}
                     </Typography>
@@ -214,23 +211,23 @@ function StyledTreeUserHead(props: StyledTreeUserHeadProps) {
 
 type StyledTreeItemHeadProps = TreeItemProps & {
     labelIcon?: React.ElementType<SvgIconProps> | string;
-    labelIconFA?:  IconProp;
+    labelIconFA?: IconProp;
     labelIconSVG?: string;
     labelInfo?: string | number | null;
     labelText?: string;
 };
 
-function StyledTreeItemHead (props: StyledTreeItemHeadProps) {
+function StyledTreeItemHead(props: StyledTreeItemHeadProps) {
     const classes = useTreeItemStyles();
     const classesForHead = useTreeItemStylesForHead();
-    const {  labelText, labelIcon: LabelIcon, labelIconFA, labelIconSVG, labelInfo, ...other } = props;
+    const {labelText, labelIcon: LabelIcon, labelIconFA, labelIconSVG, labelInfo, ...other} = props;
 
     // @ts-ignore
     return (
         <TreeItem
             label={
                 <div className={classesForHead.headLabel}>
-                    {LabelIcon && <LabelIcon color="inherit" className={classes.labelIcon} />}
+                    {LabelIcon && <LabelIcon color="inherit" className={classes.labelIcon}/>}
                     {labelIconFA && <FontAwesomeIcon icon={labelIconFA} color="inherit" className={classes.labelIcon}/>}
                     {labelIconSVG && <img className={classes.labelIcon} src={labelIconSVG} alt="alt"/>}
                     <Typography variant="body2" className={classes.labelText}>
@@ -259,8 +256,7 @@ function StyledTreeItemHead (props: StyledTreeItemHeadProps) {
 }
 
 
-const useStyles = makeStyles(
-    createStyles({
+const useStyles = makeStyles(() => ({
         root: {
             // height: 264,
             // flexGrow: 0.8,
@@ -274,21 +270,20 @@ type Props = {
 }
 
 
-
-export default function CustomTreeView(props:Props) {
+export default function CustomTreeView(props: Props) {
     const classes = useStyles();
-    const { user } = useUser()!;
-    const { notificationCount, setNotificationCount } = useNotification()!;
+    const {user} = useUser()!;
+    const {notificationCount, setNotificationCount} = useNotification()!;
     const toggleDrawerOpen = props.toggleDrawerOpen;
 
     return (
         <TreeView
             className={classes.root}
-            defaultCollapseIcon={<ArrowDropDownIcon />}
-            defaultExpandIcon={<ArrowRightIcon />}
+            defaultCollapseIcon={<ArrowDropDownIcon/>}
+            defaultExpandIcon={<ArrowRightIcon/>}
         >
 
-            { !!user && <>
+            {!!user && <>
                 <StyledTreeUserHead
                     nodeId="0"
                     labelText={user?.fbName}
@@ -300,7 +295,10 @@ export default function CustomTreeView(props:Props) {
                         labelText="通知"
                         labelIcon={NotificationsIcon}
                         labelInfo={notificationCount}
-                        onClick={() => {setNotificationCount(0); toggleDrawerOpen()}}
+                        onClick={() => {
+                            setNotificationCount(0);
+                            toggleDrawerOpen()
+                        }}
                         to="/notification"
                     />
                     <StyledTreeItem
@@ -325,7 +323,7 @@ export default function CustomTreeView(props:Props) {
                         onClick={toggleDrawerOpen}
                     />
                 </StyledTreeUserHead>
-                <Divider />
+                <Divider/>
             </>
             }
 
@@ -357,8 +355,8 @@ export default function CustomTreeView(props:Props) {
                 />
             </StyledTreeItemHead>
 
-            { user && <>
-                <Divider />
+            {user && <>
+                <Divider/>
                 <StyledTreeItem
                     nodeId="9"
                     labelText="用戶設定"
@@ -366,7 +364,7 @@ export default function CustomTreeView(props:Props) {
                     to="/setting"
                     onClick={toggleDrawerOpen}
                 />
-                </>
+            </>
             }
 
         </TreeView>

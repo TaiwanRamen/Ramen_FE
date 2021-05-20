@@ -5,15 +5,14 @@ import Loading from "../Loading/Loading";
 import StoreCardList from "../StoreCard/StoreCardList";
 import './StoreIndex.css';
 import Pagination from '@material-ui/lab/Pagination';
-import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import {Button} from "react-bootstrap";
 import SearchBar from "../SearchBar/SearchBar";
 import useFetch from "../../customHooks/UseFetch";
 
 
-const useStyles = makeStyles((theme:Theme) =>
-    createStyles({
+const useStyles = makeStyles( (theme:Theme) => ({
         root: {
             justifyContent: "center",
             margin: "3rem 0",

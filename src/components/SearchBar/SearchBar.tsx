@@ -3,15 +3,14 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Paper from "@material-ui/core/Paper";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {makeStyles, Theme} from "@material-ui/core/styles";
 import {SyntheticEvent} from "react";
 
 
-const useStyles = makeStyles((theme:Theme) =>
-    createStyles({
-        searchBar:{
-            margin:16,
-            zIndex: 1300
+const useStyles = makeStyles((theme: Theme) => ({
+        searchBar: {
+            margin: 16,
+            zIndex: 500
         },
         searchRoot: {
             padding: '2px 4px',

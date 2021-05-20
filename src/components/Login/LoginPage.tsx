@@ -1,36 +1,36 @@
-import { Checkbox, Divider, FormControlLabel, Paper, Typography} from "@material-ui/core";
+import {Checkbox, Divider, FormControlLabel, Paper, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Login from "./Login";
 import {ChangeEvent, useState} from "react";
 import {useUser} from "../../Context/UserContext";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
     root: {
         display: "flex",
-        justifyContent:"center",
+        justifyContent: "center",
         flexWrap: "wrap",
         maxHeight: "50vh",
         top: 100,
     },
     paper: {
         backgroundColor: '#f8f9fa!important',
-        maxWidth:800,
-        width:"80vw",
+        maxWidth: 800,
+        width: "80vw",
     },
     title: {
-        textAlign:"center",
-        fontSize:"2rem",
-        fontWeight:700,
-        margin:15
+        textAlign: "center",
+        fontSize: "2rem",
+        fontWeight: 700,
+        margin: 15
     },
-    content:{
+    content: {
         height: "60vh",
         position: "relative",
         overflowY: "scroll",
-        fontSize:"1rem",
-        fontWeight:400,
-        margin:"10px 50px",
+        fontSize: "1rem",
+        fontWeight: 400,
+        margin: "10px 50px",
         whiteSpace: "pre-line"
     },
     container: {
@@ -39,26 +39,27 @@ const useStyles = makeStyles(() => ({
         flexDirection: "column",
         maxWidth: "1440px",
         width: "80%",
-        padding:"0 15px",
-        margin:"100px auto 0 auto"
+        padding: "0 15px",
+        margin: "100px auto 0 auto"
     },
     checkBox: {
-        margin:"10px 30px",
+        margin: "10px 30px",
     },
-    actions:{
+    actions: {
         flex: "0 0 auto",
         display: "flex",
         padding: 8,
         alignItems: "center",
         justifyContent: "space-between"
     },
-    loginBtn:{
-        right:10
+    loginBtn: {
+        right: 10
     }
 }));
 const LoginPage = () => {
+    const {state} = useLocation();
     const history = useHistory();
-    const { user } = useUser()!;
+    const {user} = useUser()!;
 
     const classes = useStyles();
     const [checked, setChecked] = useState(false);
@@ -67,9 +68,14 @@ const LoginPage = () => {
         setChecked(event.target.checked);
     };
 
-    if(user) {
-        history.push('/');
+    if (user) {
+        if (state) {
+            history.push(state?.from.pathname);
+        } else {
+            history.push("/");
+        }
     }
+
 
     return (
         <div className={classes.root}>
@@ -77,9 +83,9 @@ const LoginPage = () => {
                 <Typography className={classes.title}>
                     登入
                 </Typography>
-                <Divider />
+                <Divider/>
                 <div className={classes.content}>
-                    <Typography >
+                    <Typography>
                         {`使用者登入即代表同意本網站之使用者規範: \n
                         使用者登入即代表同意本網站之使用者規範:使用者登入即代表同意本網站之使用者規範: \n
                         使用者登入即代表同意本網站之使用者規範:使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範: \n
@@ -93,14 +99,14 @@ const LoginPage = () => {
                     </Typography>
                 </div>
 
-                <Divider />
+                <Divider/>
                 <div className={classes.actions}>
                     <FormControlLabel
                         value="checkbox"
                         control={<Checkbox
                             color="secondary"
                             checked={checked}
-                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                            inputProps={{'aria-label': 'primary checkbox'}}
                             onChange={handleChange}
                         />}
                         label="我同意以上使用者條款"
