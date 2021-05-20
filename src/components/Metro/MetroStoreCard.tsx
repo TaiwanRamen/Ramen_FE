@@ -5,15 +5,14 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import {makeStyles,} from "@material-ui/core/styles";
 
-const useStyles = makeStyles(() =>
-    createStyles({
+const useStyles = makeStyles(() => ({
         cardRoot: {
             margin: "45px auto 0 auto",
         },
         card: {
-            margin:15
+            margin: 30
         },
         moreNtn: {
             marginLeft: 'auto'
@@ -22,9 +21,9 @@ const useStyles = makeStyles(() =>
 ));
 
 type Props = {
-    store:string
+    store: string
 }
-const MetroStoreCard = (props:Props) => {
+const MetroStoreCard = (props: Props) => {
     const classes = useStyles();
     return (
         <Card className={classes.card}>

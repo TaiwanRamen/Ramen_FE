@@ -2,16 +2,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import React, {useContext} from "react";
+import React from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import UserInfoAndLogout from './UserInfoAndLogout';
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {NotificationContext} from "../../Context/NotificationContext";
+import {makeStyles, Theme} from "@material-ui/core/styles";
+import {useNotification} from "../../Context/NotificationContext";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-
+const useStyles = makeStyles((theme: Theme) => ({
         sectionDesktop: {
             display: 'none',
             [theme.breakpoints.up('md')]: {
@@ -27,9 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-
 const UserMenu = () => {
-    const { notificationCount } = useContext(NotificationContext);
+    const { notificationCount } = useNotification()!;
 
     const classes = useStyles();
 

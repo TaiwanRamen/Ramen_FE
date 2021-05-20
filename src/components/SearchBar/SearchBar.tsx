@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme:Theme) =>
         searchRoot: {
             padding: '2px 4px',
             display: 'flex',
-            width:"25vw",
+            width: "25vw",
             maxWidth: 350,
         },
         input: {
@@ -33,15 +33,15 @@ const useStyles = makeStyles((theme:Theme) =>
     }),
 );
 type Props = {
-    setPage?:(number:number)=>void,
-    setSearchInput:(input:string)=>void,
+    setPage?: (number: number) => void,
+    setSearchInput: (input: string) => void,
 }
 
-const SearchBar = (props:Props) => {
+const SearchBar = (props: Props) => {
     const classes = useStyles();
 
     const handleSubmit = (event: SyntheticEvent) => {
-        if(props.setPage) props.setPage(1);
+        if (props.setPage) props.setPage(1);
         event.preventDefault();
         const target = event.target as typeof event.target & {
             search: { value: string };
@@ -58,9 +58,9 @@ const SearchBar = (props:Props) => {
                     placeholder="搜尋關鍵字"
                     autoComplete='off'
                 />
-                <Divider className={classes.divider} orientation="vertical" />
+                <Divider className={classes.divider} orientation="vertical"/>
                 <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                    <SearchIcon />
+                    <SearchIcon/>
                 </IconButton>
             </Paper>
         </div>

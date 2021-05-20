@@ -19,6 +19,7 @@ import KaohsiungMetro from "./components/Metro/KaohsiungMetro";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 import Map from "./components/Map/Map";
 import LoginPage from "./components/Login/LoginPage";
+import Test from "./components/Test";
 
 // import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
 
@@ -64,7 +65,7 @@ function App() {
                         </Route>
 
                         <Route exact path="/test">
-                          <Map />
+                          <Test />
                         </Route>
 
                         <Route exact path="/map">

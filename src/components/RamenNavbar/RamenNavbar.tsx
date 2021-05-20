@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { makeStyles, Theme, createStyles} from '@material-ui/core/styles';
+import { makeStyles, Theme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from "clsx";
 import SideDrawer from "../Drawer/SideDrawer";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import {Backdrop} from "@material-ui/core";
 import UserSection from "./UserSection";
@@ -20,11 +20,10 @@ import {useUser} from "../../Context/UserContext";
 import axios from "axios";
 
 const navbarHeight = 64;
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+const useStyles =  makeStyles((theme: Theme) => ({
         appBar: {
             backgroundColor: '#f8f9fa!important',
-            color:theme.palette.text.secondary,
+            color: theme.palette.text.secondary,
             transition: theme.transitions.create(['margin', 'width'], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
@@ -47,21 +46,21 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         title: {
             fontFamily: "JFOpen",
-            fontSize:"1.25rem",
-            color:theme.palette.text.primary,
+            fontSize: "1.25rem",
+            color: theme.palette.text.primary,
             display: 'none',
             [theme.breakpoints.up('sm')]: {
                 display: 'block',
             },
-            "&:hover":{
-                color:theme.palette.text.primary,
+            "&:hover": {
+                color: theme.palette.text.primary,
             }
         },
         backdrop: {
             zIndex: 1100,
             color: '#fff',
         },
-        divider:{
+        divider: {
             height: 28,
             margin: 8,
         }
@@ -77,15 +76,15 @@ const RamenNavbar = () => {
         setDrawerOpen(!drawerOpen)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
         const sessionUserString = window.sessionStorage.getItem("current_user");
 
-        if(sessionUserString != null && sessionUserString !== "null" && sessionUserString !== "undefined") {
+        if (sessionUserString != null && sessionUserString !== "null" && sessionUserString !== "undefined") {
             const sessionUser = JSON.parse(sessionUserString);
             setUser(sessionUser);
         }
-    },[])
+    }, [])
 
 
     //fetch for notification update every 1 minute
@@ -93,7 +92,7 @@ const RamenNavbar = () => {
         try {
             setInterval(async () => {
                 const url = process.env.REACT_APP_URL + "/api/v1/user/unReadNotificationCount";
-                const response = await axios.get(url, { withCredentials:true});
+                const response = await axios.get(url, {withCredentials: true});
                 setNotificationCount(response.data.data);
             }, 1000 * 10);
         } catch (e) {
@@ -119,26 +118,26 @@ const RamenNavbar = () => {
                         className={clsx(classes.menuButton)}
                     >
                         <Badge badgeContent={notificationCount} variant="dot" color="secondary">
-                            {!drawerOpen ? <MenuIcon /> : <ChevronLeftIcon />}
+                            {!drawerOpen ? <MenuIcon/> : <ChevronLeftIcon/>}
                         </Badge>
                     </IconButton>
 
-                    <Button size="large" component={RouterLink} className={classes.title}  to="/">
+                    <Button size="large" component={RouterLink} className={classes.title} to="/">
                         <img src="/images/ramen.png" alt="" width="32px" height="32px" className="mx-2"/>
                         台灣拉麵倶樂部
                     </Button>
-                    <Divider className={classes.divider} orientation="vertical" />
-                    <SubCategory />
+                    <Divider className={classes.divider} orientation="vertical"/>
+                    <SubCategory/>
 
-                    <div className={classes.grow} />
+                    <div className={classes.grow}/>
 
                     <UserSection/>
 
                 </Toolbar>
             </AppBar>
 
-            <SideDrawer isOpen={drawerOpen} toggleDrawerOpen={toggleDrawerOpen} navbarHeight={navbarHeight} />
-            <Backdrop className={classes.backdrop} open={drawerOpen} onClick={toggleDrawerOpen} />
+            <SideDrawer isOpen={drawerOpen} toggleDrawerOpen={toggleDrawerOpen} navbarHeight={navbarHeight}/>
+            <Backdrop className={classes.backdrop} open={drawerOpen} onClick={toggleDrawerOpen}/>
         </div>
     );
 }

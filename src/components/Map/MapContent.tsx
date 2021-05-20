@@ -57,7 +57,7 @@ const MapContent = (props:Props) => {
         enabled: !!mapBound,
         key:"mapStores",
         url: process.env.REACT_APP_URL + "/api/v1/map/get-store",
-        queryParams: {...mapBound, search: searchInput}
+        requestQuery: {...mapBound, search: searchInput}
     }
 
     const { data:stores, status, error } = useFetch<Store[]>(options);

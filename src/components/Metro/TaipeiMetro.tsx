@@ -4,7 +4,7 @@ import ImageMapper from 'react-img-mapper';
 import MapAreas from './TaipeiMetroMapAreas'
 import metroMap from '../../static/TPMetro.png';
 import Loading from "../Loading/Loading";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {makeStyles, Theme} from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import Paper from '@material-ui/core/Paper';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -13,9 +13,8 @@ import MetroSideDrawer from "./MetroSideDrawer";
 const imageWidth = 960;
 
 
-
 function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispatch<any>) {
-    const [size, setSize] = useState({width:0, height:0});
+    const [size, setSize] = useState({width: 0, height: 0});
     useLayoutEffect(() => {
 
         function updateSize() {
@@ -30,29 +29,28 @@ function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispa
     return size;
 }
 
-const resize = (currentWidth:number) => {
+const resize = (currentWidth: number) => {
     const factor = currentWidth / imageWidth;
     const oldMapAreas = JSON.parse(JSON.stringify(MapAreas.areas));
-    for (let i=0; i<oldMapAreas.length; i++){
+    for (let i = 0; i < oldMapAreas.length; i++) {
         let coords = oldMapAreas[i].coords;
-        coords = coords.map((c:number) => c * factor);
+        coords = coords.map((c: number) => c * factor);
         oldMapAreas[i].coords = coords;
     }
     return {name: "my-map", areas: JSON.parse(JSON.stringify(oldMapAreas))};
 }
 
-const useStyles = makeStyles((theme:Theme) =>
-    createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
         presenter: {
-            marginBottom:100,
+            marginBottom: 100,
             maxWidth: "960px",
             margin: "auto",
             display: "flex",
             justifyContent: "center",
-            alignItems:"center"
+            alignItems: "center"
         },
-        imageDiv:{
-            height:"auto",
+        imageDiv: {
+            height: "auto",
             maxWidth: "960px",
             '& > div > map > area:hover': {
                 cursor: "pointer",
@@ -65,8 +63,8 @@ const useStyles = makeStyles((theme:Theme) =>
         arrow: {
             overflowX: "unset",
             overflowY: "unset",
-            width:0,
-            height:0,
+            width: 0,
+            height: 0,
             "&::before": {
                 content: '""',
                 position: "absolute",
@@ -82,14 +80,14 @@ const useStyles = makeStyles((theme:Theme) =>
             },
         },
         paper: {
-            height:50,
-            maxHeight:"10vh",
+            height: 50,
+            maxHeight: "10vh",
             maxWidth: 150,
             overflow: 'auto',
             boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.1)"
         },
         popper: {
-            zIndex:9999,
+            zIndex: 9999,
             position: "relative"
         },
     }),
@@ -97,12 +95,12 @@ const useStyles = makeStyles((theme:Theme) =>
 
 const TaipeiMetro = () => {
     const [isLoading, setIsLoading] = useState(true);
-    const [clickedStationName, setClickedStationName]  = useState("");
-    const [hoverStationName, setHoverStationName]  = useState("");
+    const [clickedStationName, setClickedStationName] = useState("");
+    const [hoverStationName, setHoverStationName] = useState("");
 
     const [mapAreas, setMapAreas] = useState<any>(MapAreas);
 
-    const [popoverPosition, setPopoverPosition] = useState({left:800, top:300})
+    const [popoverPosition, setPopoverPosition] = useState({left: 800, top: 300})
     const [drawerOpen, setDrawerOpen] = useState(false);
     const anchorRef = React.useRef(null);
     const targetRef = useRef<HTMLDivElement>(null)
@@ -114,9 +112,9 @@ const TaipeiMetro = () => {
 
     useEffect(() => {
         setIsLoading(false);
-    },[])
+    }, [])
 
-    const handleClick = (area:any) => {
+    const handleClick = (area: any) => {
         setClickedStationName(area.name);
         setDrawerOpen(true);
     };
@@ -129,7 +127,10 @@ const TaipeiMetro = () => {
         setDrawerOpen(!drawerOpen)
     };
     const handleEnter = (area: any, targetRef: React.RefObject<any>) => {
-        const centerCoords = {left: area.center[0] + targetRef.current.offsetLeft,  top: area.center[1] + targetRef.current.offsetTop };
+        const centerCoords = {
+            left: area.center[0] + targetRef.current.offsetLeft,
+            top: area.center[1] + targetRef.current.offsetTop
+        };
         setHoverStationName(`${area.name}`)
         setPopoverPosition(centerCoords);
         setOpen(true);
@@ -140,18 +141,20 @@ const TaipeiMetro = () => {
     };
 
     return (
-        <div className="grid"  style={{ border: "2px #FFAC55 solid" }}>
+        <div className="grid" style={{border: "2px #FFAC55 solid"}}>
             {isLoading && <Loading/>}
-            <div id="bird" style={{position: 'absolute', left:popoverPosition.left, top:popoverPosition.top -40 , zIndex: 9999}} ref={anchorRef}>
+            <div id="bird"
+                 style={{position: 'absolute', left: popoverPosition.left, top: popoverPosition.top - 40, zIndex: 9999}}
+                 ref={anchorRef}>
             </div>
             <div className={classes.presenter} ref={targetRef}>
-                <div className={classes.imageDiv} >
+                <div className={classes.imageDiv}>
                     <ImageMapper
                         src={metroMap}
                         map={mapAreas}
                         width={width}
                         imgWidth={width}
-                        onClick={(area:any) => handleClick(area)}
+                        onClick={(area: any) => handleClick(area)}
                         onMouseEnter={(area, _) => handleEnter(area, targetRef)}
                         onMouseLeave={() => handleLeave()}
                         onImageClick={handleDrawerClose}
@@ -181,7 +184,7 @@ const TaipeiMetro = () => {
                         },
                     }}
                 >
-                    <span className={classes.arrow} ref={arrowRef} />
+                    <span className={classes.arrow} ref={arrowRef}/>
                     <Paper className={classes.paper}>
                         <DialogTitle>{hoverStationName}</DialogTitle>
                     </Paper>

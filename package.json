@@ -31,6 +31,7 @@
     "js-cookie": "^2.2.1",
     "mapbox-gl": "^2.2.0",
     "moment": "^2.29.1",
+    "notistack": "^1.0.8",
     "react": "^17.0.2",
     "react-alert-template-mui": "^1.0.7",
     "react-bootstrap": "^1.5.2",

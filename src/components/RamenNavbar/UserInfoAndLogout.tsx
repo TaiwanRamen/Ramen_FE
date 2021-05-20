@@ -11,16 +11,15 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import StyledMenu from "../StyledMenu/StyledMenu";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import {useUser} from "../../Context/UserContext";
 import {useHistory} from "react-router-dom";
 import Cookies from "js-cookie";
 
-const useStyles = makeStyles(() =>
-    createStyles({
+const useStyles = makeStyles(() => ({
         imageIcon: {
             height: "24px",
-            width:"24px"
+            width: "24px"
         },
         listItemIcon: {
             minWidth: 36,
@@ -30,7 +29,7 @@ const useStyles = makeStyles(() =>
 const UserInfoAndLogout = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { user, setUser } = useUser()!;
+    const {user, setUser} = useUser()!;
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -41,9 +40,9 @@ const UserInfoAndLogout = () => {
         setAnchorEl(null);
     };
 
-    const handleLogout = async() => {
+    const handleLogout = async () => {
         setUser(null);
-        await Cookies.remove('access_token', { path: '', domain: process.env.REACT_APP_DOMAIN });
+        await Cookies.remove('access_token', {path: '', domain: process.env.REACT_APP_DOMAIN});
         window.sessionStorage.removeItem("current_user");
         history.push("/");
     }
@@ -57,13 +56,13 @@ const UserInfoAndLogout = () => {
                 color="inherit"
                 onClick={handleClick}
             >
-                {user && <Box m={2} >
-                    <Typography  variant="button" display="inline" >
-                    {user?.fbName}
+                {user && <Box m={2}>
+                    <Typography variant="button" display="inline">
+                        {user?.fbName}
                     </Typography>
                 </Box>}
-                {user ? <Avatar alt="Remy Sharp" src={user?.avatar} /> : <AccountCircle />}
-                <ExpandMoreIcon />
+                {user ? <Avatar alt="Remy Sharp" src={user?.avatar}/> : <AccountCircle/>}
+                <ExpandMoreIcon/>
             </Button>
 
             <StyledMenu
@@ -75,13 +74,13 @@ const UserInfoAndLogout = () => {
             >
                 <MenuItem>
                     <ListItemIcon className={classes.listItemIcon}>
-                        <InfoIcon className={classes.imageIcon}  />
+                        <InfoIcon className={classes.imageIcon}/>
                     </ListItemIcon>
-                    <ListItemText primary="個人資料" />
+                    <ListItemText primary="個人資料"/>
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>
                     <ListItemIcon className={classes.listItemIcon}>
-                        <ExitToAppIcon className={classes.imageIcon}  />
+                        <ExitToAppIcon className={classes.imageIcon}/>
                     </ListItemIcon>
                     <ListItemText primary="登出"/>
                 </MenuItem>
