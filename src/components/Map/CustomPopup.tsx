@@ -1,25 +1,11 @@
 import {Popup} from "react-map-gl";
+import {IStore} from "../../types/IStore";
 
 const markerSize = 45;
 
-type Store = {
-    _id: string,
-    name: string,
-    city: string,
-    descriptionText: string,
-    imageSmall: string[],
-    location: {
-        type: string,
-        coordinates: number[],
-        formattedAddress: string
-    },
-    rating: number,
-    reviewsCount: number,
-};
-
 type Props = {
     index:number,
-    store:Store,
+    store:IStore,
     closePopup: Function
 };
 
@@ -31,7 +17,7 @@ const CustomPopup = (props: Props) => {
             longitude={store?.location?.coordinates[0]}
             latitude={store?.location?.coordinates[1]}
             onClose={closePopup}
-            closeButton={true}
+            closeButton={false}
             offsetLeft={markerSize/2}
             closeOnClick={false}
         >

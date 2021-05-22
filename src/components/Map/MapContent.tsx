@@ -3,40 +3,14 @@ import {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import useFetch from "../../customHooks/UseFetch";
 import MarkersAndModal from "./MarkersAndModal";
+import {IStore} from "../../types/IStore";
 
 const useStyles = makeStyles( () => ({
     mapComponent: {
-      position:"relative"
-    },
-    reSearchBtn: {
-        backgroundColor:"white",
-        color:"#4e8fff",
-        position:"relative",
-        top: "40px",
-        width:"200px",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        zIndex:1400,
-        "&:hover":{
-            backgroundColor:"#f8f8f8",
-        }
+      position:"relative",
     },
 }))
 
-type Store = {
-    _id: string,
-    name: string,
-    city: string,
-    descriptionText: string,
-    imageSmall: string[],
-    location: {
-        type: string,
-        coordinates: number[],
-        formattedAddress: string
-    },
-    rating: number,
-    reviewsCount: number,
-};
 
 type MapBound = {
     N: number, S: number,
@@ -60,7 +34,7 @@ const MapContent = (props:Props) => {
         requestQuery: {...mapBound, search: searchInput}
     }
 
-    const { data:stores, status, error } = useFetch<Store[]>(options);
+    const { data:stores, status, error } = useFetch<IStore[]>(options);
 
 
     return (

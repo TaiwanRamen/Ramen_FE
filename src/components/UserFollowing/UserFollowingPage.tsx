@@ -1,30 +1,86 @@
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles, Theme} from "@material-ui/core/styles";
+import useFetch from "../../customHooks/UseFetch";
+import Pagination from "@material-ui/lab/Pagination";
+import {ChangeEvent, useState} from "react";
+import {IStore} from "../../types/IStore";
 import FollowingStrip from "./FollowingStrip";
-import {useUser} from "../../Context/UserContext";
 
-
-const useStyles = makeStyles(() => ({
-
-        header: {margin: 30},
-    }),
+const useStyles = makeStyles((theme: Theme) => ({
+        root: {
+            justifyContent: "center",
+            margin: "3rem 0",
+            display: "flex",
+        },
+        header: {},
+        searchRoot: {
+            padding: '2px 4px',
+            display: 'flex',
+            alignItems: 'center',
+            width: 400,
+        },
+        input: {
+            marginLeft: theme.spacing(1),
+            flex: 1,
+        },
+        iconButton: {
+            padding: 10,
+        },
+        divider: {
+            height: 28,
+            margin: 4,
+        },
+        pagination: {
+            backgroundColor: "transparent",
+            "& ul > li > button": {
+                backgroundColor: "white"
+            }
+        }
+    })
 );
+
+type Stores = {
+    current: number;
+    pages: number;
+    stores: IStore[]
+};
 const UserFollowingPage = () => {
     const classes = useStyles();
-    const {user} = useUser()!;
-    const followedStores = user?.followedStore;
-    console.log("followstore:", followedStores)
+    const [page, setPage] = useState<number>(1);
+    //const {user} = useUser()!;
 
-    return (
-        <div>
+    const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
+        setPage(value);
+    };
+
+    const options = {
+        key: "stores",
+        url: process.env.REACT_APP_URL + "/api/v1/user/followedStore",
+        requestQuery: {
+            page: page,
+        }
+    }
+
+    const {data} = useFetch<Stores>(options);
+    console.log(data)
+    return data?.stores ?
+        <>
             <h1 className={classes.header}>追蹤清單</h1>
             {
-                followedStores && followedStores.map((store:string) => {
-                    <FollowingStrip store={store}/>
+                data.stores.map((store: IStore) => {
+                    return <FollowingStrip store={store}/>
                 })
             }
+            <div className={classes.root}>
+                <Pagination count={data?.pages}
+                            className={classes.pagination}
+                            page={page}
+                            size="large"
+                            variant="outlined"
+                            shape="rounded"
+                            onChange={handlePageChange}/>
+            </div>
+        </> : null
 
-        </div>
-    );
 };
 
 export default UserFollowingPage;

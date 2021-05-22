@@ -43,7 +43,7 @@ const UserInfoAndLogout = () => {
     const handleLogout = async () => {
         setUser(null);
         await Cookies.remove('access_token', {path: '', domain: process.env.REACT_APP_DOMAIN});
-        window.sessionStorage.removeItem("current_user");
+        window.localStorage.removeItem("current_user");
         history.push("/");
     }
 

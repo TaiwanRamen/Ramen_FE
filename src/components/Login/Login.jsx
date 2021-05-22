@@ -37,7 +37,7 @@ const Login = (props: Props) => {
             let loginUser = serverRes.data.data.user;
             setUser(loginUser);
             Cookies.set('access_token', serverRes.data.data.token);
-            window.sessionStorage.setItem("current_user", JSON.stringify(loginUser));
+            window.localStorage.setItem("current_user", JSON.stringify(loginUser));
 
         } catch (e) {
             console.log("error:", e);

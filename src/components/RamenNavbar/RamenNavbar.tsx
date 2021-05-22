@@ -57,7 +57,7 @@ const useStyles =  makeStyles((theme: Theme) => ({
             }
         },
         backdrop: {
-            zIndex: 1100,
+            zIndex: 700,
             color: '#fff',
         },
         divider: {
@@ -78,11 +78,11 @@ const RamenNavbar = () => {
 
     useEffect(() => {
 
-        const sessionUserString = window.sessionStorage.getItem("current_user");
+        const localUserString = window.localStorage.getItem("current_user");
 
-        if (sessionUserString != null && sessionUserString !== "null" && sessionUserString !== "undefined") {
-            const sessionUser = JSON.parse(sessionUserString);
-            setUser(sessionUser);
+        if (localUserString != null && localUserString !== "null" && localUserString !== "undefined") {
+            const localUser = JSON.parse(localUserString);
+            setUser(localUser);
         }
     }, [])
 

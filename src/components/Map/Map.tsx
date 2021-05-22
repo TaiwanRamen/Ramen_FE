@@ -5,14 +5,15 @@ import {useState} from "react";
 import MapContent from "./MapContent";
 import Button from "@material-ui/core/Button";
 
-const useStyles = makeStyles( () => ({
-
+const useStyles = makeStyles(() => ({
     map: {
+        position: "relative",
         borderRadius: "10px",
         height: "100%",
     },
     mapOuter: {
-        width: "80vw",
+        position: "relative",
+        width: "100%",
         height: "80vh",
         margin: "0 auto"
     },
@@ -21,14 +22,14 @@ const useStyles = makeStyles( () => ({
         bottom: 30,
     },
     reSearchBtn: {
-        backgroundColor:"white",
-        color:"#4e8fff",
+        backgroundColor: "white",
+        color: "#4e8fff",
         position: "absolute",
         top: "40px",
-        width:"200px",
+        width: "200px",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        zIndex:1400,
+        zIndex:600,
         "&:hover":{
             backgroundColor:"#f8f8f8",
         }
@@ -44,12 +45,12 @@ const Map = () => {
     const classes = useStyles();
     const [map, setMap] = useState<any>();
     const [mapBound, setMapBound] = useState<MapBound | null>(null);
-    const [maxSeenBound, setMaxSeenBound] = useState<MapBound>({N:-90,S:90,E:-180,W:180});
+    const [maxSeenBound, setMaxSeenBound] = useState<MapBound>({N: -90, S: 90, E: -180, W: 180});
     const [searchBtnShow, setSearchBtnShow] = useState<boolean>(false);
-    const defaultViewport = {width:"100%",height:"100%",latitude: 25.046,longitude: 121.5178,zoom: 14};
+    const defaultViewport = {latitude: 25.046, longitude: 121.5178, zoom: 14};
     const [viewport, setViewport] = useState<any>(defaultViewport);
     const [flag, setFlag] = useState<boolean>(true);
-    const geolocateControlStyle= {
+    const geolocateControlStyle = {
         right: 10,
         top: 10
     };
@@ -65,32 +66,32 @@ const Map = () => {
         resetMaxSeenBound(maxSeenBound, getCurrentMapBound());
     }
 
-    const handleViewportChange = (viewport:any) => {
+    const handleViewportChange = (viewport: any) => {
         setViewport(viewport);
         handleInteract();
         flag && setMapBound(maxSeenBound);
         setFlag(false);
     }
 
-    const resetMaxSeenBound = (previousMax: MapBound, current: MapBound) =>  {
-        if(current.N > previousMax.N || current.E > previousMax.E || current.S < previousMax.S || current.W < previousMax.W){
-            let result:MapBound = {N:-90,S:90,E:-180,W:180};
+    const resetMaxSeenBound = (previousMax: MapBound, current: MapBound) => {
+        if (current.N > previousMax.N || current.E > previousMax.E || current.S < previousMax.S || current.W < previousMax.W) {
+            let result: MapBound = {N: -90, S: 90, E: -180, W: 180};
             result.N = current.N > previousMax.N ? current.N : previousMax.N;
             result.E = current.E > previousMax.E ? current.E : previousMax.E;
             result.S = current.S < previousMax.S ? current.S : previousMax.S;
             result.W = current.W < previousMax.W ? current.W : previousMax.W;
             setMaxSeenBound(result);
-            if(!(JSON.stringify(viewport) === JSON.stringify(defaultViewport))){
+            if (!(JSON.stringify(viewport) === JSON.stringify(defaultViewport))) {
                 setSearchBtnShow(true);
             }
         }
     }
-    const handleSearchBtnClick =  () => {
+    const handleSearchBtnClick = () => {
         setSearchBtnShow(false);
         setMapBound(maxSeenBound);
     }
 
-    const flyTo = (lng: number, lat:number)  => {
+    const flyTo = (lng: number, lat: number) => {
         setViewport({
             ...viewport,
             longitude: lng,
@@ -105,6 +106,8 @@ const Map = () => {
         <div className={classes.mapOuter}>
             <ReactMapGL
                 {...viewport}
+                width="100%"
+                height="100%"
                 onViewportChange={handleViewportChange}
                 onInteractionStateChange={handleInteract}
                 mapStyle="mapbox://styles/mapbox/streets-v10"
@@ -119,7 +122,7 @@ const Map = () => {
                     trackUserLocation={true}
                     auto
                 />
-                <NavigationControl className={classes.navControlStyle} />
+                <NavigationControl className={classes.navControlStyle}/>
                 {searchBtnShow && <Button variant="contained" className={classes.reSearchBtn}
                                           onClick={handleSearchBtnClick}> 搜尋這個區域
                 </Button>}

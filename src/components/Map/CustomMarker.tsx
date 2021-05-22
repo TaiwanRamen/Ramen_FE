@@ -1,6 +1,7 @@
 import {Marker} from "react-map-gl";
 import {makeStyles} from "@material-ui/core/styles";
 import ramenIcon from "../../static/ramen.svg";
+import {IStore} from "../../types/IStore";
 
 
 const useStyles = makeStyles( () => ({
@@ -11,28 +12,13 @@ const useStyles = makeStyles( () => ({
         height: "45px",
         borderRadius: "50%",
         cursor: "pointer",
-        zIndex:0
+        zIndex:600
     },
 }))
 
-type Store = {
-    _id: string,
-    name: string,
-    city: string,
-    descriptionText: string,
-    imageSmall: string[],
-    location: {
-        type: string,
-        coordinates: number[],
-        formattedAddress: string
-    },
-    rating: number,
-    reviewsCount: number,
-};
-
 type Props = {
     index:number,
-    store:Store,
+    store:IStore,
     openPopup: Function,
     flyTo: Function
 }

@@ -43,7 +43,8 @@ const useStyles = (props:Props) => makeStyles( (theme:Theme) => ({
         display: 'flex',
         alignItems: 'center',
         color:theme.palette.text.secondary,
-    }
+    },
+
 
 }));
 

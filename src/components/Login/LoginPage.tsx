@@ -56,8 +56,16 @@ const useStyles = makeStyles(() => ({
         right: 10
     }
 }));
+interface LocationState {
+    from: {
+        pathname: string;
+    };
+}
 const LoginPage = () => {
-    const {state} = useLocation();
+    const location = useLocation<LocationState>();
+
+    const { from } = location.state || { from: { pathname: "/" } };
+
     const history = useHistory();
     const {user} = useUser()!;
 
@@ -69,11 +77,7 @@ const LoginPage = () => {
     };
 
     if (user) {
-        if (state) {
-            history.push(state?.from.pathname);
-        } else {
-            history.push("/");
-        }
+        history.push(from)
     }
 
 

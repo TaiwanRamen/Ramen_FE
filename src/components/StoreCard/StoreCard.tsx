@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     content: {
         position: 'relative',
         padding: 24,
-        margin: '-15% 16px 0',
+        //margin: '-15% 16px 0',
         backgroundColor: '#fff',
         borderRadius: 4,
         height: "350px"
@@ -72,13 +72,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         left: 10,
         backgroundColor: "#f8f9fa!important",
         "&:hover": {
-            // "& $follow": {
-            //     color: "#2589ff"
-            // },
-            // "& $unfollow": {
-            //     color: "#7d7d7d"
-            // },
-
             backgroundColor: "#E2E2E2!important",
             boxShadow: '0 3px 7px 2px rgba(0,0,0,0.3)'
 
@@ -94,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: 4,
         width: '100%',
         height: 0,
-        paddingBottom: '56.25%',
+        paddingBottom: '53%',
         backgroundColor: 'rgba(0, 0, 0, 0.08)',
     },
     fadeShadow: {
@@ -126,7 +119,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     divider: {
         width: 230,
         margin: "15px 10px",
-    },
+    }
 }));
 
 type Props = {
@@ -149,7 +142,7 @@ const StoreCard = (props: Props) => {
     //     }
     //     return description;
     // }
-    const {isLoading, isError, error, mutate} = usePut();
+    const {mutate} = usePut();
 
     const [isUserFollowStore, setIsUserFollowStore] = useState<boolean>(store.followers.includes(user?._id as string));
 
@@ -214,7 +207,6 @@ const StoreCard = (props: Props) => {
                         </Button>
                     }
 
-
                 </CardMedia>
 
                 <CardContent className={cx(classes.fadeShadow, classes.content)}>
@@ -249,13 +241,6 @@ const StoreCard = (props: Props) => {
                     </Box>
                 </CardContent>
             </Card>
-            <div>
-                {isLoading
-                    ? "Saving..."
-                    : isError
-                        ? error.message
-                        : "Saved!"}
-            </div>
         </Box>
     );
 };

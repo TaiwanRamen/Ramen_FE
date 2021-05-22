@@ -12,7 +12,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import useFetch from "../../customHooks/UseFetch";
 
 
-const useStyles = makeStyles( (theme:Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
         root: {
             justifyContent: "center",
             margin: "3rem 0",
@@ -35,13 +35,13 @@ const useStyles = makeStyles( (theme:Theme) => ({
             height: 28,
             margin: 4,
         },
-        pagination:{
-            backgroundColor:"transparent",
+        pagination: {
+            backgroundColor: "transparent",
             "& ul > li > button": {
                 backgroundColor: "white"
             }
         }
-    }),
+    })
 );
 
 type Stores = {
@@ -61,48 +61,48 @@ const StoreIndex = () => {
     };
 
     const options = {
-        key:"stores",
+        key: "stores",
         url: process.env.REACT_APP_URL + "/api/v1/stores",
         requestQuery: {
-            page:page,
-            search:searchInput
+            page: page,
+            search: searchInput
         }
     }
 
-    const { data:stores, status, error } = useFetch<Stores>(options);
+    const {data, status, error} = useFetch<Stores>(options);
 
 
     if (status === "loading") {
-        return <Loading />;
+        return <Loading/>;
     }
 
     if (status === "error") {
         return <div>{error?.message}</div>;
     }
-    if (stores?.stores?.length === 0) {
-        return searchInput? <div>
+    if (data?.stores?.length === 0) {
+        return searchInput ? <div>
             {`搜尋\"${searchInput}\"沒有找到店家`}
             <Button variant="outline-primary" className="goBack-btn" onClick={() => setSearchInput(null)}>
-                <ArrowLeftIcon />
+                <ArrowLeftIcon/>
                 返回店家列表
             </Button>
         </div> : <div>沒有找到店家</div>
     }
 
-    return stores ?
+    return data ?
         <>
             <SearchBar setPage={setPage} setSearchInput={setSearchInput}/>
-            <StoreCardList  stores={stores.stores}/>
-            { stores &&
-                <div className={classes.root}>
-                    <Pagination count={stores.pages}
-                                className={classes.pagination}
-                                page={page}
-                                size="large"
-                                variant="outlined"
-                                shape="rounded"
-                                onChange={handlePageChange} />
-                </div>
+            <StoreCardList stores={data.stores}/>
+            {data &&
+            <div className={classes.root}>
+                <Pagination count={data.pages}
+                            className={classes.pagination}
+                            page={page}
+                            size="large"
+                            variant="outlined"
+                            shape="rounded"
+                            onChange={handlePageChange}/>
+            </div>
             }
 
         </> : null;

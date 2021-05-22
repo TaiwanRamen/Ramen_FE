@@ -20,19 +20,19 @@ import Map from "./components/Map/Map";
 import LoginPage from "./components/Login/LoginPage";
 import UserFollowingPage from "./components/UserFollowing/UserFollowingPage";
 import {UserProvider} from "./Context/UserContext";
+import {Container} from "@material-ui/core";
 
 // import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
 
 const useStyles = makeStyles(() => ({
-
         container: {
             display: "flex",
             flexDirection: "column",
             minHeight: "100vh",
             maxWidth: "1440px",
-            width: "100%",
+            width: "80%",
             padding: "0 15px",
-            margin: "100px auto 0 auto"
+            margin: "100px auto 0 auto",
         }
     }),
 );
@@ -41,7 +41,8 @@ function App() {
     const classes = useStyles();
     useEffect(() => {
         document.title = "台灣拉麵倶樂部";
-    }, [])
+
+    }, []);
 
     return (
         <UserProvider>
@@ -57,7 +58,8 @@ function App() {
                             <Footer/>
                         </Route>
                         <Route>
-                            <div className={classes.container}>
+                            <Container className={classes.container}>
+
                                 <Switch>
                                     <Route exact path="/stores">
                                         <StoreIndex/>
@@ -80,13 +82,13 @@ function App() {
                                     <Route path="/login">
                                         <LoginPage/>
                                     </Route>
-                                        <ProtectedRoute path="/create" component={Profile}/>
-                                        <ProtectedRoute path="/stores/:id" component={Store}/>
-                                        <ProtectedRoute path="/notification" component={Profile}/>
-                                        <ProtectedRoute path="/following" component={UserFollowingPage}/>
-                                        <ProtectedRoute path="/wishlist" component={Profile}/>
-                                        <ProtectedRoute path="/commented" component={Profile}/>
-                                        <ProtectedRoute path="/setting" component={Profile}/>
+                                    <ProtectedRoute path="/create" component={Profile}/>
+                                    <ProtectedRoute path="/stores/:id" component={Store}/>
+                                    <ProtectedRoute path="/notification" component={Profile}/>
+                                    <ProtectedRoute path="/following" component={UserFollowingPage}/>
+                                    <ProtectedRoute path="/wishlist" component={Profile}/>
+                                    <ProtectedRoute path="/commented" component={Profile}/>
+                                    <ProtectedRoute path="/setting" component={Profile}/>
 
 
                                     <Route exact path="/404" component={NotFound}/>
@@ -94,7 +96,7 @@ function App() {
                                 </Switch>
 
 
-                            </div>
+                            </Container>
                         </Route>
                     </Switch>
                 </div>

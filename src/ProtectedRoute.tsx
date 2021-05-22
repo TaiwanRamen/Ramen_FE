@@ -3,9 +3,7 @@ import {useUser} from "./Context/UserContext";
 
 
 const ProtectedRoute = ({ component:Component, path, ...rest } : any) => {
-    const { user } = useUser()!;
-
-    console.log(user);
+    const { user } = useUser()!; // for any reason to be null...
     return (
         <Route path={path} {...rest}
                render={props => {
