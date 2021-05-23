@@ -10,8 +10,8 @@ type Props = {
 }
 
 const getReview = async (storeId: string): Promise<IReview[]> => {
-    console.log(process.env.REACT_APP_URL + `/api/v1/review/${storeId}`)
-    const response = await axios.get(process.env.REACT_APP_URL + `/api/v1/review/${storeId}`);
+    console.log(process.env.REACT_APP_BE_URL + `/api/v1/review/${storeId}`)
+    const response = await axios.get(process.env.REACT_APP_BE_URL + `/api/v1/review/${storeId}`);
     if (response.status !== 200) {
         throw new Error("Problem fetching data");
     }

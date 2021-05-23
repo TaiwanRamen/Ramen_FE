@@ -28,7 +28,8 @@ export default function useFetch<T>(props: Props) {
             if (error.response.status === 401) {
                 setUser(null);
                 window.localStorage.removeItem("current_user");
-                await Cookies.remove('access_token', {path: '', domain: process.env.REACT_APP_DOMAIN});
+                //await Cookies.remove('access_token', {path: '', domain: process.env.REACT_APP_DOMAIN});
+                await Cookies.remove('access_token');
                 history.push("/login");
             }
             throw new Error("Problem fetching data");

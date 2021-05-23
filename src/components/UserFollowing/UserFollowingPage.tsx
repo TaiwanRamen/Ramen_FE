@@ -60,7 +60,7 @@ const UserFollowingPage = () => {
 
     const options = {
         key: "stores",
-        url: process.env.REACT_APP_URL + "/api/v1/user/followedStore",
+        url: process.env.REACT_APP_BE_URL + "/api/v1/user/followedStore",
         requestQuery: {
             page: page,
         }

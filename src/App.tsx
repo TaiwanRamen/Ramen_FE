@@ -19,8 +19,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import Map from "./components/Map/Map";
 import LoginPage from "./components/Login/LoginPage";
 import UserFollowingPage from "./components/UserFollowing/UserFollowingPage";
-import {UserProvider} from "./Context/UserContext";
 import {Container} from "@material-ui/core";
+import NetworkInterceptors from "./NetworkInterceptors";
 
 // import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
 
@@ -43,65 +43,62 @@ function App() {
         document.title = "台灣拉麵倶樂部";
 
     }, []);
-
     return (
-        <UserProvider>
-            <Router>
-                <div className="App">
-                    <NotificationProvider>
-                        <RamenNavbar/>
-                    </NotificationProvider>
-                    <Switch>
-                        {/* landing page only */}
-                        <Route exact path="/">
-                            <Landing/>
-                            <Footer/>
-                        </Route>
-                        <Route>
-                            <Container className={classes.container}>
+        <Router>
+            <div className="App">
+                <NotificationProvider>
+                    <RamenNavbar/>
+                </NotificationProvider>
+                <Switch>
+                    {/* landing page only */}
+                    <Route exact path="/">
+                        <Landing/>
+                        <Footer/>
+                    </Route>
+                    <Route>
+                        <Container className={classes.container}>
 
-                                <Switch>
-                                    <Route exact path="/stores">
-                                        <StoreIndex/>
-                                    </Route>
+                            <Switch>
+                                <Route exact path="/stores">
+                                    <StoreIndex/>
+                                </Route>
 
-                                    <Route exact path="/test">
-                                        <UserFollowingPage/>
-                                    </Route>
+                                <Route exact path="/test">
+                                    <UserFollowingPage/>
+                                </Route>
 
-                                    <Route exact path="/map">
-                                        <Map/>
-                                    </Route>
-                                    <Route path="/map/TaipeiMetro">
-                                        <TaipeiMetro/>
-                                    </Route>
-                                    <Route path="/map/KaohsiungMetro">
-                                        <KaohsiungMetro/>
-                                    </Route>
+                                <Route exact path="/map">
+                                    <Map/>
+                                </Route>
+                                <Route path="/map/TaipeiMetro">
+                                    <TaipeiMetro/>
+                                </Route>
+                                <Route path="/map/KaohsiungMetro">
+                                    <KaohsiungMetro/>
+                                </Route>
 
-                                    <Route path="/login">
-                                        <LoginPage/>
-                                    </Route>
-                                    <ProtectedRoute path="/create" component={Profile}/>
-                                    <ProtectedRoute path="/stores/:id" component={Store}/>
-                                    <ProtectedRoute path="/notification" component={Profile}/>
-                                    <ProtectedRoute path="/following" component={UserFollowingPage}/>
-                                    <ProtectedRoute path="/wishlist" component={Profile}/>
-                                    <ProtectedRoute path="/commented" component={Profile}/>
-                                    <ProtectedRoute path="/setting" component={Profile}/>
-
-
-                                    <Route exact path="/404" component={NotFound}/>
-                                    <Redirect from='*' to="/404"/>
-                                </Switch>
+                                <Route path="/login">
+                                    <LoginPage/>
+                                </Route>
+                                <ProtectedRoute path="/create" component={Profile}/>
+                                <ProtectedRoute path="/stores/:id" component={Store}/>
+                                <ProtectedRoute path="/notification" component={Profile}/>
+                                <ProtectedRoute path="/following" component={UserFollowingPage}/>
+                                <ProtectedRoute path="/wishlist" component={Profile}/>
+                                <ProtectedRoute path="/commented" component={Profile}/>
+                                <ProtectedRoute path="/setting" component={Profile}/>
 
 
-                            </Container>
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-        </UserProvider>
+                                <Route exact path="/404" component={NotFound}/>
+                                <Redirect from='*' to="/404"/>
+                            </Switch>
+
+
+                        </Container>
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 }
 

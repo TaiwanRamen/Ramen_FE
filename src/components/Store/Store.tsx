@@ -16,7 +16,7 @@ type StoreResponse = {
 }
 
 const getStore = async (id: string): Promise<StoreResponse> => {
-    const response = await axios.get(process.env.REACT_APP_URL+ `/api/v1/stores/${id}`);
+    const response = await axios.get(process.env.REACT_APP_BE_URL+ `/api/v1/stores/${id}`);
     if (response.status !== 200) {
         throw new Error("Problem fetching data");
     }

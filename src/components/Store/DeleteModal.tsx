@@ -66,9 +66,13 @@ const DeleteModal = (props: Props) => {
             setIsInputMatch(false);
         }
     }
+    const handleDialogClose = () => {
+        setIsInputMatch(false);
+        props.onClose();
+    }
 
     return (
-        <Dialog open={props.open} onClose={props.onClose} aria-labelledby="form-dialog-title">
+        <Dialog open={props.open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
             <div className={classes.dialog}>
                 <DialogTitle id="form-dialog-title">{`刪除店家: ${props.storeName}`}</DialogTitle>
                 <DialogContent>

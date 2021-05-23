@@ -17,7 +17,7 @@ const Login = (props: Props) => {
     const [loginCount, setLoginCount] = useState(0);
 
     const { user, setUser } = useUser();
-    const url = `${process.env.REACT_APP_URL}/api/v1/user/oauth/facebook`;
+    const url = `${process.env.REACT_APP_BE_URL}/api/v1/user/oauth/facebook`;
 
     const componentClicked = () => {
         setIsLoading(true);
@@ -25,7 +25,6 @@ const Login = (props: Props) => {
 
     const loginToOurServer = async (response) => {
         try {
-            console.log(response);
             let payload = { "access_token": response.accessToken };
             let options = {
                 method: 'post',

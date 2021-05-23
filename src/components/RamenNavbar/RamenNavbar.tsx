@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { makeStyles, Theme} from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,7 +20,7 @@ import {useUser} from "../../Context/UserContext";
 import axios from "axios";
 
 const navbarHeight = 64;
-const useStyles =  makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
         appBar: {
             backgroundColor: '#f8f9fa!important',
             color: theme.palette.text.secondary,
@@ -69,7 +69,7 @@ const useStyles =  makeStyles((theme: Theme) => ({
 
 const RamenNavbar = () => {
     const classes = useStyles();
-    const {setUser} = useUser()!;
+    const {user, setUser} = useUser()!;
     const {notificationCount, setNotificationCount} = useNotification()!;
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const toggleDrawerOpen = () => {
@@ -90,11 +90,13 @@ const RamenNavbar = () => {
     //fetch for notification update every 1 minute
     useEffect(() => {
         try {
-            setInterval(async () => {
-                const url = process.env.REACT_APP_URL + "/api/v1/user/unReadNotificationCount";
-                const response = await axios.get(url, {withCredentials: true});
-                setNotificationCount(response.data.data);
-            }, 1000 * 10);
+            if (user) {
+                setInterval(async () => {
+                    const url = process.env.REACT_APP_BE_URL + "/api/v1/user/unReadNotificationCount";
+                    const response = await axios.get(url, {withCredentials: true});
+                    setNotificationCount(response.data.data);
+                }, 1000 * 10);
+            }
         } catch (e) {
             console.log(e)
         }

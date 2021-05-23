@@ -1,10 +1,38 @@
+import {useHistory} from "react-router-dom";
+import {useUser} from "../Context/UserContext";
+import axios from "axios";
+import Cookies from "js-cookie";
+import {useMutation} from "react-query";
 
-const UseDelete = () => {
-    return (
-        <div>
+type Props = {
+    url: string,
+    requestBody: Object,
+    requestQuery?: Object
+}
 
-        </div>
-    );
+const useDelete = () => {
+
+    const history = useHistory();
+    const {setUser} = useUser()!;
+
+    const deleteData = async (props:Props) => {
+        try {
+            const url = props.url;
+            const requestBody = props.requestBody;
+            const params = props?.requestQuery;
+            await axios.put(url, requestBody, {params: params, withCredentials: true})
+        } catch (error) {
+            if (error.response.status === 401) {
+                setUser(null);
+                window.localStorage.removeItem("current_user");
+                await Cookies.remove('access_token', {path: '', domain: process.env.REACT_APP_DOMAIN});
+                history.push("/login");
+            }
+            throw new Error("Problem fetching data");
+        }
+    }
+
+    return useMutation((props:Props) => deleteData(props));
 };
 
-export default UseDelete;
+export default useDelete;

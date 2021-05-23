@@ -16,7 +16,7 @@ const usePut = () => {
     const {setUser} = useUser()!;
 
     const putData = async (props:Props) => {
-        try {
+        try{
             const url = props.url;
             const requestBody = props.requestBody;
             const params = props?.requestQuery;

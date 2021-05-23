@@ -30,7 +30,7 @@ const MapContent = (props:Props) => {
     const options = {
         enabled: !!mapBound,
         key:"mapStores",
-        url: process.env.REACT_APP_URL + "/api/v1/map/get-store",
+        url: process.env.REACT_APP_BE_URL + "/api/v1/map/get-store",
         requestQuery: {...mapBound, search: searchInput}
     }
 

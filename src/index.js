@@ -5,6 +5,7 @@ import App from './App';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {SnackbarProvider} from 'notistack';
 import Grow from '@material-ui/core/Grow';
+import {UserProvider} from "./Context/UserContext";
 
 
 const queryClient = new QueryClient();
@@ -16,7 +17,9 @@ ReactDOM.render(
             TransitionComponent={Grow}
         >
             <QueryClientProvider client={queryClient}>
-                <App/>
+                <UserProvider>
+                    <App/>
+                </UserProvider>
             </QueryClientProvider>
         </SnackbarProvider>
 
