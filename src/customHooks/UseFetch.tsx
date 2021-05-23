@@ -3,6 +3,7 @@ import axios from "axios";
 import {useUser} from "../Context/UserContext";
 import Cookies from 'js-cookie';
 import {useHistory} from "react-router-dom";
+import useStackedSnackBar from "./UseStackedSnackBar";
 
 type Props = {
     enabled?: boolean,
@@ -15,6 +16,7 @@ type Props = {
 export default function useFetch<T>(props: Props) {
     const history = useHistory();
     const {setUser} = useUser()!;
+    const showSnackBar = useStackedSnackBar();
     const enabled = (props.enabled !== null) ? props.enabled : true;
     const key = props.key;
     const requestQuery = props.requestQuery;
@@ -28,10 +30,10 @@ export default function useFetch<T>(props: Props) {
             if (error.response.status === 401) {
                 setUser(null);
                 window.localStorage.removeItem("current_user");
-                //await Cookies.remove('access_token', {path: '', domain: process.env.REACT_APP_DOMAIN});
                 await Cookies.remove('access_token');
                 history.push("/login");
             }
+            showSnackBar(`請重新登入`, 'error');
             throw new Error("Problem fetching data");
         }
     }

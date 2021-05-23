@@ -20,9 +20,7 @@ import Map from "./components/Map/Map";
 import LoginPage from "./components/Login/LoginPage";
 import UserFollowingPage from "./components/UserFollowing/UserFollowingPage";
 import {Container} from "@material-ui/core";
-import NetworkInterceptors from "./NetworkInterceptors";
 
-// import DrawerUserSelectionTree from './components/Drawer/DrawerUserSelectionTree';
 
 const useStyles = makeStyles(() => ({
         container: {
@@ -43,6 +41,7 @@ function App() {
         document.title = "台灣拉麵倶樂部";
 
     }, []);
+    // NetworkInterceptors();
     return (
         <Router>
             <div className="App">

@@ -1,8 +1,9 @@
+import axios from "axios";
+import {useMutation} from "react-query";
+import Cookies from "js-cookie";
 import {useHistory} from "react-router-dom";
 import {useUser} from "../Context/UserContext";
-import axios from "axios";
-import Cookies from "js-cookie";
-import {useMutation} from "react-query";
+import useStackedSnackBar from "./UseStackedSnackBar";
 
 type Props = {
     url: string,
@@ -11,12 +12,11 @@ type Props = {
 }
 
 const usePut = () => {
-
     const history = useHistory();
     const {setUser} = useUser()!;
-
-    const putData = async (props:Props) => {
-        try{
+    const showSnackBar = useStackedSnackBar();
+    const putData = async (props: Props) => {
+        try {
             const url = props.url;
             const requestBody = props.requestBody;
             const params = props?.requestQuery;
@@ -25,14 +25,14 @@ const usePut = () => {
             if (error.response.status === 401) {
                 setUser(null);
                 window.localStorage.removeItem("current_user");
-                await Cookies.remove('access_token', {path: '', domain: process.env.REACT_APP_DOMAIN});
+                await Cookies.remove('access_token');
                 history.push("/login");
             }
+            showSnackBar(`請重新登入`, 'error');
             throw new Error("Problem fetching data");
         }
     }
-
-    return useMutation((props:Props) => putData(props));
+    return useMutation((props: Props) => putData(props));
 };
 
 export default usePut;
