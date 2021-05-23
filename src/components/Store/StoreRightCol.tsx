@@ -1,8 +1,4 @@
-import {Dropdown} from 'react-bootstrap';
-import React, {useState} from "react";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEllipsisH} from "@fortawesome/free-solid-svg-icons";
-import DeleteModal from './DeleteModal';
+import React from "react";
 import {IStore} from '../../types/IStore'
 import Comment from "../Comment/Comment";
 import CarouselImage from "../Carousel/Carousel";
@@ -15,6 +11,7 @@ import FollowBtn from "../FollowBtn/FollowBtn";
 import {Link} from "react-router-dom";
 import {Paper, Tab, Tabs} from "@material-ui/core";
 import {LocationOn} from "@material-ui/icons";
+import StoreDropdown from "./StoreDropdown";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -47,7 +44,6 @@ const useStyles = makeStyles(() => ({
         padding: 10,
         borderRadius: 10,
     },
-
     title: {
         margin: 2
     },
@@ -55,36 +51,6 @@ const useStyles = makeStyles(() => ({
         marginRight: 8,
         fontWeight: 'bold',
         display: 'inline',
-    },
-    content: {
-        position: 'relative',
-        padding: 24,
-        backgroundColor: '#fff',
-        borderRadius: 4,
-        height: 350,
-    },
-    follow: {
-        margin: "2px",
-        color: "#7d7d7d",
-        fontSize: "0.85rem"
-    },
-    unfollow: {
-        margin: "2px",
-        color: "#2589ff",
-        fontSize: "0.85rem"
-    },
-    followBg: {
-        zIndex: 100,
-        position: 'relative',
-        top: 10,
-        left: 10,
-        backgroundColor: "#f8f9fa!important",
-        "&:hover": {
-            backgroundColor: "#E2E2E2!important",
-            boxShadow: '0 3px 7px 2px rgba(0,0,0,0.3)'
-
-        },
-        "&:hover, &.Mui-focusVisible": {backgroundColor: "white"}
     },
     locationIcon: {
         marginLeft: 0,
@@ -104,7 +70,7 @@ const useStyles = makeStyles(() => ({
     storeDropdown: {
         margin: 10,
         display: "inline",
-        float: "right"
+        float: "right",
     }
 }))
 
@@ -119,17 +85,14 @@ type Props = {
 const StoreRightCol = (props: Props) => {
     const classes = useStyles();
     const store = props?.data.store;
-    const storeName = store?.name;
     const storeId = store?._id;
     const imageUrls = store?.imageLarge;
-    const reviewLength = store?.reviews.length;
     const isStoreOwner = true;
 
-    const [modalShow, setModalShow] = useState(false);
 
     const [value, setValue] = React.useState(0);
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
 
@@ -137,21 +100,8 @@ const StoreRightCol = (props: Props) => {
         <Paper className={classes.root}>
 
             <FollowBtn store={store}/>
-            {isStoreOwner &&
-            <Dropdown className={classes.storeDropdown}>
-                <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
-                    <FontAwesomeIcon icon={faEllipsisH}/>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item className="edit" href="#/action-1">編輯</Dropdown.Item>
-                    <Dropdown.Item className="delete" onClick={() => setModalShow(true)}>刪除</Dropdown.Item>
-                </Dropdown.Menu>
-                <DeleteModal
-                    storeName={storeName}
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                />
-            </Dropdown>}
+            {isStoreOwner &&<StoreDropdown store={store}/>}
+
             <Box pt={1} p={5}>
                 <h2 className={classes.title}>{store.name}</h2>
 

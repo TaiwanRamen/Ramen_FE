@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
         card: {
             margin: 30
         },
-        moreNtn: {
+        moreBtn: {
             marginLeft: 'auto'
         },
     }
@@ -46,7 +46,7 @@ const MetroStoreCard = (props: Props) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="medium" color="primary" className={classes.moreNtn}>
+                <Button size="medium" color="primary" className={classes.moreBtn}>
                     查看更多
                 </Button>
             </CardActions>
