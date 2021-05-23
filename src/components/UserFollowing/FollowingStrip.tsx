@@ -6,15 +6,11 @@ import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {IStore} from "../../types/IStore";
+import {DateTime} from "luxon";
+import {Link} from "react-router-dom";
+
 
 const useStyles = makeStyles((theme: Theme) => ({
-        strip: {
-            backgroundColor: '#f8f9fa!important',
-            margin: 10,
-            width: "100%",
-            height: 60,
-            padding: 15
-        },
         title: {
             display: "flex",
             justifyContent: "left",
@@ -23,11 +19,23 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         root: {
             width: '100%',
-            maxWidth: 560,
             backgroundColor: theme.palette.background.paper,
-            padding:0,
-            margin:5,
-            boxShadow: '0 2px 4px -2px rgba(0,0,0,0.24), 0 4px 8px -2px rgba(0, 0, 0, 0.2)'
+            padding: 0,
+            margin: 5,
+            boxShadow: '0 2px 4px -2px rgba(0,0,0,0.24), 0 4px 8px -2px rgba(0, 0, 0, 0.2)',
+            color: theme.palette.text.primary,
+            "&:hover": {
+                color: theme.palette.text.primary,
+                textDecoration: "none",
+            }
+        },
+        selection: {
+            fontFamily: "JFOpen",
+            fontSize: "1rem",
+            color: theme.palette.text.primary,
+            "&:hover": {
+                color: theme.palette.text.primary,
+            }
         },
     }),
 );
@@ -38,13 +46,14 @@ type Props = {
 const FollowingStrip = (props: Props) => {
     const classes = useStyles();
     const store = props.store;
+    const dt = DateTime.fromISO(store.updatedAt).setLocale('zh-tw');
     const handleListItemClick = (store: IStore,) => {
         console.log(store._id);
     };
+
     return (
         <>
-
-            <List className={classes.root}>
+            <List component={Link} to={`/stores/${store._id}`} className={classes.root}>
                 <ListItem
                     button
                     onClick={() => handleListItemClick(props.store)}
@@ -54,7 +63,8 @@ const FollowingStrip = (props: Props) => {
                             <ImageIcon/>
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary={store.name} secondary="Jan 9, 2014"/>
+                    <ListItemText primary={store.name}
+                                  secondary={`更新於 ${dt.toRelative()}`}/>
                 </ListItem>
             </List>
 

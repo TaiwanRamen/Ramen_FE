@@ -2,7 +2,7 @@ export type IStore = {
     address: string,
     city: string,
     comments: string[],
-    createdAt: Date,
+    createdAt: string,
     descriptionHTML: string,
     descriptionText: string ,
     followers: string[],
@@ -15,7 +15,7 @@ export type IStore = {
     region: string,
     reviews: string[],
     tags: string[],
-    updatedAt: Date,
+    updatedAt: string,
     __v: number,
     _id: string
  }

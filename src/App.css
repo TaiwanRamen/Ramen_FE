@@ -10,10 +10,12 @@
 html, body {
   height: 100%;
   margin: 0;
-  background: #fffbf6;
+  background: #f8f8f8;
+  /*background: #fcf9f6;*/
 }
 .App {
-  background: #FFFBF6;
+  background: #f8f8f8;
+  /*background: #fcf9f6;*/
 
 }
 

@@ -14,20 +14,24 @@ const useStyles = makeStyles(() => ({
         justifyContent: "left"
     },
     modalRoot: {
-        padding: '2px 4px',
+        padding: 0,
         width: "25vw",
         maxWidth: 350,
+        maxHeight: 300
     },
     closeButton: {
         padding:5,
-        margin:20,
+        margin:10,
         float:"right",
         zIndex: 600,
-        backgroundColor: "rgba(255,255,255,1.0)",
+        backgroundColor: "rgba(255,255,255,0.5)",
         "&:hover": {
-            backgroundColor: "rgba(255,255,255,0.7)",
+            backgroundColor: "rgba(255,255,255,1.0)",
         }
     },
+    storeCard:{
+        maxHeight:100
+    }
 }))
 
 type Props = {
@@ -45,7 +49,9 @@ const MapStoreModal = (props:Props) => {
                 <IconButton className={classes.closeButton} onClick={closePopup}>
                     <CloseIcon/>
                 </IconButton>
-                <StoreCard store={store} />
+                <div className={classes.storeCard}>
+                    <StoreCard store={store} />
+                </div>
             </Paper>
         </div>
     );

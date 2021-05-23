@@ -6,24 +6,19 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
-//import IconButton from '@material-ui/core/IconButton';
-// import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
-import LocalOfferRoundedIcon from '@material-ui/icons/LocalOfferRounded';
 import LocationOn from '@material-ui/icons/LocationOn';
 import Button from '@material-ui/core/Button';
 import {IStore} from "../../types/IStore";
 import Divider from '@material-ui/core/Divider';
-import usePut from "../../customHooks/UsePut";
 import {useUser} from "../../Context/UserContext";
-import {useState} from "react";
-// import StackedSnackBar from "../SnackBar/StackedSnackBar";
-import useStackedSnackBar from "../../customHooks/UseStackedSnackBar";
+import {Link as RouterLink} from "react-router-dom";
+import FollowBtn from "../FollowBtn/FollowBtn";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        margin: 10,
         overflow: 'initial',
         maxWidth: 500,
+        maxHeight: '80vh',
         backgroundColor: 'transparent',
         "&:hover": {
             "& $cardMedia": {
@@ -50,33 +45,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     content: {
         position: 'relative',
         padding: 24,
-        //margin: '-15% 16px 0',
         backgroundColor: '#fff',
         borderRadius: 4,
-        height: "350px"
-    },
-    follow: {
-        margin: "2px",
-        color: "#7d7d7d",
-        fontSize: "0.85rem"
-    },
-    unfollow: {
-        margin: "2px",
-        color: "#2589ff",
-        fontSize: "0.85rem"
-    },
-    followBg: {
-        zIndex: 100,
-        position: 'relative',
-        top: 10,
-        left: 10,
-        backgroundColor: "#f8f9fa!important",
-        "&:hover": {
-            backgroundColor: "#E2E2E2!important",
-            boxShadow: '0 3px 7px 2px rgba(0,0,0,0.3)'
-
-        },
-        "&:hover, &.Mui-focusVisible": {backgroundColor: "white"}
+        height: 350,
     },
     locationIcon: {
         marginLeft: 0,
@@ -105,12 +76,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     cardBody: {
         fontSize: "0.875rem",
         flex: "1 1 auto",
-        minHeight: "0.875rem",
-        padding: "1.25rem",
+        padding: "1rem",
         overflow: "hidden",
         maxHeight: "10rem",
         textOverflow: "ellipsis",
-        marginBottom: 0,
+        marginBottom: 10,
         whiteSpace: "normal",
         display: "-webkit-box",
         "-webkit-line-clamp": 6,
@@ -129,54 +99,6 @@ const StoreCard = (props: Props) => {
     const store = props.store;
     const classes = useStyles();
     const {user} = useUser()!;
-    const showSnackBar = useStackedSnackBar();
-    // const mapFlyTo = (e) => {
-    //     console.log(e.target)
-    // }
-    // const imageError = () =>{
-    //     return "this.onerror=null;this.src='https://i.imgur.com/siJp2jE.png"
-    // }
-    // const descriptionTrimer = (description) => {
-    //     if (description.length > 200) {
-    //         return description.substring(0, 200) + "...";
-    //     }
-    //     return description;
-    // }
-    const {mutate} = usePut();
-
-    const [isUserFollowStore, setIsUserFollowStore] = useState<boolean>(store.followers.includes(user?._id as string));
-
-
-    const handleFollowBtnClick = async () => {
-        // if followed, unFollow
-        if (isUserFollowStore) {
-            const reqProps = {
-                url: process.env.REACT_APP_URL + `/api/v1/stores/${store._id}/unfollow`,
-                requestBody: {body: "hot"},
-            };
-            await mutate(reqProps, {
-                onSuccess: () => {
-                    showSnackBar(`成功取消追蹤: ${store.name}`, 'default');
-                    setIsUserFollowStore(!isUserFollowStore);
-                },
-                onError: () => showSnackBar(`取消追蹤: ${store.name} 失敗`, 'error')
-            });
-
-        } else {
-            const reqProps = {
-                url: process.env.REACT_APP_URL + `/api/v1/stores/${store._id}/follow`,
-                requestBody: {body: "hot"},
-            };
-            await mutate(reqProps, {
-                onSuccess: () => {
-                    showSnackBar(`成功追蹤: ${store.name}`, 'success');
-                    setIsUserFollowStore(!isUserFollowStore);
-                },
-                onError: () => showSnackBar(`追蹤: ${store.name} 失敗`, 'error')
-            });
-        }
-
-    }
 
     const descriptionTrimmer = (description: string) => {
         if (description.length > 200) {
@@ -192,21 +114,7 @@ const StoreCard = (props: Props) => {
                     className={classes.cardMedia}
                     image={store.imageLarge[0]}
                 >
-                    {
-                        user && !isUserFollowStore &&
-                        <Button size={"medium"} className={classes.followBg} onClick={() => handleFollowBtnClick()}>
-                            <LocalOfferRoundedIcon className={classes.follow}/>
-                            <span className={classes.follow}>追蹤</span>
-                        </Button>
-                    }
-                    {
-                        user && isUserFollowStore &&
-                        <Button size={"medium"} className={classes.followBg} onClick={() => handleFollowBtnClick()}>
-                            <LocalOfferRoundedIcon className={classes.unfollow}/>
-                            <span className={classes.unfollow}>已追蹤</span>
-                        </Button>
-                    }
-
+                    {user && <FollowBtn store={store}/>}
                 </CardMedia>
 
                 <CardContent className={cx(classes.fadeShadow, classes.content)}>
@@ -214,17 +122,19 @@ const StoreCard = (props: Props) => {
 
                     <h4 className={classes.title}>{store.name}</h4>
 
-                    <Box color={'grey.500'} display={'flex'} alignItems={'center'} mb={1} mt={1}>
-                        <LocationOn className={classes.locationIcon}/>
-                        <span className={classes.locationIcon}>{store.city}</span>
-                    </Box>
-
-                    <Box display={'flex'} alignItems={'center'} mb={0}>
+                    <Box display={'flex'} alignItems={'center'} mb={1} mt={1}>
                         <Rating name={'rating'} value={store.rating} size={'small'} precision={0.1} readOnly/>
                         <Typography variant={'body2'} className={classes.rateValue}>
                             {store.rating.toFixed(1)}
                         </Typography>
                     </Box>
+
+                    <Box color={'grey.500'} display={'flex'} alignItems={'center'}  >
+                        <LocationOn className={classes.locationIcon}/>
+                        <span className={classes.locationIcon}>{store.city}</span>
+                    </Box>
+
+
                     <div className={classes.cardBody}>
                         <Typography color={'textSecondary'} variant={'body2'}>
                             {descriptionTrimmer(store.descriptionText)}
@@ -235,7 +145,12 @@ const StoreCard = (props: Props) => {
 
                     <Box mt={2} display={'flex'} justifyContent={'space-between'} alignItems={'center'}
                          className={classes.readMoreBtn}>
-                        <Button size={'small'} className={classes.readMoreText}>
+                        <Button
+                            component={RouterLink}
+                            className={classes.readMoreText}
+                            size={'small'}
+                            to={`stores/${store._id}`}
+                        >
                             顯示更多
                         </Button>
                     </Box>

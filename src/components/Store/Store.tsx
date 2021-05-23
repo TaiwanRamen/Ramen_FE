@@ -6,6 +6,7 @@ import {useQuery} from "react-query";
 import axios from 'axios';
 import Loading from "../Loading/Loading";
 import {IStore} from '../../types/IStore'
+import Grid from "@material-ui/core/Grid";
 
 
 type StoreResponse = {
@@ -46,10 +47,17 @@ const Store = () => {
 
 
     return store ?
-        <div className="row">
-            <StoreLeftCol data={store}/>
-            <StoreRightCol data={store}/>
-        </div>
+        // <div className="row">
+            <Grid container direction="row" justify="space-between" spacing={5}>
+                <Grid key={"leftCol"} item sm={4} lg={3}>
+                    <StoreLeftCol store={store.store}/>
+                </Grid>
+                <Grid key={"rightCol"} item sm={8} lg={9}>
+                    <StoreRightCol data={store}/>
+                </Grid>
+            </Grid>
+
+        // </div>
         : null;
 };
 

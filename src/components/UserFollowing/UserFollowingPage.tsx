@@ -11,7 +11,13 @@ const useStyles = makeStyles((theme: Theme) => ({
             margin: "3rem 0",
             display: "flex",
         },
-        header: {},
+        header: {
+            textAlign: "left",
+            float: "none",
+            color: "#323232",
+            margin:16,
+            fontSize: 24,
+        },
         searchRoot: {
             padding: '2px 4px',
             display: 'flex',
@@ -61,10 +67,9 @@ const UserFollowingPage = () => {
     }
 
     const {data} = useFetch<Stores>(options);
-    console.log(data)
     return data?.stores ?
         <>
-            <h1 className={classes.header}>追蹤清單</h1>
+            <p className={classes.header}>追蹤清單</p>
             {
                 data.stores.map((store: IStore) => {
                     return <FollowingStrip store={store}/>
