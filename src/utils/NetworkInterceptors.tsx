@@ -1,24 +1,36 @@
 import axios from "axios";
-import Cookies from "js-cookie";
-import {useUser} from "../Context/UserContext";
+// import Cookies from "js-cookie";
+// import {useUser} from "../Context/UserContext";
 import useStackedSnackBar from "../customHooks/UseStackedSnackBar";
+import {history} from "./history";
 
 const NetworkInterceptors = () => {
-    const {setUser} = useUser()!;
+    // const {setUser} = useUser()!;
     const showSnackBar = useStackedSnackBar();
     axios.interceptors.response.use(
         function (successRes) {
             return successRes;
-        },
-        async function (err) {
-            if (err.response?.status === 401 || err.response?.data.message === '401 Unauthorized') {
-                setUser(null);
-                window.localStorage.removeItem("current_user");
-                await Cookies.remove('access_token');
-                window.location.href = '/login';
+        }, function (error) {
+            const message = error?.response?.data?.message;
+            switch (error.response.status){
+                case 401:
+                    // setUser(null);
+                    // window.localStorage.removeItem("current_user");
+                    // await Cookies.remove('access_token');
+                    history.push("/unAuthorized");
+                    break;
+                case 404:
+                    history.push('/notFound');
+                    break;
+                case 500:
+                    history.push('/error');
+                    break;
+                default:
+                    history.push('/');
+                    break;
             }
-            showSnackBar(`請登入`, 'error')
-            return Promise.reject(err);
+            showSnackBar(message, 'error');
+            return Promise.reject(error);
         }
     );
 };

@@ -6,7 +6,8 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import {SnackbarProvider} from 'notistack';
 import Grow from '@material-ui/core/Grow';
 import {UserProvider} from "./Context/UserContext";
-
+import {history} from "./utils/history";
+import {Router} from "react-router";
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,9 @@ ReactDOM.render(
         >
             <QueryClientProvider client={queryClient}>
                 <UserProvider>
-                    <App/>
+                    <Router history={history}>
+                        <App/>
+                    </Router>
                 </UserProvider>
             </QueryClientProvider>
         </SnackbarProvider>

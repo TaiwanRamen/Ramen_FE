@@ -1,6 +1,6 @@
 import './App.css';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-import NotFound from './NotFound';
+import {Route, Switch, Redirect} from 'react-router-dom';
+import NotFound from '../src/components/ErrorPages/NotFound';
 import ProtectedRoute from './ProtectedRoute';
 import Profile from './Profile';
 import StoreIndex from './components/AllStores/StoreIndex';
@@ -20,6 +20,9 @@ import Map from "./components/Map/Map";
 import LoginPage from "./components/Login/LoginPage";
 import UserFollowingPage from "./components/UserFollowing/UserFollowingPage";
 import {Container} from "@material-ui/core";
+import NetworkInterceptors from "./utils/NetworkInterceptors";
+import UnAuthorized from "./components/ErrorPages/UnAuthorized";
+import ErrorPage from "./components/ErrorPages/ErrorPage";
 
 
 const useStyles = makeStyles(() => ({
@@ -41,9 +44,8 @@ function App() {
         document.title = "台灣拉麵倶樂部";
 
     }, []);
-    // NetworkInterceptors();
+    NetworkInterceptors();
     return (
-        <Router>
             <div className="App">
                 <NotificationProvider>
                     <RamenNavbar/>
@@ -61,11 +63,9 @@ function App() {
                                 <Route exact path="/stores">
                                     <StoreIndex/>
                                 </Route>
-
                                 <Route exact path="/test">
                                     <UserFollowingPage/>
                                 </Route>
-
                                 <Route exact path="/map">
                                     <Map/>
                                 </Route>
@@ -88,8 +88,10 @@ function App() {
                                 <ProtectedRoute path="/setting" component={Profile}/>
 
 
-                                <Route exact path="/404" component={NotFound}/>
-                                <Redirect from='*' to="/404"/>
+                                <Route exact path="/notFound" component={NotFound}/>
+                                <Route exact path="/unAuthorized" component={UnAuthorized}/>
+                                <Route exact path="/error" component={ErrorPage}/>
+                                <Redirect from='*' to="/notFound"/>
                             </Switch>
 
 
@@ -97,7 +99,6 @@ function App() {
                     </Route>
                 </Switch>
             </div>
-        </Router>
     );
 }
 
