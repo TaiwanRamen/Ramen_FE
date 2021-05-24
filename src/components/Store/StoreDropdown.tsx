@@ -80,6 +80,7 @@ const StoreDropdown = (props: Props) => {
                 </MenuItem>
             </StyledMenu>
             <DeleteModal
+                storeId={store._id}
                 storeName={store.name}
                 open={modalShow}
                 onClose={() => setModalShow(false)}

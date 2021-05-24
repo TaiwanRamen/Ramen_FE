@@ -52,7 +52,7 @@ const FollowBtn = (props: Props) => {
         if (isUserFollowStore) {
             const reqProps = {
                 url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${store._id}/unfollow`,
-                requestBody: {body: "hot"},
+                requestBody: {},
             };
             await mutate(reqProps, {
                 onSuccess: () => {
@@ -65,7 +65,7 @@ const FollowBtn = (props: Props) => {
         } else {
             const reqProps = {
                 url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${store._id}/follow`,
-                requestBody: {body: "hot"},
+                requestBody: {},
             };
             await mutate(reqProps, {
                 onSuccess: () => {

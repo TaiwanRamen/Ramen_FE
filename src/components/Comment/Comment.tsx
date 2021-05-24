@@ -1,21 +1,10 @@
-import {useQuery} from "react-query";
-import axios from "axios";
 import {IComment} from "../../types/IComment";
 import Loading from "../Loading/Loading";
 import { useState} from "react";
 import AddComment from "./AddComment";
 import {Button} from "react-bootstrap";
 import {useUser} from "../../Context/UserContext";
-
-const getComments = async (storeId: string): Promise<IComment[]> => {
-    //console.log(process.env.REACT_APP_BE_URL + `/api/v1/comment/${storeId}`);
-    const response = await axios.get(process.env.REACT_APP_BE_URL + `/api/v1/comment/${storeId}`);
-    if (response.status !== 200) {
-        throw new Error("Problem fetching data");
-    }
-    console.log("comment:", response.data.data)
-    return await response.data.data;
-}
+import useFetch from "../../customHooks/UseFetch";
 
 type Props = {
     storeId: string
@@ -24,14 +13,16 @@ type Props = {
 const Comment = (props: Props) => {
     const { user } = useUser()!;
     const [modalShow, setModalShow] = useState(false);
+    const storeId = props.storeId;
+    const options = {
+        key: "comments",
+        url: process.env.REACT_APP_BE_URL + `/api/v1/comment/${storeId}`,
+        requestQuery: {}
+    }
 
-    const { data: comments, status, error } = useQuery<IComment[], Error>(
-        ['comments', props.storeId],
-        () => getComments(props.storeId),
-        {
-            keepPreviousData: true,
-        }
-    );
+    const {data:comments, status, error} = useFetch<IComment[]>(options);
+
+
     if (status === "loading") {
         return <Loading />;
     }

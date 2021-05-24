@@ -9,6 +9,9 @@ import {
     TextField
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import useDelete from "../../customHooks/UseDelete";
+import useStackedSnackBar from "../../customHooks/UseStackedSnackBar";
+import {useHistory} from "react-router-dom";
 
 
 const useStyles = makeStyles(() => ({
@@ -47,20 +50,38 @@ const useStyles = makeStyles(() => ({
 }))
 
 type Props = {
+    storeId: string,
     storeName: string,
     open: boolean,
     onClose: () => void
 }
 const DeleteModal = (props: Props) => {
     const classes = useStyles();
-    const [isInputMatch, setIsInputMatch] = useState(false);
+    const storeName = props.storeName;
+    const history = useHistory();
+    const storeId = props.storeId;
 
-    const handleDeleteStore = () => {
-        if (isInputMatch) alert(`delete store ${props.storeName}`)
+    const [isInputMatch, setIsInputMatch] = useState(false);
+    const {mutate} = useDelete();
+    const showSnackBar = useStackedSnackBar();
+
+    const handleDeleteStore = async () => {
+        const reqProps = {
+            url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${storeId}`,
+            requestBody: {},
+        };
+        await mutate(reqProps, {
+            onSuccess: () => {
+                history.push('/stores')
+                showSnackBar(`成功刪除: ${storeName}`, 'success');
+            },
+            onError: () => showSnackBar(`刪除: ${storeName} 失敗`, 'error')
+        });
+        props.onClose();
     }
     const validateName = (e: ChangeEvent<HTMLInputElement>) => {
         const input = e.target.value;
-        if (input === props.storeName) {
+        if (input === storeName) {
             setIsInputMatch(true);
         } else {
             setIsInputMatch(false);
@@ -74,13 +95,13 @@ const DeleteModal = (props: Props) => {
     return (
         <Dialog open={props.open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
             <div className={classes.dialog}>
-                <DialogTitle id="form-dialog-title">{`刪除店家: ${props.storeName}`}</DialogTitle>
+                <DialogTitle id="form-dialog-title">{`刪除店家: ${storeName}`}</DialogTitle>
                 <DialogContent>
                     <DialogContentText className={classes.content}>
                         {`請問您是否確定要刪除店家？系統將會把評論與食記一併刪除。此步驟無法復原！若了解風險請於下方輸入欄輸入完整的店家名稱以刪除：`}
                     </DialogContentText>
                     <DialogContentText className={classes.storeNameOuter}>
-                        <span className={classes.storeName}>{props.storeName}</span>
+                        <span className={classes.storeName}>{storeName}</span>
                     </DialogContentText>
                     <TextField
                         id="storeName"
