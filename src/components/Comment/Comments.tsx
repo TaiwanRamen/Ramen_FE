@@ -1,27 +1,26 @@
-import {IReview} from "../../types/IReview";
+import {IComment} from "../../types/IComment";
 import Loading from "../Loading/Loading";
-import {useState} from "react";
-import Review from './Review';
+import { useState} from "react";
+import {Button} from "react-bootstrap";
 import {useUser} from "../../Context/UserContext";
 import useFetch from "../../customHooks/UseFetch";
-import {Button} from "react-bootstrap";
-import AddReviewModal from "./AddReviewModal";
+import AddCommentModal from "./AddCommentModal";
 
 type Props = {
     storeId: string
 }
 
-const Reviews = (props:Props) => {
+const Comments = (props: Props) => {
     const { user } = useUser()!;
     const [modalShow, setModalShow] = useState(false);
     const storeId = props.storeId;
     const options = {
         key: "comments",
-        url: process.env.REACT_APP_BE_URL + `/api/v1/review/${storeId}`,
+        url: process.env.REACT_APP_BE_URL + `/api/v1/comment/${storeId}`,
         requestQuery: {}
     }
 
-    const {data:reviews, status, error} = useFetch<IReview[]>(options);
+    const {data:comments, status, error} = useFetch<IComment[]>(options);
 
 
     if (status === "loading") {
@@ -31,19 +30,25 @@ const Reviews = (props:Props) => {
     if (status === "error") {
         return <div>{error?.message}</div>;
     }
-    if (!reviews) return <div>沒有評論/</div>;
+    if (!comments) return <div>沒有留言</div>;
 
-    return reviews ?
+    return comments ?
         <div className="well">
             {user && <div className="text-left">
                 <Button variant="success" className="m-2" onClick={() => setModalShow(true)} >留言</Button>
-                <AddReviewModal
+                <AddCommentModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                 />
             </div>}
-            {reviews.map(review => <Review review={review} key={review._id} />)}
+            {comments.map(comment =>
+                <div>
+                    {comment._id}, {comment.createdAt}
+                </div>
+            )}
         </div> : null
 };
 
-export default Reviews;
+export default Comments;
+
+

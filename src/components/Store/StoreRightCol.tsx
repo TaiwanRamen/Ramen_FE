@@ -1,6 +1,6 @@
 import React from "react";
 import {IStore} from '../../types/IStore'
-import Comment from "../Comment/Comment";
+import Comments from "../Comment/Comments";
 import CarouselImage from "../Carousel/Carousel";
 import Reviews from "../Reviews/Reviews";
 import Box from "@material-ui/core/Box";
@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
         margin: 2
     },
     rateValue: {
-        marginRight: 8,
+        marginRight: 2,
         fontWeight: 'bold',
         display: 'inline',
     },
@@ -61,7 +61,8 @@ const useStyles = makeStyles(() => ({
         marginLeft: 8,
         fontWeight: 'bold',
         display: 'inline',
-    },
+        textDecoration: "underline",
+},
     tabs: {
         color: "black",
         backgroundColor: 'white',
@@ -134,7 +135,7 @@ const StoreRightCol = (props: Props) => {
                 </Tabs>
                 <TabPanel value={value} index={0}>
                     <CarouselImage imageUrls={imageUrls}/>
-                    <Comment storeId={storeId}/>
+                    <Comments storeId={storeId}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Reviews storeId={storeId}/>

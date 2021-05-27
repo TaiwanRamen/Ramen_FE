@@ -15,6 +15,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {useUser} from "../../Context/UserContext";
 import {useHistory} from "react-router-dom";
 import Cookies from "js-cookie";
+import {Divider} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
         imageIcon: {
@@ -23,6 +24,10 @@ const useStyles = makeStyles(() => ({
         },
         listItemIcon: {
             minWidth: 36,
+        },
+        divider: {
+            width: 190,
+            margin: "1px auto"
         }
     }),
 );
@@ -78,6 +83,7 @@ const UserInfoAndLogout = () => {
                     </ListItemIcon>
                     <ListItemText primary="個人資料"/>
                 </MenuItem>
+                <Divider className={classes.divider} orientation="horizontal"/>
                 <MenuItem onClick={handleLogout}>
                     <ListItemIcon className={classes.listItemIcon}>
                         <ExitToAppIcon className={classes.imageIcon}/>

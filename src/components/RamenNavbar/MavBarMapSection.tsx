@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }),
 );
 
-const SubCategory = () => {
+const MavBarMapSection = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -91,4 +91,4 @@ const SubCategory = () => {
     );
 };
 
-export default SubCategory;
+export default MavBarMapSection;

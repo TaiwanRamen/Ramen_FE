@@ -18,7 +18,6 @@ export default function useFetch<T>(props: Props) {
     const getData = async (url: string, params: Object): Promise<T> => {
         try {
             const response = await axios.get(url, {params: params, withCredentials: true});
-            console.log(response);
             return await response.data.data;
         } catch (error) {
             throw new Error("Problem fetching data, please retry later");

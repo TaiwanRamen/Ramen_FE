@@ -4,7 +4,8 @@ import Menu, {MenuProps} from "@material-ui/core/Menu";
 
 const StyledMenu = withStyles({
     paper: {
-        border: '1px solid #d3d4d5',
+        borderRadius: 2,
+        width:200,
     },
 })((props: MenuProps) => (
     <Menu

@@ -9,13 +9,13 @@ import SideDrawer from "../Drawer/SideDrawer";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import {Link as RouterLink} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import {Backdrop} from "@material-ui/core";
+import {Backdrop, Hidden} from "@material-ui/core";
 import UserSection from "./UserSection";
 import './RamenNav.css';
 import {useNotification} from "../../Context/NotificationContext";
 import Badge from "@material-ui/core/Badge";
-import Divider from "@material-ui/core/Divider";
-import SubCategory from "./SubCategory";
+// import Divider from "@material-ui/core/Divider";
+// import MavBarMapSection from "./MavBarMapSection";
 import {useUser} from "../../Context/UserContext";
 import axios from "axios";
 
@@ -111,7 +111,6 @@ const RamenNavbar = () => {
                 })}
             >
                 <Toolbar>
-
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -123,13 +122,14 @@ const RamenNavbar = () => {
                             {!drawerOpen ? <MenuIcon/> : <ChevronLeftIcon/>}
                         </Badge>
                     </IconButton>
-
-                    <Button size="large" component={RouterLink} className={classes.title} to="/">
-                        <img src="/images/ramen.png" alt="" width="32px" height="32px" className="mx-2"/>
-                        台灣拉麵倶樂部
-                    </Button>
-                    <Divider className={classes.divider} orientation="vertical"/>
-                    <SubCategory/>
+                    <Hidden xsDown>
+                        <Button size="large" component={RouterLink} className={classes.title} to="/">
+                            <img src="/images/ramen.png" alt="" width="32px" height="32px" className="mx-2"/>
+                            台灣拉麵倶樂部
+                        </Button>
+                        {/*<Divider className={classes.divider} orientation="vertical"/>*/}
+                        {/*<MavBarMapSection/>*/}
+                    </Hidden>
 
                     <div className={classes.grow}/>
 
