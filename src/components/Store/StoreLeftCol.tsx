@@ -1,25 +1,31 @@
 import {useHistory} from "react-router-dom";
-import {Button} from "react-bootstrap";
+import {Button} from "@material-ui/core";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleDoubleLeft} from "@fortawesome/free-solid-svg-icons";
 import {makeStyles} from "@material-ui/core/styles";
 import ReactMapGL, {Marker} from "react-map-gl";
 import {IStore} from "../../types/IStore";
 import ramenIcon from "../../static/ramen.svg";
-import {useState} from "react";
+import React, {useState} from "react";
 import Paper from "@material-ui/core/Paper";
+import {Tab, Tabs} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     root: {
         padding: 10,
         borderRadius: 10,
     },
-    button: {
+    backButton: {
         marginTop: "1rem",
+        marginBottom:"1rem",
         width: "100%",
+        "&:hover": {
+            backgroundColor: "#efefef",
+            boxShadow: '0 3px 7px 2px rgba(0,0,0,0.1)'
+        },
     },
-    icon: {
-        margin: 10
+    back: {
+        margin: 5,
     },
     storeMap: {
         borderRadius: 20,
@@ -41,11 +47,32 @@ const useStyles = makeStyles(() => ({
         borderRadius: "50%",
         zIndex: 600
     },
+    tabs: {
+        margin:"10px 0",
+        color: "black",
+        backgroundColor: 'white',
+        boxShadow: "none",
+        "& > div > span": {
+            width: 5
+        },
+        "& > div > div > button": {
+            border: "1px solid rgba(0, 0, 0, 0.23)",
+            borderRadius: "5px"
+        },
+        "& > div > div > button:hover": {
+            backgroundColor: "#efefef",
+            boxShadow: '0 3px 7px 2px rgba(0,0,0,0.1)'
+        },
+    },
 }));
 type Props = {
+    currentTabNum: number,
+    setCurrentTabNum: Function,
     store: IStore
 }
 const StoreLeftCol = (props: Props) => {
+    const currentTabNum = props.currentTabNum;
+    const setCurrentTabNum = props.setCurrentTabNum;
     const history = useHistory(); //this object represent history
     const classes = useStyles();
     const store = props.store;
@@ -53,16 +80,30 @@ const StoreLeftCol = (props: Props) => {
     const lat = store?.location?.coordinates[1];
     const defaultViewport = {latitude: lat, longitude: lng, zoom: 12};
     const [viewport, setViewport] = useState<any>(defaultViewport);
-    // const clickCity = (city) => {
-    //     history.push('/');
-    // }
+
+    const handleTabChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
+        setCurrentTabNum(newValue);
+    };
     return (
         <Paper className={classes.root}>
 
-            <Button variant="outline-secondary"  className={classes.button} onClick={() => history.go(-1)}>
+            <Button variant="outlined"  className={classes.backButton} onClick={() => history.go(-1)}>
                 <FontAwesomeIcon icon={faAngleDoubleLeft}/>
-                <span className={classes.icon}>返回上一頁</span>
+                <span className={classes.back}>返回上一頁</span>
             </Button>
+
+            <Tabs
+                value={currentTabNum}
+                onChange={handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                variant="fullWidth"
+                orientation="vertical"
+                className={classes.tabs}
+            >
+                <Tab label="店家介紹"/>
+                <Tab label="食記"/>
+            </Tabs>
 
             <div id="map" className={classes.storeMap}>
                 <ReactMapGL
@@ -84,7 +125,7 @@ const StoreLeftCol = (props: Props) => {
                 </ReactMapGL>
             </div>
             <p className={classes.address}>地址：
-                <a className={classes.addressLink} href="https://www.google.com.tw/maps/place/%>">
+                <a className={classes.addressLink} href={`https://www.google.com.tw/maps/place/${store.address}`}>
                     {store.address}
                 </a>
             </p>

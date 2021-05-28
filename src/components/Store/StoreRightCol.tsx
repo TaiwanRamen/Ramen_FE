@@ -1,4 +1,3 @@
-import React from "react";
 import {IStore} from '../../types/IStore'
 import Comments from "../Comment/Comments";
 import CarouselImage from "../Carousel/Carousel";
@@ -9,35 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import FollowBtn from "../FollowBtn/FollowBtn";
 import {Link} from "react-router-dom";
-import {Paper, Tab, Tabs} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 import {LocationOn} from "@material-ui/icons";
 import StoreDropdown from "./StoreDropdown";
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-    const {children, value, index, ...other} = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`scrollable-auto-tabpanel-${index}`}
-            aria-labelledby={`scrollable-auto-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+import TabPanel from "./TabPanel";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -62,12 +36,8 @@ const useStyles = makeStyles(() => ({
         fontWeight: 'bold',
         display: 'inline',
         textDecoration: "underline",
-},
-    tabs: {
-        color: "black",
-        backgroundColor: 'white',
-        boxShadow: "none"
     },
+
     storeDropdown: {
         margin: 10,
         display: "inline",
@@ -76,6 +46,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 type Props = {
+    currentTabNum: number,
     data: {
         mapboxAccessToken: string,
         isStoreOwner: boolean,
@@ -84,6 +55,7 @@ type Props = {
 }
 
 const StoreRightCol = (props: Props) => {
+    const currentTabNum = props.currentTabNum;
     const classes = useStyles();
     const store = props?.data.store;
     const storeId = store?._id;
@@ -91,17 +63,11 @@ const StoreRightCol = (props: Props) => {
     const isStoreOwner = true;
 
 
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
-    };
-
     return (
         <Paper className={classes.root}>
 
             <FollowBtn store={store}/>
-            {isStoreOwner &&<StoreDropdown store={store}/>}
+            {isStoreOwner && <StoreDropdown store={store}/>}
 
             <Box pt={1} p={5}>
                 <h2 className={classes.title}>{store.name}</h2>
@@ -122,22 +88,11 @@ const StoreRightCol = (props: Props) => {
                 </Box>
 
 
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    variant="fullWidth"
-                    className={classes.tabs}
-                >
-                    <Tab label="Item One"/>
-                    <Tab label="Item Two"/>
-                </Tabs>
-                <TabPanel value={value} index={0}>
+                <TabPanel value={currentTabNum} index={0}>
                     <CarouselImage imageUrls={imageUrls}/>
                     <Comments storeId={storeId}/>
                 </TabPanel>
-                <TabPanel value={value} index={1}>
+                <TabPanel value={currentTabNum} index={1}>
                     <Reviews storeId={storeId}/>
                 </TabPanel>
 

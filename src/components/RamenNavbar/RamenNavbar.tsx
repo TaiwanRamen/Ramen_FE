@@ -18,6 +18,7 @@ import Badge from "@material-ui/core/Badge";
 // import MavBarMapSection from "./MavBarMapSection";
 import {useUser} from "../../Context/UserContext";
 import axios from "axios";
+import MavBarMapSection from "./MavBarMapSection";
 
 const navbarHeight = 64;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -128,7 +129,7 @@ const RamenNavbar = () => {
                             台灣拉麵倶樂部
                         </Button>
                         {/*<Divider className={classes.divider} orientation="vertical"/>*/}
-                        {/*<MavBarMapSection/>*/}
+                        <MavBarMapSection/>
                     </Hidden>
 
                     <div className={classes.grow}/>
