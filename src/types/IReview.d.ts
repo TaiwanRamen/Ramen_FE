@@ -7,8 +7,8 @@ export type IReview = {
     "_id": string,
     "rating": number,
     "text": string,
-    "createdAt": Date,
-    "updatedAt": Date,
+    "createdAt": string,
+    "updatedAt": string,
     "__v": number,
     "store": string
 }

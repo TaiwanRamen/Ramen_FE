@@ -5,7 +5,6 @@ import Menu, {MenuProps} from "@material-ui/core/Menu";
 const StyledMenu = withStyles({
     paper: {
         borderRadius: 2,
-        width:200,
     },
 })((props: MenuProps) => (
     <Menu

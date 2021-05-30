@@ -23,6 +23,7 @@ const Reviews = (props:Props) => {
 
     const {data:reviews, status, error} = useFetch<IReview[]>(options);
 
+    console.log(reviews)
 
     if (status === "loading") {
         return <Loading />;
@@ -33,7 +34,7 @@ const Reviews = (props:Props) => {
     }
     if (!reviews) return <div>沒有評論/</div>;
 
-    return reviews ?
+    return !!reviews ?
         <div className="well">
             {user && <div className="text-left">
                 <Button variant="success" className="m-2" onClick={() => setModalShow(true)} >留言</Button>

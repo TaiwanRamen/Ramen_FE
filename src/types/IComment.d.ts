@@ -1,9 +1,8 @@
 export type IComment = {
     _id: string,
-    createdAt:Date,
+    createdAt: string,
     rating: number,
     text:string,
-    __v:number,
     author: {
         avatar: string,
         id: string,

@@ -48,7 +48,7 @@ const Store = () => {
                 <StoreLeftCol store={store.store} currentTabNum={currentTabNum} setCurrentTabNum={setCurrentTabNum}/>
             </Grid>
             <Grid key={"rightCol"} item sm={8} lg={9}>
-                <StoreRightCol data={store} currentTabNum={currentTabNum}/>
+                <StoreRightCol data={store} currentTabNum={currentTabNum} setCurrentTabNum={setCurrentTabNum}/>
             </Grid>
         </Grid>
         : null;

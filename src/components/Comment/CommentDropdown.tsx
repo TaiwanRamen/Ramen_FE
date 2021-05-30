@@ -1,24 +1,22 @@
 import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import StyledMenu from "../StyledMenu/StyledMenu";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import DeleteModal from "./DeleteModal";
-import {IStore} from "../../types/IStore";
+import DeleteCommentModal from "./DeleteCommentModal";
+import {IComment} from "../../types/IComment";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {IconButton} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
         dropdownBtn: {
             color: "#585b5d",
-            margin: 10,
+            padding: 5,
             display: "inline",
             float: "right",
-            padding: 5
         },
         divider: {
             height: 28,
@@ -28,26 +26,28 @@ const useStyles = makeStyles(() => ({
             minWidth: 36,
         },
         menuItem: {
-            margin:5
+            margin: 5
         }
     }),
 );
 
 type Props = {
-    store: IStore
+    comment: IComment,
+    editSectionShow: boolean,
+    setEditSectionShow: Function
 }
-const StoreDropdown = (props: Props) => {
+const CommentDropdown = (props: Props) => {
     const classes = useStyles();
-    const store = props.store;
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const comment = props.comment;
+    const setEditSectionShow = props.setEditSectionShow;
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalShow, setModalShow] = useState(false);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleEditBtnClick = () => {
-        setAnchorEl(null);
-        setModalShow(true);
+        setEditSectionShow(true);
     }
     const handleDeleteBtnClick = () => {
         setAnchorEl(null);
@@ -55,12 +55,11 @@ const StoreDropdown = (props: Props) => {
     }
     return (
         <>
-            <Button variant="outlined" className={classes.dropdownBtn} onClick={handleClick}>
-                <MoreHorizIcon/>
-                <ExpandMoreIcon/>
-            </Button>
+            <IconButton className={classes.dropdownBtn} onClick={handleClick}>
+                <MoreVertIcon/>
+            </IconButton>
             <StyledMenu
-                id="store-menu"
+                id="comment-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
@@ -79,9 +78,9 @@ const StoreDropdown = (props: Props) => {
                     <ListItemText primary="刪除"/>
                 </MenuItem>
             </StyledMenu>
-            <DeleteModal
-                storeId={store._id}
-                storeName={store.name}
+            <DeleteCommentModal
+                commentId={comment._id}
+                commentText={comment.text}
                 open={modalShow}
                 onClose={() => setModalShow(false)}
             />
@@ -89,4 +88,4 @@ const StoreDropdown = (props: Props) => {
     );
 };
 
-export default StoreDropdown;
+export default CommentDropdown;

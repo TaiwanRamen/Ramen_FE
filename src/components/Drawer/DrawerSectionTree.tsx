@@ -39,7 +39,6 @@ export default function CustomTreeView(props: Props) {
     const {notificationCount, setNotificationCount} = useNotification()!;
     const toggleDrawerOpen = props.toggleDrawerOpen;
 
-    console.log(notificationCount);
     return (
 
         <Box mt={1}>

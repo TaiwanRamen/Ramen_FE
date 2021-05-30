@@ -9,6 +9,7 @@ import ramenIcon from "../../static/ramen.svg";
 import React, {useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import {Tab, Tabs} from "@material-ui/core";
+// import OpeningHours from "./OpeningHours";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles(() => ({
     },
     backButton: {
         marginTop: "1rem",
-        marginBottom:"1rem",
+        marginBottom: "1rem",
         width: "100%",
         "&:hover": {
             backgroundColor: "#efefef",
@@ -48,7 +49,7 @@ const useStyles = makeStyles(() => ({
         zIndex: 600
     },
     tabs: {
-        margin:"10px 0",
+        margin: "10px 0",
         color: "black",
         backgroundColor: 'white',
         boxShadow: "none",
@@ -87,7 +88,7 @@ const StoreLeftCol = (props: Props) => {
     return (
         <Paper className={classes.root}>
 
-            <Button variant="outlined"  className={classes.backButton} onClick={() => history.go(-1)}>
+            <Button variant="outlined" className={classes.backButton} onClick={() => history.go(-1)}>
                 <FontAwesomeIcon icon={faAngleDoubleLeft}/>
                 <span className={classes.back}>返回上一頁</span>
             </Button>
@@ -124,11 +125,13 @@ const StoreLeftCol = (props: Props) => {
                     </Marker>
                 </ReactMapGL>
             </div>
-            <p className={classes.address}>地址：
+            <p className={classes.address}>
+                地址：
                 <a className={classes.addressLink} href={`https://www.google.com.tw/maps/place/${store.address}`}>
                     {store.address}
                 </a>
             </p>
+            {/*<OpeningHours/>*/}
 
         </Paper>
     );
