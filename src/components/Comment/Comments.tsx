@@ -7,7 +7,7 @@ import AddCommentModal from "./AddCommentModal";
 import Comment from './Comment'
 import Pagination from "@material-ui/lab/Pagination";
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, Button, Typography} from "@material-ui/core";
+import {Box, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     noComment: {
@@ -41,8 +41,6 @@ type CommentsRes = {
 const Comments = (props: Props) => {
         const {user} = useUser()!;
         const classes = useStyles();
-
-        const [modalShow, setModalShow] = useState(false);
         const [page, setPage] = useState<number>(1);
 
         const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
@@ -73,11 +71,7 @@ const Comments = (props: Props) => {
         return (
             <div className={classes.comments}>
                 {user && <div className={classes.commentBtn}>
-                    <Button variant="contained" onClick={() => setModalShow(true)}>留言</Button>
-                    <AddCommentModal
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
-                    />
+                    <AddCommentModal storeId={storeId}/>
                 </div>}
 
                 <Box mt={2}>

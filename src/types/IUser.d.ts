@@ -1,5 +1,6 @@
 import {UserRole} from '../enums/UserRole';
 export interface IUser {
+    userName?:string,
     avatar: string ,
     isVerified: boolean,
     userRole: UserRole,

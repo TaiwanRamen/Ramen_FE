@@ -10,19 +10,31 @@ import EditComment from "./EditComment";
 
 const useStyles = makeStyles((theme: Theme) => ({
     avatar: {
-        marginRight: theme.spacing(2),
+        marginRight: 10,
+        width: theme.spacing(6),
+        height: theme.spacing(6),
     },
     createdTime: {
         margin: 0
     },
     paper: {
-        marginTop: 10,
+        marginTop: 15,
         backgroundColor: "#efefef",
         boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.2)",
         borderRadius: 5,
-        padding: 15
+        padding: 20,
+        paddingTop:0,
+        "&::before": {
+            content: '""',
+            position: "relative",
+            top:-30,
+            width: 0,
+            height: 0,
+            borderLeft: "10px solid transparent",
+            borderRight: "10px solid transparent",
+            borderBottom: "10px solid #efefef",
+        },
     },
-
 }))
 
 type Props = {
@@ -31,6 +43,7 @@ type Props = {
 const Comment = (props: Props) => {
     // const {user} = useUser()!;
     const comment = props.comment;
+    const [commentText, setCommentText] = useState<string>(comment.text);
     //const commentAuthorId = props.comment?.author?.id;
     const [editSectionShow, setEditSectionShow] = useState(false);
     const classes = useStyles();
@@ -40,7 +53,7 @@ const Comment = (props: Props) => {
         <Box mt={4} mb={4}>
             <Grid container spacing={1}>
                 <Grid item>
-                    {<Avatar src={comment.author.avatar} className={classes.avatar}/>}
+                    {<Avatar variant="rounded" src={comment.author.avatar} className={classes.avatar}/>}
                 </Grid>
                 <Grid item xs={12} sm container>
                     <Grid item xs container direction="column">
@@ -48,7 +61,7 @@ const Comment = (props: Props) => {
                             <Typography variant="subtitle1">
                                 {comment.author.username}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary">
+                            <Typography variant="body2" color="textSecondary" className={classes.createdTime}>
                                 {dt.toRelative()}
                             </Typography>
                         </Grid>
@@ -76,17 +89,19 @@ const Comment = (props: Props) => {
             </Grid>
             {editSectionShow &&
             <EditComment
-                comment={comment}
+                commentText={commentText}
+                commentId={comment._id}
+                setCommentText={setCommentText}
                 setEditSectionShow={setEditSectionShow}
             />
             }
             {!editSectionShow &&
             <Paper className={classes.paper}>
-                <Grid item spacing={2}>
-                    <Typography variant="body1">
-                        {comment.text}
-                    </Typography>
-                </Grid>
+                {/*<span>{commentText}</span>*/}
+
+                <Typography variant="body1">
+                    {commentText}
+                </Typography>
             </Paper>
             }
 

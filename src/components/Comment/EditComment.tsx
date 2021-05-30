@@ -2,7 +2,6 @@ import {Box, Button, TextField} from "@material-ui/core";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import useStackedSnackBar from "../../customHooks/UseStackedSnackBar";
 import usePut from "../../customHooks/UsePut";
-import {IComment} from "../../types/IComment";
 import {useState} from "react";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -14,36 +13,41 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     submitButton: {
         padding: 5,
-        margin:2
+        margin: 2
     },
     cancelButton: {
         color: theme.palette.text.secondary,
         padding: 5,
-        margin:2
+        margin: 2
 
     }
 }))
 type Props = {
-    comment: IComment,
+    commentText: string,
+    commentId: string,
+    setCommentText: Function,
     setEditSectionShow: Function,
 }
 const EditComment = (props: Props) => {
     const classes = useStyles();
-    const comment = props.comment;
-    const [editedComment, setEditedComment] = useState(comment.text);
+    const commentText = props.commentText;
+    const commentId = props.commentId;
+    const setCommentText = props.setCommentText;
+    const [editedComment, setEditedComment] = useState(commentText);
     const setEditSectionShow = props.setEditSectionShow;
     const {mutate} = usePut();
     const showSnackBar = useStackedSnackBar();
 
     const handleUpdate = async () => {
         const reqProps = {
-            url: process.env.REACT_APP_BE_URL + `/api/v1/comments/${comment._id}`,
+            url: process.env.REACT_APP_BE_URL + `/api/v1/comments/${commentId}`,
             requestBody: {
                 comment: editedComment
             },
         };
         await mutate(reqProps, {
             onSuccess: () => {
+                setCommentText(editedComment);
                 showSnackBar(`成功更新留言`, 'success');
                 setEditSectionShow(false);
             },
@@ -58,13 +62,13 @@ const EditComment = (props: Props) => {
         <div>
             <TextField
                 id="storeName"
-                defaultValue={comment.text}
+                defaultValue={commentText}
                 fullWidth
                 margin="normal"
                 variant="outlined"
                 className={classes.input}
                 autoComplete='off'
-                onChange={(e:any) => setEditedComment(e.target.value)}
+                onChange={(e: any) => setEditedComment(e.target.value)}
             />
 
 
@@ -72,7 +76,7 @@ const EditComment = (props: Props) => {
                 <Button onClick={() => setEditSectionShow(false)} className={classes.cancelButton}>
                     取消
                 </Button>
-                <Button variant="outlined" color="primary"  onClick={handleUpdate} className={classes.submitButton}>
+                <Button variant="outlined" color="primary" onClick={handleUpdate} className={classes.submitButton}>
                     送出
                 </Button>
             </Box>

@@ -61,15 +61,15 @@ const DeleteCommentModal = (props: Props) => {
     const {mutate} = useDelete();
     const showSnackBar = useStackedSnackBar();
 
-    const handleDeleteStore = async () => {
+    const handleDeleteComent = async () => {
         const reqProps = {
             url: process.env.REACT_APP_BE_URL + `/api/v1/comments/${commentId}`,
             requestBody: {},
         };
         await mutate(reqProps, {
             onSuccess: () => {
-                history.push('/stores')
                 showSnackBar(`成功刪除: ${commentText}`, 'success');
+                history.go(0);
             },
             onError: () => showSnackBar(`刪除: ${commentText} 失敗`, 'error')
         });
@@ -89,7 +89,7 @@ const DeleteCommentModal = (props: Props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions className={classes.bottom}>
-                    <Button variant="outlined" color="secondary" onClick={handleDeleteStore}>
+                    <Button variant="outlined" color="secondary" onClick={handleDeleteComent}>
                         刪除
                     </Button>
                     <Button variant='text' onClick={props.onClose} className={classes.btn}>
