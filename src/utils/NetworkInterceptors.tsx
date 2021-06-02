@@ -12,21 +12,27 @@ const NetworkInterceptors = () => {
             return successRes;
         }, async (error) => {
             const message = error?.response?.data?.message;
-            switch (error.response.status){
+            switch (error.response.status) {
                 case 401:
                     setUser(null);
                     window.localStorage.removeItem("current_user");
                     await Cookies.remove('access_token');
                     history.push("/unAuthorized");
                     break;
+                case 403:
+                    history.go(0);
+                    break;
                 case 404:
                     history.push('/notFound');
+                    break;
+                case 422:
+                    history.go(0);
                     break;
                 case 500:
                     history.push('/error');
                     break;
                 default:
-                    history.push('/');
+                    history.go(0);
                     break;
             }
             showSnackBar(message, 'error');

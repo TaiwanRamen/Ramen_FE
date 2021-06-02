@@ -15,10 +15,10 @@ import './RamenNav.css';
 import {useNotification} from "../../Context/NotificationContext";
 import Badge from "@material-ui/core/Badge";
 // import Divider from "@material-ui/core/Divider";
-// import MavBarMapSection from "./MavBarMapSection";
+// import SubCategorySection from "./SubCategorySection";
 import {useUser} from "../../Context/UserContext";
 import axios from "axios";
-import MavBarMapSection from "./MavBarMapSection";
+import SubCategorySection from "./SubCategorySection";
 
 const navbarHeight = 64;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -123,13 +123,12 @@ const RamenNavbar = () => {
                             {!drawerOpen ? <MenuIcon/> : <ChevronLeftIcon/>}
                         </Badge>
                     </IconButton>
-                    <Hidden xsDown>
+                    <Hidden smDown>
                         <Button size="large" component={RouterLink} className={classes.title} to="/">
                             <img src="/images/ramen.png" alt="" width="32px" height="32px" className="mx-2"/>
                             台灣拉麵倶樂部
                         </Button>
-                        {/*<Divider className={classes.divider} orientation="vertical"/>*/}
-                        <MavBarMapSection/>
+                        <SubCategorySection/>
                     </Hidden>
 
                     <div className={classes.grow}/>

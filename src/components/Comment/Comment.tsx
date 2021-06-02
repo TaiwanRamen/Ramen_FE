@@ -6,7 +6,7 @@ import {Box, Grid, Paper, Typography} from "@material-ui/core";
 import CommentDropdown from "./CommentDropdown";
 import {useState} from "react";
 import EditComment from "./EditComment";
-// import {useUser} from "../../Context/UserContext";
+import {useUser} from "../../Context/UserContext";
 
 const useStyles = makeStyles((theme: Theme) => ({
     avatar: {
@@ -39,12 +39,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type Props = {
     comment: IComment,
+    storeId: string
 }
 const Comment = (props: Props) => {
-    // const {user} = useUser()!;
+    const {user} = useUser()!;
     const comment = props.comment;
+    const storeId = props.storeId;
     const [commentText, setCommentText] = useState<string>(comment.text);
-    //const commentAuthorId = props.comment?.author?.id;
+    const commentAuthorId = props.comment?.author?.id;
     const [editSectionShow, setEditSectionShow] = useState(false);
     const classes = useStyles();
     const dt = DateTime.fromISO(comment.createdAt).setLocale('zh-tw');
@@ -67,23 +69,17 @@ const Comment = (props: Props) => {
                         </Grid>
                     </Grid>
 
-                    {/*{user && comment && (user._id === commentAuthorId) &&*/}
-                    {/*<Grid item>*/}
-                    {/*    <Typography variant="body2">*/}
-                    {/*        <CommentDropdown comment={comment}/>*/}
-                    {/*    </Typography>*/}
-                    {/*</Grid>*/}
-                    {/*}*/}
-
+                    {user && comment && (user._id === commentAuthorId) &&
                     <Grid item>
                         <Typography variant="body2">
                             <CommentDropdown comment={comment}
+                                             storeId={storeId}
                                              editSectionShow={editSectionShow}
                                              setEditSectionShow={setEditSectionShow}
                             />
                         </Typography>
                     </Grid>
-
+                    }
 
                 </Grid>
             </Grid>

@@ -41,13 +41,14 @@ type CommentsRes = {
 const Comments = (props: Props) => {
         const {user} = useUser()!;
         const classes = useStyles();
+        const storeId = props.storeId;
+
         const [page, setPage] = useState<number>(1);
 
         const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
             setPage(value);
         };
 
-        const storeId = props.storeId;
         const options = {
             key: "comments",
             url: process.env.REACT_APP_BE_URL + `/api/v1/comments/${storeId}`,
@@ -78,7 +79,7 @@ const Comments = (props: Props) => {
                     {(data.comments?.length > 0) ?
                         <div>
                             {data.comments.map(comment =>
-                                <Comment comment={comment}/>
+                                <Comment comment={comment} storeId={storeId}/>
                             )}
                             <div className={classes.pages}>
                                 <Pagination count={data.pages}

@@ -10,8 +10,7 @@ import Chip from "@material-ui/core/Chip";
 
 const useTreeItemStyles = makeStyles((theme: Theme) => ({
         root: {
-            marginTop: "2px",
-            marginBottom: "2px",
+            margin: 5,
             color: theme.palette.text.secondary,
             '&:hover > $content': {
                 backgroundColor: theme.palette.action.hover,

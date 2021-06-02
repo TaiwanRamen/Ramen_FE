@@ -13,7 +13,7 @@ const usePut = () => {
             const url = props.url;
             const requestBody = props.requestBody;
             const params = props?.requestQuery;
-            await axios.put(url, requestBody, {params: params, withCredentials: true})
+            await axios.post(url, requestBody, {params: params, withCredentials: true})
         } catch (error) {
             throw new Error("Problem fetching data");
         }

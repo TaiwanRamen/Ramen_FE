@@ -40,7 +40,8 @@ const EditComment = (props: Props) => {
 
     const handleUpdate = async () => {
         const reqProps = {
-            url: process.env.REACT_APP_BE_URL + `/api/v1/comments/${commentId}`,
+            url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
+            requestQuery: {commentId: commentId},
             requestBody: {
                 comment: editedComment
             },

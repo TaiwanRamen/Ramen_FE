@@ -33,12 +33,14 @@ const useStyles = makeStyles(() => ({
 
 type Props = {
     comment: IComment,
+    storeId: string,
     editSectionShow: boolean,
     setEditSectionShow: Function
 }
 const CommentDropdown = (props: Props) => {
     const classes = useStyles();
     const comment = props.comment;
+    const storeId = props.storeId;
     const setEditSectionShow = props.setEditSectionShow;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalShow, setModalShow] = useState(false);
@@ -80,6 +82,7 @@ const CommentDropdown = (props: Props) => {
             </StyledMenu>
             <DeleteCommentModal
                 commentId={comment._id}
+                storeId={storeId}
                 commentText={comment.text}
                 open={modalShow}
                 onClose={() => setModalShow(false)}

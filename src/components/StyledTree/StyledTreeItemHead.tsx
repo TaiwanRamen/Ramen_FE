@@ -10,7 +10,7 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {
-            marginTop: "10px",
+            margin: 5,
             color: theme.palette.text.secondary,
             '&:hover > $content': {
                 backgroundColor: theme.palette.action.hover,

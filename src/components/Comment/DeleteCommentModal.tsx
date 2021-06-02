@@ -49,6 +49,7 @@ const useStyles = makeStyles(() => ({
 
 type Props = {
     commentId: string,
+    storeId:string,
     commentText: string,
     open: boolean,
     onClose: () => void
@@ -56,14 +57,16 @@ type Props = {
 const DeleteCommentModal = (props: Props) => {
     const classes = useStyles();
     const commentId = props.commentId;
+    const storeId = props.storeId;
     const history = useHistory();
     const commentText = props.commentText;
     const {mutate} = useDelete();
     const showSnackBar = useStackedSnackBar();
 
-    const handleDeleteComent = async () => {
+    const handleDeleteComment = async () => {
         const reqProps = {
-            url: process.env.REACT_APP_BE_URL + `/api/v1/comments/${commentId}`,
+            url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
+            requestQuery: {commentId: commentId, storeId: storeId},
             requestBody: {},
         };
         await mutate(reqProps, {
@@ -89,7 +92,7 @@ const DeleteCommentModal = (props: Props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions className={classes.bottom}>
-                    <Button variant="outlined" color="secondary" onClick={handleDeleteComent}>
+                    <Button variant="outlined" color="secondary" onClick={handleDeleteComment}>
                         刪除
                     </Button>
                     <Button variant='text' onClick={props.onClose} className={classes.btn}>

@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }),
 );
 
-const MavBarMapSection = () => {
+const SubCategorySection = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -51,6 +51,11 @@ const MavBarMapSection = () => {
     };
     return (
         <>
+            <Button component={RouterLink} className={classes.selection} to="/storesAround">
+                附近店家
+            </Button>
+            <Divider className={classes.divider} orientation="vertical"/>
+
             <Button component={RouterLink} className={classes.selection} to="/stores">
                 店家列表
             </Button>
@@ -91,4 +96,4 @@ const MavBarMapSection = () => {
     );
 };
 
-export default MavBarMapSection;
+export default SubCategorySection;

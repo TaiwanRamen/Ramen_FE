@@ -8,7 +8,7 @@ import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import CommentIcon from "@material-ui/icons/Comment";
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import {useNotification} from "../../Context/NotificationContext";
-import {faMapMarkedAlt, faStoreAlt, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faMapMarkedAlt, faStoreAlt, faStreetView, faUser} from "@fortawesome/free-solid-svg-icons";
 import TaiwanIcon from "../../static/taiwan.svg";
 import TaipeiMetroIcon from "../../static/Metro_Taipei_Logo_new.svg";
 import KaohsiungMetroIcon from "../../static/kaohsiung-metro-logo.svg";
@@ -44,39 +44,48 @@ export default function CustomTreeView(props: Props) {
         <Box mt={1}>
             <TreeView
                 className={classes.root}
-                defaultExpanded={['1', '5']}
+                defaultExpanded={['10', '20']}
                 defaultCollapseIcon={<ArrowDropDownIcon/>}
                 defaultExpandIcon={<ArrowRightIcon/>}
             >
                 <StyledTreeItem
                     nodeId="0"
+                    labelText="附近店家"
+                    to="/storesAround"
+                    labelIconFA={faStreetView}
+                    onClick={toggleDrawerOpen}
+                />
+                <Divider/>
+                <StyledTreeItem
+                    nodeId="1"
                     labelText="店家列表"
                     to="/stores"
                     labelIconFA={faStoreAlt}
                     onClick={toggleDrawerOpen}
                 />
                 <Divider/>
+
                 <StyledTreeItemHead
-                    nodeId="1"
+                    nodeId="10"
                     labelText="地圖"
                     labelIconFA={faMapMarkedAlt}
                 >
                     <StyledTreeItem
-                        nodeId="2"
+                        nodeId="11"
                         labelText="臺灣地圖"
                         to="/map"
                         labelIconSVG={TaiwanIcon}
                         onClick={toggleDrawerOpen}
                     />
                     <StyledTreeItem
-                        nodeId="3"
+                        nodeId="12"
                         labelText="臺北捷運地圖"
                         labelIconSVG={TaipeiMetroIcon}
                         to="/map/TaipeiMetro"
                         onClick={toggleDrawerOpen}
                     />
                     <StyledTreeItem
-                        nodeId="4"
+                        nodeId="13"
                         labelText="高雄捷運地圖"
                         labelIconSVG={KaohsiungMetroIcon}
                         to="/map/KaohsiungMetro"
@@ -87,13 +96,13 @@ export default function CustomTreeView(props: Props) {
 
                 {!!user && <>
                     <StyledTreeItemHead
-                        nodeId="5"
+                        nodeId="20"
                         labelText="用戶專區"
                         labelIconFA={faUser}
                         labelInfo={notificationCount}
                     >
                         <StyledTreeItem
-                            nodeId="6"
+                            nodeId="21"
                             labelText="通知"
                             labelIcon={NotificationsIcon}
                             labelInfo={notificationCount}
@@ -104,28 +113,28 @@ export default function CustomTreeView(props: Props) {
                             to="/notification"
                         />
                         <StyledTreeItem
-                            nodeId="7"
+                            nodeId="22"
                             labelText="追蹤清單"
                             labelIcon={BookmarkIcon}
                             to="/following"
                             onClick={toggleDrawerOpen}
                         />
                         <StyledTreeItem
-                            nodeId="8"
+                            nodeId="23"
                             labelText="願望清單"
                             labelIcon={PlaylistAddIcon}
                             to="/wishlist"
                             onClick={toggleDrawerOpen}
                         />
                         <StyledTreeItem
-                            nodeId="9"
+                            nodeId="24"
                             labelText="已評論店家"
                             labelIcon={CommentIcon}
                             to="/commented"
                             onClick={toggleDrawerOpen}
                         />
                         <StyledTreeItem
-                            nodeId="10"
+                            nodeId="25"
                             labelText="用戶設定"
                             labelIcon={SettingsIcon}
                             to="/setting"

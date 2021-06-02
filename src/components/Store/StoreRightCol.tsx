@@ -48,12 +48,12 @@ const useStyles = makeStyles(() => ({
         float: "right",
     },
     divider: {
-        color:'black',
+        color: 'black',
         margin: "25px auto"
     },
-    tabPanel:{
+    tabPanel: {
         marginTop: 30,
-        "& > div" :{
+        "& > div": {
             padding: 5
         }
     }
@@ -79,13 +79,11 @@ const StoreRightCol = (props: Props) => {
     const isStoreOwner = true;
 
     const gotoComment = () => {
-        setCurrentTabNum(0);
+        setCurrentTabNum(1);
         if (commentEl.current) {
             commentEl.current.scrollIntoView();
         }
-
     }
-
 
     return (
         <Paper className={classes.root}>
@@ -116,12 +114,12 @@ const StoreRightCol = (props: Props) => {
 
                 <TabPanel value={currentTabNum} index={0} className={classes.tabPanel}>
                     <StoreIntro store={store}/>
-                    <div ref={commentEl}>
-                        <Comments storeId={storeId}/>
-                    </div>
+                    <Comments storeId={storeId}/>
                 </TabPanel>
                 <TabPanel value={currentTabNum} index={1}>
-                    <Reviews storeId={storeId}/>
+                    <div ref={commentEl}>
+                        <Reviews storeId={storeId}/>
+                    </div>
                 </TabPanel>
 
             </Box>

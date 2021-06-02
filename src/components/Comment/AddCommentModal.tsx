@@ -1,14 +1,17 @@
 import {Button, Grid, TextField} from "@material-ui/core";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {useUser} from "../../Context/UserContext";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
+import usePost from "../../customHooks/usePost";
+import useStackedSnackBar from "../../customHooks/UseStackedSnackBar";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
     input: {
+        maxHeight: 60,
         margin: "0 5px",
-        float:"right"
+        float: "right"
     },
     avatar: {
         width: theme.spacing(6),
@@ -16,7 +19,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     commentBtn: {
         margin: 5,
-        padding:0
+        padding: 0,
+        maxHeight: 60
     }
 }))
 
@@ -26,12 +30,44 @@ type Props = {
 
 const AddCommentModal = (props: Props) => {
     const classes = useStyles();
-    const [comment, setComment] = useState<string>("")
-    const {user} = useUser()!;
     const storeId = props.storeId;
 
-    const addComment = () => {
-        console.log(comment)
+    const [comment, setComment] = useState<string>("");
+    const [commentBtnDisabled, setCommentBtnDisabled] = useState<boolean>(true);
+    const [isInputFocus, setIsInputFocus] = useState<boolean>(false);
+
+    const {mutate} = usePost();
+    const {user} = useUser()!;
+    const showSnackBar = useStackedSnackBar();
+
+    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+        const input = e.target.value;
+        setComment(input);
+        if (input.length !== 0) {
+            setCommentBtnDisabled(false)
+        } else {
+            setCommentBtnDisabled(true)
+        }
+    }
+
+    const addComment = async () => {
+        const reqProps = {
+            url: process.env.REACT_APP_BE_URL + `/api/v1/comments/new`,
+            requestBody: {
+                storeId: storeId,
+                comment: comment,
+            },
+        };
+        await mutate(reqProps, {
+            onSuccess: () => {
+                console.log("success")
+                showSnackBar(`成功新增留言`, 'success');
+                window.location.reload();
+            },
+            onError: () => {
+                showSnackBar(`新增留言失敗`, 'error');
+            }
+        });
     }
 
     return (
@@ -49,11 +85,16 @@ const AddCommentModal = (props: Props) => {
                         variant="outlined"
                         className={classes.input}
                         autoComplete='off'
-                        onChange={(e: any) => setComment(e.target.value)}
+                        onChange={handleInput}
+                        onFocus={()=>setIsInputFocus(true)}
+                        onBlur={()=>setIsInputFocus(false)}
+                        error={commentBtnDisabled && isInputFocus}
+                        helperText={commentBtnDisabled && isInputFocus ? '輸入不能為空': ''}
                     />
                 </Grid>
 
-                <Button variant="outlined" className={classes.commentBtn} onClick={addComment}>
+                <Button variant="outlined" disabled={commentBtnDisabled} className={classes.commentBtn}
+                        onClick={addComment}>
                     留言
                 </Button>
 
