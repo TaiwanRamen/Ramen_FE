@@ -13,7 +13,7 @@ const usePut = () => {
         const url = props.url;
         const requestBody = props.requestBody;
         const params = props?.requestQuery;
-        await axios.put(url, requestBody, {params: params, withCredentials: true})
+        return await axios.put(url, requestBody, {params: params, withCredentials: true})
 
     }
     return useMutation((props: Props) => putData(props));

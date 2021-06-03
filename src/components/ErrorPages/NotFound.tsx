@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import {Link, withRouter} from "react-router-dom"
 const NotFound = () => {
     return ( 
     <div className="row">
@@ -10,4 +10,4 @@ const NotFound = () => {
     </div> );
 }
  
-export default NotFound;
+export default withRouter(NotFound);

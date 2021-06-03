@@ -1,3 +1,4 @@
+import {withRouter} from "react-router-dom";
 
 const UnAuthorized = () => {
     return (
@@ -7,4 +8,4 @@ const UnAuthorized = () => {
     );
 };
 
-export default UnAuthorized;
+export default withRouter(UnAuthorized);

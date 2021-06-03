@@ -4,6 +4,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import {ChangeEvent, useState} from "react";
 import {IStore} from "../../types/IStore";
 import FollowingStrip from "./FollowingStrip";
+import {withRouter} from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -88,4 +89,4 @@ const UserFollowingPage = () => {
 
 };
 
-export default UserFollowingPage;
+export default withRouter(UserFollowingPage);

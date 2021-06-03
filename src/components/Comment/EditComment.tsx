@@ -35,28 +35,26 @@ const EditComment = (props: Props) => {
     const setCommentText = props.setCommentText;
     const [editedComment, setEditedComment] = useState(commentText);
     const setEditSectionShow = props.setEditSectionShow;
-    const {mutate} = usePut();
+    const {mutateAsync} = usePut();
     const showSnackBar = useStackedSnackBar();
 
     const handleUpdate = async () => {
-        const reqProps = {
-            url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
-            requestQuery: {commentId: commentId},
-            requestBody: {
-                comment: editedComment
-            },
-        };
-        await mutate(reqProps, {
-            onSuccess: () => {
-                setCommentText(editedComment);
-                showSnackBar(`成功更新留言`, 'success');
-                setEditSectionShow(false);
-            },
-            onError: () => {
-                showSnackBar(`更新留言失敗`, 'error');
-                setEditSectionShow(false);
-            }
-        });
+        try {
+            const reqProps = {
+                url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
+                requestQuery: {commentId: commentId},
+                requestBody: {
+                    comment: editedComment
+                },
+            };
+            await mutateAsync(reqProps);
+            setCommentText(editedComment);
+            showSnackBar(`成功更新留言`, 'success');
+            setEditSectionShow(false);
+        } catch (error) {
+            showSnackBar(`更新留言失敗`, 'error');
+            setEditSectionShow(false);
+        }
     }
 
     return (

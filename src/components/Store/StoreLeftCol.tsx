@@ -103,7 +103,7 @@ const StoreLeftCol = (props: Props) => {
                 className={classes.tabs}
             >
                 <Tab label="店家介紹"/>
-                <Tab label="食記"/>
+                <Tab label="食記/評論"/>
             </Tabs>
 
             <div id="map" className={classes.storeMap}>

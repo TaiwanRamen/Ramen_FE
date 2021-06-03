@@ -1,15 +1,15 @@
 export type IReview = {
-    "author": {
-        "avatar": string,
-        "id": string,
-        "username": string
+    author: {
+        avatar: string,
+        id: string,
+        username: string
     },
-    "_id": string,
-    "rating": number,
-    "text": string,
-    "createdAt": string,
-    "updatedAt": string,
-    "__v": number,
-    "store": string
+    _id: string,
+    rating: number,
+    text: string,
+    createdAt: string,
+    updatedAt: string,
+    __v: number,
+    store: string
 }
 

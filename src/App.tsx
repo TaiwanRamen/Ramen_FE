@@ -10,7 +10,6 @@ import {NotificationProvider} from './Context/NotificationContext';
 
 import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
-import 'moment/locale/zh-tw';
 import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
 import TaipeiMetro from "./components/Metro/TaipeiMetro";
@@ -23,6 +22,7 @@ import {Container} from "@material-ui/core";
 import NetworkInterceptors from "./utils/NetworkInterceptors";
 import UnAuthorized from "./components/ErrorPages/UnAuthorized";
 import ErrorPage from "./components/ErrorPages/ErrorPage";
+import AddReviewPage from "./components/Reviews/AddReviewPage";
 
 
 const useStyles = makeStyles(() => ({
@@ -79,13 +79,19 @@ function App() {
                                 <Route path="/login">
                                     <LoginPage/>
                                 </Route>
-                                <ProtectedRoute path="/create" component={Profile}/>
-                                <ProtectedRoute path="/stores/:id" component={Store}/>
+
+                                {/*user section*/}
                                 <ProtectedRoute path="/notification" component={Profile}/>
                                 <ProtectedRoute path="/following" component={UserFollowingPage}/>
                                 <ProtectedRoute path="/wishlist" component={Profile}/>
                                 <ProtectedRoute path="/commented" component={Profile}/>
                                 <ProtectedRoute path="/setting" component={Profile}/>
+
+
+                                <ProtectedRoute path="/stores/:id/newReview" component={AddReviewPage}/>
+                                <ProtectedRoute path="/stores/new" component={Profile}/>
+                                <ProtectedRoute path="/stores/:id" component={Store}/>
+
 
 
                                 <Route exact path="/notFound" component={NotFound}/>

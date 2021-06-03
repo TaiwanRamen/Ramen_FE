@@ -7,6 +7,7 @@ import {IStore} from '../../types/IStore'
 import Grid from "@material-ui/core/Grid";
 import useFetch from "../../customHooks/UseFetch";
 import React from "react";
+import {withRouter} from "react-router-dom";
 
 
 type StoreResponse = {
@@ -54,4 +55,4 @@ const Store = () => {
         : null;
 };
 
-export default Store;
+export default withRouter(Store);

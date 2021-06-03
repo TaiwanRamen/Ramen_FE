@@ -6,7 +6,7 @@ import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import FollowBtn from "../FollowBtn/FollowBtn";
-import {Paper} from "@material-ui/core";
+import {Divider, Paper} from "@material-ui/core";
 import {LocationOn} from "@material-ui/icons";
 import StoreDropdown from "./StoreDropdown";
 import TabPanel from "./TabPanel";
@@ -111,6 +111,7 @@ const StoreRightCol = (props: Props) => {
                 </Box>
                 <Tags/>
 
+                <Divider className={classes.divider} orientation="horizontal" variant="fullWidth"/>
 
                 <TabPanel value={currentTabNum} index={0} className={classes.tabPanel}>
                     <StoreIntro store={store}/>

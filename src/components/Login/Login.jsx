@@ -1,11 +1,12 @@
 import FacebookLogin from "react-facebook-login";
-import { useState} from "react";
+import {useState} from "react";
 import './Login.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {useUser} from "../../Context/UserContext";
 import LoadingIcon from "../Loading/LoadingIcon";
 import Button from "@material-ui/core/Button";
+import {useHistory} from "react-router-dom";
 
 
 type Props = {
@@ -16,7 +17,7 @@ const Login = (props: Props) => {
     const [isLoginFail, setIsLoginFail] = useState(false);
     const [loginCount, setLoginCount] = useState(0);
 
-    const { user, setUser } = useUser();
+    const {user, setUser} = useUser();
     const url = `${process.env.REACT_APP_BE_URL}/api/v1/user/oauth/facebook`;
 
     const componentClicked = () => {
@@ -25,23 +26,22 @@ const Login = (props: Props) => {
 
     const loginToOurServer = async (response) => {
         try {
-            let payload = { "access_token": response.accessToken };
+            let payload = {"access_token": response.accessToken};
             let options = {
                 method: 'post',
                 url: url,
                 data: payload,
-                config: { headers: {'Content-Type': 'application/json' }}
+                config: {headers: {'Content-Type': 'application/json'}}
             };
             let serverRes = await axios(options);
             let loginUser = serverRes.data.data.user;
             setUser(loginUser);
             Cookies.set('access_token', serverRes.data.data.token);
             window.localStorage.setItem("current_user", JSON.stringify(loginUser));
-
         } catch (e) {
             console.log("error:", e);
             setIsLoginFail(true);
-            setLoginCount(loginCount+1)
+            setLoginCount(loginCount + 1)
         } finally {
             setIsLoading(false);
         }
@@ -50,7 +50,7 @@ const Login = (props: Props) => {
     const onFailure = () => {
         setIsLoading(false);
         setIsLoginFail(true);
-        setLoginCount(loginCount+1)
+        setLoginCount(loginCount + 1)
     };
 
     const handleFailure = () => {
@@ -59,7 +59,7 @@ const Login = (props: Props) => {
 
     const fields = 'id, name, gender, picture.type(large), email';
 
-    if(user){
+    if (user) {
         return <></>
     }
 
@@ -68,22 +68,22 @@ const Login = (props: Props) => {
             {isLoading && <div className="m-2">
                 <LoadingIcon/>
                 <span>登入中，請稍等</span>
-            </div>  }
+            </div>}
 
             {isLoginFail && loginCount < 3 &&
-                <div>
-                    <Button variant="outlined"  color="secondary" size="large" onClick={handleFailure} className="m-2">
-                        登入失敗，請點擊重試
-                    </Button>
-                </div>
+            <div>
+                <Button variant="outlined" color="secondary" size="large" onClick={handleFailure} className="m-2">
+                    登入失敗，請點擊重試
+                </Button>
+            </div>
             }
             {loginCount >= 3 && <div className="m-2">
                 <p>登入異常，請重新整理或稍後再試</p>
-            </div>  }
+            </div>}
 
 
             {!isLoading && !isLoginFail && <FacebookLogin
-                appId="315819223006532"
+                appId={process.env.REACT_APP_FB_ID}
                 autoLoad={false}
                 fields={fields}
                 cookie={true}

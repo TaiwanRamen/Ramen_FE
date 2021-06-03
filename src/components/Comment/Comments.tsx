@@ -67,7 +67,8 @@ const Comments = (props: Props) => {
             return <div>{error?.message}</div>;
         }
 
-        if (!data) return <div>系統無法取得留言，請重新整理</div>
+        if (!data?.comments) return <div>系統無法取得留言，請重新整理</div>
+
 
         return (
             <div className={classes.comments}>
@@ -98,8 +99,6 @@ const Comments = (props: Props) => {
                         </Typography>
                     }
                 </Box>
-
-
             </div>
         )
     }

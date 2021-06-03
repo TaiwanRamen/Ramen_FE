@@ -43,37 +43,37 @@ const FollowBtn = (props: Props) => {
 
     const [isUserFollowStore, setIsUserFollowStore] = useState<boolean>(store.followers.includes(user?._id as string));
 
-    const {mutate} = usePut();
+    const {mutateAsync} = usePut();
     const showSnackBar = useStackedSnackBar();
 
 
     const handleFollowBtnClick = async () => {
         // if followed, unFollow
         if (isUserFollowStore) {
-            const reqProps = {
-                url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${store._id}/unfollow`,
-                requestBody: {},
-            };
-            await mutate(reqProps, {
-                onSuccess: () => {
-                    showSnackBar(`成功取消追蹤: ${store.name}`, 'default');
-                    setIsUserFollowStore(!isUserFollowStore);
-                },
-                onError: () => showSnackBar(`取消追蹤: ${store.name} 失敗`, 'error')
-            });
+            try {
+                const reqProps = {
+                    url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${store._id}/unfollow`,
+                    requestBody: {},
+                };
+                await mutateAsync(reqProps);
+                showSnackBar(`成功取消追蹤: ${store.name}`, 'default');
+                setIsUserFollowStore(!isUserFollowStore);
+            } catch (e) {
+                showSnackBar(`取消追蹤: ${store.name} 失敗`, 'error')
+            }
 
         } else {
-            const reqProps = {
-                url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${store._id}/follow`,
-                requestBody: {},
-            };
-            await mutate(reqProps, {
-                onSuccess: () => {
-                    showSnackBar(`成功追蹤: ${store.name}`, 'success');
-                    setIsUserFollowStore(!isUserFollowStore);
-                },
-                onError: () => showSnackBar(`追蹤: ${store.name} 失敗`, 'error')
-            });
+            try {
+                const reqProps = {
+                    url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${store._id}/follow`,
+                    requestBody: {},
+                };
+                await mutateAsync(reqProps);
+                showSnackBar(`成功追蹤: ${store.name}`, 'success');
+                setIsUserFollowStore(!isUserFollowStore);
+            } catch (e) {
+                showSnackBar(`追蹤: ${store.name} 失敗`, 'error')
+            }
         }
 
     }
@@ -81,14 +81,16 @@ const FollowBtn = (props: Props) => {
         <>
             {
                 !isUserFollowStore &&
-                <Button size={"medium"}  variant="outlined"  className={classes.followBg} onClick={() => handleFollowBtnClick()}>
+                <Button size={"medium"} variant="outlined" className={classes.followBg}
+                        onClick={() => handleFollowBtnClick()}>
                     <LocalOfferRoundedIcon className={classes.follow}/>
                     <span className={classes.follow}>追蹤</span>
                 </Button>
             }
             {
                 isUserFollowStore &&
-                <Button size={"medium"} variant="outlined"  className={classes.followBg} onClick={() => handleFollowBtnClick()}>
+                <Button size={"medium"} variant="outlined" className={classes.followBg}
+                        onClick={() => handleFollowBtnClick()}>
                     <LocalOfferRoundedIcon className={classes.unfollow}/>
                     <span className={classes.unfollow}>已追蹤</span>
                 </Button>

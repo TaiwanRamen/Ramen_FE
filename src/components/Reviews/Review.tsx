@@ -1,20 +1,109 @@
 import {IReview} from "../../types/IReview";
-import Moment from 'react-moment';
+import {DateTime} from "luxon";
+import {Box, Grid, Paper, Typography} from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import {useUser} from "../../Context/UserContext";
+import {makeStyles, Theme} from "@material-ui/core/styles";
+import Rating from "@material-ui/lab/Rating";
+
+
+const useStyles = makeStyles((theme: Theme) => ({
+    avatar: {
+        marginRight: 10,
+        width: theme.spacing(6),
+        height: theme.spacing(6),
+    },
+    createdTime: {
+        marginRight:8,
+        fontWeight: 'bold',
+        margin: 0
+    },
+    paper: {
+        marginTop: 15,
+        backgroundColor: "#f8f6f6",
+        boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.2)",
+        borderRadius: 5,
+        padding: 20,
+        paddingTop:0,
+        "&::before": {
+            content: '""',
+            position: "relative",
+            top:-30,
+            width: 0,
+            height: 0,
+            borderLeft: "10px solid transparent",
+            borderRight: "10px solid transparent",
+            borderBottom: "10px solid #efefef",
+        },
+    },
+    rateValue: {
+        marginRight: 2,
+        fontWeight: 'bold',
+        display: 'inline',
+    },
+}))
 
 type Props = {
     review: IReview
 }
 const Review = (props: Props) => {
-
+    const classes = useStyles();
+    const {user} = useUser()!;
     const review = props.review;
+    const author = review.author;
+    const reviewCreateTime = DateTime.fromISO(review.createdAt).setLocale('zh-tw');
     return (
-        <div className="grid-container">
-            <div className="avatar">
-                {review._id}
+        <Box mt={4} mb={4}>
+            <Grid container spacing={1}>
+                <Grid item>
+                    {<Avatar variant="rounded" src={author.avatar} className={classes.avatar}/>}
+                </Grid>
+                <Grid item xs={12} sm container>
+                    <Grid item xs container direction="column">
+                        <Grid item xs>
+                            <Typography variant="subtitle1">
+                                {author.username}
+                            </Typography>
+                            <Box color={'grey.500'} display={'flex'} alignItems="flex-start" m={0}>
+                                <Typography  variant="body2" color="textSecondary" className={classes.createdTime}>
+                                    {reviewCreateTime.toRelative()}
+                                </Typography>
+                                <Rating name={'rating'} value={review.rating} size={'small'} precision={0.1} readOnly/>
+                            </Box>
+                        </Grid>
+                    </Grid>
 
-                <Moment fromNow>{review.createdAt}</Moment>
-            </div>
-        </div>
+
+                    {user &&
+                    <Grid item>
+                        <Typography variant="body2">
+                           select
+                        </Typography>
+                    </Grid>
+                    }
+
+                </Grid>
+            </Grid>
+            {/*{editSectionShow &&*/}
+            {/*<EditComment*/}
+            {/*    commentText={commentText}*/}
+            {/*    commentId={comment._id}*/}
+            {/*    setCommentText={setCommentText}*/}
+            {/*    setEditSectionShow={setEditSectionShow}*/}
+            {/*/>*/}
+            {/*}*/}
+
+            <Paper className={classes.paper}>
+                {/*<span>{commentText}</span>*/}
+
+                <Typography variant="body1">
+                    {review.text}
+                </Typography>
+            </Paper>
+
+
+
+        </Box>
     );
 };
 

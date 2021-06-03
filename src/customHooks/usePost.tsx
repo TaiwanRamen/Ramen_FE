@@ -4,21 +4,27 @@ import {useMutation} from "react-query";
 type Props = {
     url: string,
     requestBody: Object,
-    requestQuery?: Object
+    requestQuery?: Object,
+    headers?: Object
 }
 
-const usePut = () => {
-    const putData = async (props: Props) => {
+const usePost = () => {
+    const postData = async (props: Props) => {
         try {
             const url = props.url;
             const requestBody = props.requestBody;
             const params = props?.requestQuery;
-            await axios.post(url, requestBody, {params: params, withCredentials: true})
+            const headers = props?.headers;
+            return await axios.post(url, requestBody, {
+                params: params,
+                headers: headers,
+                withCredentials: true
+            })
         } catch (error) {
             throw new Error("Problem fetching data");
         }
     }
-    return useMutation((props: Props) => putData(props));
+    return useMutation((props: Props) => postData(props));
 };
 
-export default usePut;
+export default usePost;

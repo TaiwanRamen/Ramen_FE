@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
 
 type Props = {
     commentId: string,
-    storeId:string,
+    storeId: string,
     commentText: string,
     open: boolean,
     onClose: () => void
@@ -60,23 +60,24 @@ const DeleteCommentModal = (props: Props) => {
     const storeId = props.storeId;
     const history = useHistory();
     const commentText = props.commentText;
-    const {mutate} = useDelete();
+    const {mutateAsync} = useDelete();
     const showSnackBar = useStackedSnackBar();
 
     const handleDeleteComment = async () => {
-        const reqProps = {
-            url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
-            requestQuery: {commentId: commentId, storeId: storeId},
-            requestBody: {},
-        };
-        await mutate(reqProps, {
-            onSuccess: () => {
-                showSnackBar(`成功刪除: ${commentText}`, 'success');
-                history.go(0);
-            },
-            onError: () => showSnackBar(`刪除: ${commentText} 失敗`, 'error')
-        });
-        props.onClose();
+        try {
+            const reqProps = {
+                url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
+                requestQuery: {commentId: commentId, storeId: storeId},
+                requestBody: {},
+            };
+            await mutateAsync(reqProps);
+            showSnackBar(`成功刪除: ${commentText}`, 'success');
+            history.go(0);
+        } catch (e) {
+            showSnackBar(`刪除: ${commentText} 失敗`, 'error')
+        } finally {
+            props.onClose();
+        }
     }
     const handleDialogClose = () => {
         props.onClose();

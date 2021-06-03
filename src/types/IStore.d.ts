@@ -8,7 +8,7 @@ export type IStore = {
     followers: string[],
     imageLarge: string[],
     imageSmall: string[],
-    location: {type: string, coordinates: number[], formattedAddress: string},
+    location: {type: string, coordinates: number[], geoHash: string},
     name: string,
     owners: string[],
     rating: number

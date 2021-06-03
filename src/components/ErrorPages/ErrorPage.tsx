@@ -1,3 +1,4 @@
+import {withRouter} from "react-router-dom";
 
 const ErrorPage = () => {
     return (
@@ -7,4 +8,4 @@ const ErrorPage = () => {
     );
 };
 
-export default ErrorPage;
+export default withRouter(ErrorPage);

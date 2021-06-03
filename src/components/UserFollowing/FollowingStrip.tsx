@@ -50,7 +50,6 @@ const FollowingStrip = (props: Props) => {
     const handleListItemClick = (store: IStore,) => {
         console.log(store._id);
     };
-
     return (
         <>
             <List component={Link} to={`/stores/${store._id}`} className={classes.root}>
@@ -65,6 +64,7 @@ const FollowingStrip = (props: Props) => {
                     </ListItemAvatar>
                     <ListItemText primary={store.name}
                                   secondary={`更新於 ${dt.toRelative()}`}/>
+
                 </ListItem>
             </List>
 
