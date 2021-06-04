@@ -50,12 +50,6 @@ const useStyles = makeStyles(() => ({
     divider: {
         color: 'black',
         margin: "25px auto"
-    },
-    tabPanel: {
-        marginTop: 30,
-        "& > div": {
-            padding: 5
-        }
     }
 }))
 
@@ -101,7 +95,7 @@ const StoreRightCol = (props: Props) => {
                     </Typography>
                     <Rating name={'rating'} value={store.rating} size={'small'} precision={0.1} readOnly/>
                     <Typography variant={'body2'} onClick={gotoComment} className={classes.reviewCount}>
-                        10 則評論
+                        {store.reviews.length} 則評論
                     </Typography>
                 </Box>
 
@@ -113,7 +107,7 @@ const StoreRightCol = (props: Props) => {
 
                 <Divider className={classes.divider} orientation="horizontal" variant="fullWidth"/>
 
-                <TabPanel value={currentTabNum} index={0} className={classes.tabPanel}>
+                <TabPanel value={currentTabNum} index={0}>
                     <StoreIntro store={store}/>
                     <Comments storeId={storeId}/>
                 </TabPanel>

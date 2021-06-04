@@ -5,7 +5,8 @@ import Avatar from "@material-ui/core/Avatar";
 import {useUser} from "../../Context/UserContext";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
-
+import ReactQuill from "react-quill";
+import he from 'he';
 
 const useStyles = makeStyles((theme: Theme) => ({
     avatar: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: theme.spacing(6),
     },
     createdTime: {
-        marginRight:8,
+        marginRight: 8,
         fontWeight: 'bold',
         margin: 0
     },
@@ -24,11 +25,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.2)",
         borderRadius: 5,
         padding: 20,
-        paddingTop:0,
+        paddingTop: 0,
         "&::before": {
             content: '""',
             position: "relative",
-            top:-30,
+            top: -30,
             width: 0,
             height: 0,
             borderLeft: "10px solid transparent",
@@ -41,6 +42,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontWeight: 'bold',
         display: 'inline',
     },
+    reviewText: {
+        "& > div.ql-editor": {
+            fontSize: "1rem",
+        },
+        "& > div.ql-tooltip": {
+            height: 0
+        }
+    }
 }))
 
 type Props = {
@@ -65,7 +74,7 @@ const Review = (props: Props) => {
                                 {author.username}
                             </Typography>
                             <Box color={'grey.500'} display={'flex'} alignItems="flex-start" m={0}>
-                                <Typography  variant="body2" color="textSecondary" className={classes.createdTime}>
+                                <Typography variant="body2" color="textSecondary" className={classes.createdTime}>
                                     {reviewCreateTime.toRelative()}
                                 </Typography>
                                 <Rating name={'rating'} value={review.rating} size={'small'} precision={0.1} readOnly/>
@@ -77,7 +86,7 @@ const Review = (props: Props) => {
                     {user &&
                     <Grid item>
                         <Typography variant="body2">
-                           select
+                            select
                         </Typography>
                     </Grid>
                     }
@@ -94,13 +103,15 @@ const Review = (props: Props) => {
             {/*}*/}
 
             <Paper className={classes.paper}>
-                {/*<span>{commentText}</span>*/}
 
-                <Typography variant="body1">
-                    {review.text}
-                </Typography>
+                <ReactQuill
+                    value={he.decode(review.text)}
+                    readOnly={true}
+                    theme={"bubble"}
+                >
+                    <div className={classes.reviewText}/>
+                </ReactQuill>
             </Paper>
-
 
 
         </Box>

@@ -16,6 +16,9 @@ const useStyles = makeStyles(() => ({
             borderBottomLeftRadius:10,
             borderBottomRightRadius: 10
         },
+        "& > div.ql-container > div.ql-editor": {
+            fontSize: "1rem",
+        },
     }
 }))
 
@@ -94,7 +97,7 @@ const QuillEditor = (props: Props) => {
     const modules = useMemo(() => ({
         toolbar: {
             container: [
-                [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                [{'header': [1, 2, 3, false]}],
                 ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                 [{list: 'ordered'}, {list: 'bullet'}],
                 ['link', 'image'],
