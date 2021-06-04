@@ -5,27 +5,31 @@ import {useMemo, useRef, useState} from "react";
 import useStackedSnackBar from "../../customHooks/UseStackedSnackBar";
 import usePost from "../../customHooks/usePost";
 import resizeFile from "./resizeImage";
-import {IStore} from "../../types/IStore";
 import LoadingIcon from "../Loading/LoadingIcon";
-import {Dialog, DialogContent, DialogContentText} from "@material-ui/core";
+import {Box, Dialog, DialogContent, DialogContentText} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
-    quill: {
-        backgroundColor: "white",
-        height: "80vh"
+    quillEditor: {
+        "& > div.ql-container":{
+            backgroundColor: "white",
+            height: "50vh",
+            borderBottomLeftRadius:10,
+            borderBottomRightRadius: 10
+        },
     }
 }))
 
 type Props = {
-    store: IStore
+    storageKey: string
 }
 
 const QuillEditor = (props: Props) => {
     const classes = useStyles();
-    const store = props.store;
+    const storageKey = props.storageKey;
     const showSnackBar = useStackedSnackBar();
     const {mutateAsync} = usePost();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isUploading, setIsUpoading] = useState<boolean>(false);
+    const defaultContent = window.localStorage.getItem(storageKey);
     const quillRef = useRef<any>();
 
     const uploadImage = async (result: any) => {
@@ -69,15 +73,16 @@ const QuillEditor = (props: Props) => {
             const file = input.files[0];
             if (/^image\//.test(file.type)) {
                 try {
-                    setIsLoading(true);
+                    setIsUpoading(true);
                     const image = await resizeFile(file);
                     let imageUrl = await uploadImage(image);
                     // Insert the server saved image
                     editor?.insertEmbed(range.index, 'image', imageUrl, "user");
+                    editor?.setSelection(range.index + 1, "API")
                 } catch (e) {
                     return showSnackBar(`上傳圖片出現問題`, 'error');
                 } finally {
-                    setIsLoading(false)
+                    setIsUpoading(false)
                 }
 
             } else {
@@ -104,22 +109,13 @@ const QuillEditor = (props: Props) => {
     const formats = ['header', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image'];
 
 
-    const onQuillChange = (content: any, delta: any, source: any, editor: any) => {
-        // content 是真實的DOM節點
-        // delta 記錄了修改的物件，下篇文章詳述
-        // source 值為user或api
-        // editor 文字框物件，可以呼叫函式獲取content, delta值
-        window.localStorage.setItem(`review`, content);
-
+    const onQuillChange = (content: any) => {
+        window.localStorage.setItem(storageKey, content);
     }
 
     return (
-        <>
-            <div>
-                {`編輯${store.name}`}
-            </div>
-
-            <Dialog open={isLoading}>
+        <Box>
+            <Dialog open={isUploading}>
                 <DialogContent>
                     <DialogContentText id="uploading">
                         上傳圖片中，請稍等
@@ -131,15 +127,16 @@ const QuillEditor = (props: Props) => {
             <ReactQuill
                 ref={quillRef}
                 theme="snow"
+                defaultValue={defaultContent ? defaultContent : ""}
                 modules={modules}
                 formats={formats}
                 onChange={onQuillChange}
-                placeholder="輸入評論"
-                className={classes.quill}
+                placeholder=""
+                className={classes.quillEditor}
             />
-        </>
+        </Box>
 
     )
-}
+};
 
 export default QuillEditor

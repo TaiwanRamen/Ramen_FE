@@ -1,10 +1,47 @@
 import {useHistory, withRouter} from "react-router-dom";
 import useStackedSnackBar from "../../customHooks/UseStackedSnackBar";
-import React, {useState} from "react";
+import {useState} from "react";
 import QuillEditor from "../QuillEditor/QuillEditor";
 import {IStore} from "../../types/IStore";
 import useFetch from "../../customHooks/UseFetch";
 import Loading from "../Loading/Loading";
+import {Box, Button, Dialog, DialogContent, DialogContentText, Paper} from "@material-ui/core";
+import usePost from "../../customHooks/usePost";
+import LoadingIcon from "../Loading/LoadingIcon";
+import Rating from "@material-ui/lab/Rating";
+import {makeStyles} from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleDoubleLeft} from "@fortawesome/free-solid-svg-icons";
+
+const useStyles = makeStyles(() => ({
+    root: {
+        padding: 50,
+        paddingTop:20,
+        borderRadius: 10,
+    },
+    goBackText:{
+        marginLeft: 10
+    },
+    goBackBtn:{
+        color: "gray",
+        marginTop:20,
+        marginBottom:20
+    },
+    submitBtn: {
+        margin: 5,
+        float: "right",
+    },
+    cancelBtn: {
+        margin: 5,
+        float: "right",
+        color: "gray"
+    },
+    ratingText: {
+        marginBottom: 5
+    },
+}))
 
 type StoreResponse = {
     mapboxAccessToken: string,
@@ -15,7 +52,7 @@ type StoreResponse = {
 const AddReviewPage = () => {
     const showSnackBar = useStackedSnackBar();
     const history = useHistory();
-    const [value, setValue] = useState('');
+    const classes = useStyles();
 
 
     if (!window.location.pathname.match(/\/stores\/[a-fA-F0-9]{24}\/newReview/g)) {
@@ -24,13 +61,16 @@ const AddReviewPage = () => {
     }
 
     const storeId = window.location.pathname.slice(8, 32)
+    const storageKey = `review_${storeId}`;
+    const [rating, setRating] = useState<number | null>(null);
+
     const options = {
         key: "store",
         url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${storeId}`,
         requestQuery: {}
     }
-
-    const {data: store, status, error} = useFetch<StoreResponse>(options);
+    const {data, status, error} = useFetch<StoreResponse>(options);
+    const {mutateAsync, isLoading} = usePost();
 
     if (status === "loading") {
         return <Loading/>;
@@ -40,8 +80,92 @@ const AddReviewPage = () => {
         return <div>{error?.message}</div>;
     }
 
-    return store ? <QuillEditor store={store.store}/> : null
+    if (status === "success" && data?.store) {
+        let store = data?.store
 
+        const onSubmit = async () => {
+            if (rating === null) {
+                showSnackBar(`評分不可為空`, 'error');
+                return;
+            }
+            let review = window.localStorage.getItem(storageKey);
+            if (review === null || review === "<p><br></p>") {
+                showSnackBar(`評論不可為空！`, 'error');
+                return;
+            }
+            const reqProps = {
+                url: process.env.REACT_APP_BE_URL + `/api/v1/reviews/new`,
+                requestBody: {
+                    storeId: storeId,
+                    review: review,
+                    rating: rating
+                },
+            };
+            let response = await mutateAsync(reqProps);
+
+            if (response.status === 200) {
+                showSnackBar(`上傳評論成功`, 'success');
+                window.localStorage.removeItem(storageKey);
+                history.push(`/stores/${storeId}`)
+            } else {
+                showSnackBar(`上傳評論失敗`, 'error');
+                return new Error()
+            }
+
+        }
+
+        return <Paper className={classes.root}>
+            <Button variant="outlined" className={classes.goBackBtn} onClick={()=>history.push(`/stores/${storeId}`)}>
+                <FontAwesomeIcon icon={faAngleDoubleLeft}/>
+                <span className={classes.goBackText}>返回店家</span>
+            </Button>
+            <Box>
+                <h3>
+                    新增評論
+                </h3>
+                <Typography variant="body1" color="textSecondary" component="p">
+                    {store.name}
+                </Typography>
+            </Box>
+            <Box mt={3} mb={3}>
+                <Typography variant="body1" color="textPrimary" component="p" className={classes.ratingText}>
+                    評分：
+                </Typography>
+                <Rating
+                    name="customized-empty"
+                    value={rating}
+                    size={"large"}
+                    onChange={(_event, newValue) => {
+                        setRating(newValue);
+                    }}
+                    emptyIcon={<StarBorderIcon fontSize="inherit"/>}
+                />
+                <span>{rating}</span>
+            </Box>
+            <QuillEditor
+                storageKey={storageKey}
+            />
+            <Box mt={2} mb={2}>
+                <Button variant="outlined" color="primary" className={classes.submitBtn} onClick={onSubmit}>
+                    送出
+                </Button>
+                <Button variant="outlined" color="default" className={classes.cancelBtn} onClick={onSubmit}>
+                    取消
+                </Button>
+            </Box>
+
+
+            <Dialog open={isLoading}>
+                <DialogContent>
+                    <DialogContentText id="loading">
+                        上傳中，請稍等
+                        <LoadingIcon/>
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
+        </Paper>
+    }
+    return null;
 };
 
 export default withRouter(AddReviewPage);
