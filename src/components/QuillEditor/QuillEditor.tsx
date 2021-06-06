@@ -10,10 +10,10 @@ import {Box, Dialog, DialogContent, DialogContentText} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     quillEditor: {
-        "& > div.ql-container":{
+        "& > div.ql-container": {
             backgroundColor: "white",
             height: "50vh",
-            borderBottomLeftRadius:10,
+            borderBottomLeftRadius: 10,
             borderBottomRightRadius: 10
         },
         "& > div.ql-container > div.ql-editor": {
@@ -23,7 +23,8 @@ const useStyles = makeStyles(() => ({
 }))
 
 type Props = {
-    storageKey: string
+    storageKey: string,
+    defaultContent?: string
 }
 
 const QuillEditor = (props: Props) => {
@@ -32,7 +33,7 @@ const QuillEditor = (props: Props) => {
     const showSnackBar = useStackedSnackBar();
     const {mutateAsync} = usePost();
     const [isUploading, setIsUpoading] = useState<boolean>(false);
-    const defaultContent = window.localStorage.getItem(storageKey);
+    const defaultContent = props.defaultContent ? props.defaultContent : window.localStorage.getItem(storageKey);
     const quillRef = useRef<any>();
 
     const uploadImage = async (result: any) => {

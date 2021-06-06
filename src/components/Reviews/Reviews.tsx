@@ -4,11 +4,10 @@ import {ChangeEvent, useState} from "react";
 import Review from './Review';
 import {useUser} from "../../Context/UserContext";
 import useFetch from "../../customHooks/UseFetch";
-import {Box, Button, Typography} from "@material-ui/core";
+import {Box, Divider, Typography} from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import {makeStyles} from "@material-ui/core/styles";
-import RateReviewIcon from '@material-ui/icons/RateReview';
-import {Link as RouterLink} from "react-router-dom";
+import UserReview from "./UserReview";
 
 const useStyles = makeStyles(() => ({
     noReview: {
@@ -66,28 +65,19 @@ const Reviews = (props: Props) => {
     if (status === "error") {
         return <div>{error?.message}</div>;
     }
-    if (!data?.reviews) return <div>系統無法取得留言，請重新整理</div>
+    if (!data?.reviews) return <div>系統無法取得評論，請重新整理</div>
+
+    const reviews = data.reviews.filter(review => review.author.id !== user?._id);
 
     return (
         <div className={classes.reviews}>
-            {user && <div className={classes.reviewBtn}>
-                <Button
-                    size="large"
-                    variant="outlined"
-                    color="primary"
-                    startIcon={<RateReviewIcon/>}
-                    component={RouterLink}
-                    to={`/stores/${storeId}/newReview`}>
-                    新增 食記/評論
-                </Button>
-            </div>}
-
-            <Box mt={2}>
-
-                {(data.reviews?.length > 0) ?
+            <UserReview storeId={storeId}/>
+            <Divider/>
+            <Box>
+                {(reviews?.length > 0) ?
                     <div>
-                        {data.reviews.map(review =>
-                            <Review review={review} key={review._id}/>
+                        {reviews.map(review =>
+                            <Review review={review} key={review._id} storeId={storeId}/>
                         )}
                         <div className={classes.pages}>
                             <Pagination count={data.pages}
@@ -102,7 +92,7 @@ const Reviews = (props: Props) => {
                     </div>
                     :
                     <Typography variant="subtitle1" className={classes.noReview}>
-                        沒有留言
+                        沒有其他評論
                     </Typography>
                 }
             </Box>

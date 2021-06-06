@@ -26,7 +26,7 @@ const StoreIntro = (props: Props) => {
     const imageUrls = store.imageSmall;
     const DOMPurify = createDOMPurify()
     return (
-        <Box>
+        <Box mt={2}>
             <CarouselImage imageUrls={imageUrls}/>
             <Box mt={5} mb={2}>
                 <Divider className={classes.divider} orientation="horizontal" variant="fullWidth"/>

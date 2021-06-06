@@ -7,6 +7,7 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import ReactQuill from "react-quill";
 import he from 'he';
+import ReviewDropdown from "./ReviewDrowdown";
 
 const useStyles = makeStyles((theme: Theme) => ({
     avatar: {
@@ -53,14 +54,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 type Props = {
-    review: IReview
+    review: IReview,
+    storeId: string
 }
 const Review = (props: Props) => {
     const classes = useStyles();
     const {user} = useUser()!;
     const review = props.review;
+    const storeId = props.storeId;
     const author = review.author;
     const reviewCreateTime = DateTime.fromISO(review.createdAt).setLocale('zh-tw');
+
     return (
         <Box mt={4} mb={4}>
             <Grid container spacing={1}>
@@ -81,26 +85,17 @@ const Review = (props: Props) => {
                             </Box>
                         </Grid>
                     </Grid>
-
-
-                    {user &&
+                    {user && review && (user._id === author.id) &&
                     <Grid item>
                         <Typography variant="body2">
-                            select
+                            <ReviewDropdown review={review}
+                                            storeId={storeId}
+                            />
                         </Typography>
                     </Grid>
                     }
-
                 </Grid>
             </Grid>
-            {/*{editSectionShow &&*/}
-            {/*<EditComment*/}
-            {/*    commentText={commentText}*/}
-            {/*    commentId={comment._id}*/}
-            {/*    setCommentText={setCommentText}*/}
-            {/*    setEditSectionShow={setEditSectionShow}*/}
-            {/*/>*/}
-            {/*}*/}
 
             <Paper className={classes.paper}>
 

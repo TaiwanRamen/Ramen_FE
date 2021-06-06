@@ -53,7 +53,7 @@ const AddCommentModal = (props: Props) => {
     const addComment = async () => {
         try {
             const reqProps = {
-                url: process.env.REACT_APP_BE_URL + `/api/v1/comments/new`,
+                url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
                 requestBody: {
                     storeId: storeId,
                     comment: comment,
@@ -87,6 +87,7 @@ const AddCommentModal = (props: Props) => {
                         onBlur={() => setIsInputFocus(false)}
                         error={commentBtnDisabled && isInputFocus}
                         helperText={commentBtnDisabled && isInputFocus ? '輸入不能為空' : ''}
+                        defaultValue={"發表些店家的最新資訊！"}
                     />
                 </Grid>
 

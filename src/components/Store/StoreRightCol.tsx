@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
     },
     divider: {
         color: 'black',
-        margin: "25px auto"
+        margin: "25px auto 0px auto"
     }
 }))
 
@@ -70,6 +70,7 @@ const StoreRightCol = (props: Props) => {
     const classes = useStyles();
     const store = props?.data.store;
     const storeId = store?._id;
+    const storeRating = (store.rating ? store.rating: 0).toFixed(1)
     const isStoreOwner = true;
 
     const gotoComment = () => {
@@ -91,7 +92,7 @@ const StoreRightCol = (props: Props) => {
 
                 <Box color={'grey.500'} display={'flex'} alignItems={'center'} m={1.5}>
                     <Typography variant={'body2'} className={classes.rateValue}>
-                        {store.rating.toFixed(1)}
+                        {storeRating}
                     </Typography>
                     <Rating name={'rating'} value={store.rating} size={'small'} precision={0.1} readOnly/>
                     <Typography variant={'body2'} onClick={gotoComment} className={classes.reviewCount}>

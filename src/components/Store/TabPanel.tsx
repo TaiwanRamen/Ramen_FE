@@ -5,7 +5,6 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
     tabPanel: {
-        marginTop: 30,
         padding: 5
     }
 }))
@@ -30,7 +29,7 @@ function TabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
+                <Box p={1}>
                     <Typography>{children}</Typography>
                 </Box>
             )}

@@ -38,8 +38,12 @@ const useStyles = makeStyles(() => ({
         float: "right",
         color: "gray"
     },
-    ratingText: {
+    ratingTitle: {
         marginBottom: 5
+    },
+    ratingText: {
+        alignText:"middle",
+        color: "red"
     },
 }))
 
@@ -94,7 +98,7 @@ const AddReviewPage = () => {
                 return;
             }
             const reqProps = {
-                url: process.env.REACT_APP_BE_URL + `/api/v1/reviews/new`,
+                url: process.env.REACT_APP_BE_URL + `/api/v1/reviews`,
                 requestBody: {
                     storeId: storeId,
                     review: review,
@@ -128,7 +132,7 @@ const AddReviewPage = () => {
                 </Typography>
             </Box>
             <Box mt={3} mb={3}>
-                <Typography variant="body1" color="textPrimary" component="p" className={classes.ratingText}>
+                <Typography variant="body1" color="textPrimary" component="p" className={classes.ratingTitle}>
                     評分：
                 </Typography>
                 <Rating
@@ -140,7 +144,9 @@ const AddReviewPage = () => {
                     }}
                     emptyIcon={<StarBorderIcon fontSize="inherit"/>}
                 />
-                <span>{rating}</span>
+                {!rating && <Typography variant="caption" component="p" className={classes.ratingText}>
+                    請輸入評分
+                </Typography>}
             </Box>
             <QuillEditor
                 storageKey={storageKey}
@@ -149,7 +155,7 @@ const AddReviewPage = () => {
                 <Button variant="outlined" color="primary" className={classes.submitBtn} onClick={onSubmit}>
                     送出
                 </Button>
-                <Button variant="outlined" color="default" className={classes.cancelBtn} onClick={onSubmit}>
+                <Button variant="outlined" color="default" className={classes.cancelBtn}>
                     取消
                 </Button>
             </Box>
