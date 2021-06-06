@@ -42,8 +42,9 @@ const EditComment = (props: Props) => {
         try {
             const reqProps = {
                 url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
-                requestQuery: {commentId: commentId},
+                requestQuery: {},
                 requestBody: {
+                    commentId: commentId,
                     comment: editedComment
                 },
             };

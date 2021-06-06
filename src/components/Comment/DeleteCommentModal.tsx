@@ -67,8 +67,8 @@ const DeleteCommentModal = (props: Props) => {
         try {
             const reqProps = {
                 url: process.env.REACT_APP_BE_URL + `/api/v1/comments`,
-                requestQuery: {commentId: commentId, storeId: storeId},
-                requestBody: {},
+                requestQuery: {},
+                requestBody: {commentId: commentId, storeId: storeId},
             };
             await mutateAsync(reqProps);
             showSnackBar(`成功刪除: ${commentText}`, 'success');
