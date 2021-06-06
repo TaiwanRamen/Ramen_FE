@@ -65,7 +65,7 @@ const AddReviewPage = () => {
     }
 
     const storeId = window.location.pathname.slice(8, 32)
-    const storageKey = `review_${storeId}`;
+    const storageKey = `addReview_${storeId}`;
     const [rating, setRating] = useState<number | null>(null);
 
     const options = {

@@ -70,10 +70,8 @@ const DeleteReviewModal = (props: Props) => {
         try {
             const reqProps = {
                 url: process.env.REACT_APP_BE_URL + `/api/v1/reviews`,
-                requestQuery: {
-                    reviewId: reviewId,
-                    storeId: storeId},
-                requestBody: {},
+                requestQuery: {},
+                requestBody: {reviewId, storeId},
             };
             await mutateAsync(reqProps);
             showSnackBar(`成功刪除評論`, 'success');

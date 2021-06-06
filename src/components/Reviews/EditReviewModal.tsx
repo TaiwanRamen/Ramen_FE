@@ -1,20 +1,8 @@
-import {
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle, IconButton, Paper,
-} from "@material-ui/core";
+import {Box, Button, Dialog, IconButton,} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import useDelete from "../../customHooks/UseDelete";
 import useStackedSnackBar from "../../customHooks/UseStackedSnackBar";
 import {useHistory} from "react-router-dom";
 import he from "he";
-import ReactQuill from "react-quill";
-import RamenNavbar from "../RamenNavbar/RamenNavbar";
-import {NotificationProvider} from "../../Context/NotificationContext";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
@@ -22,6 +10,7 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import QuillEditor from "../QuillEditor/QuillEditor";
 import {IReview} from "../../types/IReview";
 import {useState} from "react";
+import usePut from "../../customHooks/UsePut";
 
 
 const useStyles = makeStyles(() => ({
@@ -43,7 +32,7 @@ const useStyles = makeStyles(() => ({
         marginBottom: 5
     },
     ratingText: {
-        alignText:"middle",
+        alignText: "middle",
         color: "red"
     },
 }))
@@ -59,12 +48,11 @@ const EditReviewModal = (props: Props) => {
     const reviewId = props.review._id;
     const storeId = props.storeId;
     const history = useHistory();
-    const storageKey = `review_${storeId}`;
-    const [reviewText, setReviewText] = useState<string>(props.review.text);
+    const storageKey = `editReview_${storeId}`;
     const [rating, setRating] = useState<number | null>(props.review.rating);
 
 
-    const {mutateAsync} = useDelete();
+    const {mutateAsync} = usePut();
     const showSnackBar = useStackedSnackBar();
 
     const handleEditReview = async () => {
@@ -78,25 +66,22 @@ const EditReviewModal = (props: Props) => {
             return;
         }
         const reqProps = {
-            url: process.env.REACT_APP_BE_URL + `/api/v1/reviews/edit`,
+            url: process.env.REACT_APP_BE_URL + `/api/v1/reviews`,
             requestBody: {
-                storeId: storeId,
-                reviewId: reviewId,
-                text: review,
-                rating: rating
+                reviewId, review, rating
             },
         };
         let response = await mutateAsync(reqProps);
 
         if (response.status === 200) {
-            showSnackBar(`上傳評論成功`, 'success');
+            showSnackBar(`編輯評論成功`, 'success');
             window.localStorage.removeItem(storageKey);
-            history.push(`/stores/${storeId}`)
+            history.go(0)
         } else {
-            showSnackBar(`上傳評論失敗`, 'error');
+            showSnackBar(`編輯評論失敗`, 'error');
             return new Error()
         }
-
+        props.onClose();
     }
 
     const handleDialogClose = () => {
@@ -134,18 +119,19 @@ const EditReviewModal = (props: Props) => {
                         emptyIcon={<StarBorderIcon fontSize="inherit"/>}
                     />
                     {!rating && <Typography variant="caption" component="p" className={classes.ratingText}>
-                       請輸入評分
+                        請輸入評分
                     </Typography>}
                 </Box>
                 <QuillEditor
                     storageKey={storageKey}
-                    defaultContent={he.decode(reviewText)}
+                    defaultContent={he.decode(props.review.text)}
                 />
                 <Box mt={2} mb={2}>
                     <Button variant="outlined" color="primary" className={classes.submitBtn} onClick={handleEditReview}>
                         送出
                     </Button>
-                    <Button variant="outlined" color="default" className={classes.cancelBtn} onClick={handleDialogClose}>
+                    <Button variant="outlined" color="default" className={classes.cancelBtn}
+                            onClick={handleDialogClose}>
                         取消
                     </Button>
                 </Box>
