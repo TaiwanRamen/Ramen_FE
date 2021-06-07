@@ -1,4 +1,4 @@
-export type IReview = {
+export interface IReview {
     author: {
         avatar: string,
         id: string,

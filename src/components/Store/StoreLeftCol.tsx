@@ -1,5 +1,5 @@
 import {useHistory} from "react-router-dom";
-import {Button} from "@material-ui/core";
+import {Box, Button} from "@material-ui/core";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleDoubleLeft} from "@fortawesome/free-solid-svg-icons";
 import {makeStyles} from "@material-ui/core/styles";
@@ -9,6 +9,9 @@ import ramenIcon from "../../static/ramen.svg";
 import React, {useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import {Tab, Tabs} from "@material-ui/core";
+// import OpeningHours from "./OpeningHours";
+import CloseToMetro from "../CloseToMetro/CloseToMetro";
+import Typography from "@material-ui/core/Typography";
 // import OpeningHours from "./OpeningHours";
 
 const useStyles = makeStyles(() => ({
@@ -88,9 +91,9 @@ const StoreLeftCol = (props: Props) => {
     return (
         <Paper className={classes.root}>
 
-            <Button variant="outlined" className={classes.backButton} onClick={() => history.go(-1)}>
+            <Button variant="outlined" className={classes.backButton} onClick={() => history.push("/stores")}>
                 <FontAwesomeIcon icon={faAngleDoubleLeft}/>
-                <span className={classes.back}>返回上一頁</span>
+                <span className={classes.back}>返回店家列表</span>
             </Button>
 
             <Tabs
@@ -125,13 +128,21 @@ const StoreLeftCol = (props: Props) => {
                     </Marker>
                 </ReactMapGL>
             </div>
-            <p className={classes.address}>
-                地址：
-                <a className={classes.addressLink} href={`https://www.google.com.tw/maps/place/${store.address}`}>
-                    {store.address}
-                </a>
-            </p>
+            <Box mt={2}>
+                <Typography color={'textSecondary'} variant={'body2'}>
+                    地址：
+                    <a className={classes.addressLink} href={`https://www.google.com.tw/maps/place/${store.address}`}>
+                        {store.address}
+                    </a>
+                </Typography>
+            </Box>
+
+            {/*TODO*/}
             {/*<OpeningHours/>*/}
+            <Box mt={2}>
+                <CloseToMetro storeId={store._id}/>
+            </Box>
+
 
         </Paper>
     );

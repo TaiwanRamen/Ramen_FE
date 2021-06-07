@@ -26,7 +26,7 @@ const NetworkInterceptors = () => {
                     history.push('/notFound');
                     break;
                 case 422:
-                    history.go(0);
+                    //history.go(0);
                     break;
                 case 500:
                     // history.push('/error');

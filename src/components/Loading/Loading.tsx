@@ -1,28 +1,30 @@
-import React from 'react';
 import './Loading.css';
 import LoadingSpinner from "./LoadingSpinner";
 import {makeStyles} from "@material-ui/core/styles";
 
-const useStyles = makeStyles(() => ({
+const useStyles = (props: Props) => makeStyles(() => ({
     spinner: {
         display: "block",
         marginLeft: "auto",
         marginRight: "auto",
-        height: 60,
-        width: 60,
+        height: props.iconSize || 60,
+        width: props.iconSize || 60,
     },
     loadingMessage: {
         textAlign: "center",
         float: "none",
         color: "#787878",
-        fontFamily: "JFOpen",
-        fontSize: 20,
+        fontSize: props.fontSize || "1.25rem",
     },
 }))
 
+type Props = {
+    iconSize?: number,
+    fontSize?: string
+}
+const Loading = (props: Props) => {
 
-const Loading = () => {
-    const classes = useStyles();
+    const classes = useStyles(props)();
     return (
         <div className=" loading">
             <LoadingSpinner className={classes.spinner}/>

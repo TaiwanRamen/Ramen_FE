@@ -36,7 +36,7 @@ const CustomPopup = (props: Props) => {
             closeOnClick={false}
             className={classes.popup}
         >
-            <Button component={Link} to={`stores/${store._id}`} className={classes.storeName}>
+            <Button component={Link} to={`/stores/${store._id}`} className={classes.storeName}>
                 {store.name}
             </Button>
         </Popup>

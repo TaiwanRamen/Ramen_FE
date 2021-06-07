@@ -1,8 +1,8 @@
-export type IComment = {
+export interface IComment {
     _id: string,
     createdAt: string,
     rating: number,
-    text:string,
+    text: string,
     author: {
         avatar: string,
         id: string,

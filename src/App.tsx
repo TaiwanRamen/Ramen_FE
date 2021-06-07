@@ -12,8 +12,8 @@ import Store from "./components/Store/Store";
 import Footer from "./components/Footer/Footer";
 import RamenNavbar from './components/RamenNavbar/RamenNavbar'
 import Landing from "./components/Landing/Landing";
-import TaipeiMetro from "./components/Metro/TaipeiMetro";
-import KaohsiungMetro from "./components/Metro/KaohsiungMetro";
+import TaipeiMetro from "./components/MetroMap/TaipeiMetro";
+import KaohsiungMetro from "./components/MetroMap/KaohsiungMetro";
 import {makeStyles} from "@material-ui/core/styles";
 import Map from "./components/Map/Map";
 import LoginPage from "./components/Login/LoginPage";

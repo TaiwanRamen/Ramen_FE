@@ -8,8 +8,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import StyledMenu from "../StyledMenu/StyledMenu";
-import KaohsiungMetroIcon from '../../static/kaohsiung-metro-logo.svg';
-import TaipeiMetroIcon from '../../static/taipei-metro-logo.svg';
+import KaohsiungMetroIcon from '../../static/kaohsiung_metro_logo_gray.svg';
+import TaipeiMetroIcon from '../../static/taipei_metro_logo_gray.svg';
 import TaiwanIcon from '../../static/taiwan.svg';
 
 
@@ -81,13 +81,13 @@ const SubCategorySection = () => {
                 </MenuItem>
                 <MenuItem component={RouterLink} to="/map/TaipeiMetro" onClick={handleClose}>
                     <ListItemIcon className={classes.listItemIcon}>
-                        <img className={classes.imageIcon} src={TaipeiMetroIcon} alt={"Taipei Metro icon"}/>
+                        <img className={classes.imageIcon} src={TaipeiMetroIcon} alt={"Taipei MetroMap icon"}/>
                     </ListItemIcon>
                     <ListItemText primary="臺北捷運地圖"/>
                 </MenuItem>
                 <MenuItem component={RouterLink} to="/map/KaohsiungMetro" onClick={handleClose}>
                     <ListItemIcon className={classes.listItemIcon}>
-                        <img className={classes.imageIcon} src={KaohsiungMetroIcon} alt={"Kaohsiung Metro icon"}/>
+                        <img className={classes.imageIcon} src={KaohsiungMetroIcon} alt={"Kaohsiung MetroMap icon"}/>
                     </ListItemIcon>
                     <ListItemText primary="高雄捷運地圖"/>
                 </MenuItem>

@@ -1,16 +1,16 @@
 import React from "react";
 import {useState, useRef, useLayoutEffect, useEffect,} from "react";
 import ImageMapper from 'react-img-mapper';
-import MapAreas from './KaohsiungMetroMapAreas'
-import metroMap from '../../static/KSMetro.jpeg';
+import MapAreas from './TaipeiMetroMapAreas'
+import metroMap from '../../static/TPMetro.png';
 import Loading from "../Loading/Loading";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import Popper from "@material-ui/core/Popper";
 import Paper from '@material-ui/core/Paper';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import MetroSideDrawer from "./MetroSideDrawer";
+import Typography from "@material-ui/core/Typography";
 
-const imageWidth = 1110;
+const imageWidth = 960;
 
 
 function useWindowSize(targetRef: React.RefObject<any>, setMapAreas: React.Dispatch<any>) {
@@ -43,7 +43,7 @@ const resize = (currentWidth: number) => {
 const useStyles = makeStyles((theme: Theme) => ({
         presenter: {
             marginBottom: 100,
-            maxWidth: "1110px",
+            maxWidth: "960px",
             margin: "auto",
             display: "flex",
             justifyContent: "center",
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         imageDiv: {
             height: "auto",
-            maxWidth: "1110px",
+            maxWidth: "960px",
             '& > div > map > area:hover': {
                 cursor: "pointer",
             },
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
 
         arrow: {
-            zIndex: 9999,
             overflowX: "unset",
             overflowY: "unset",
             width: 0,
@@ -81,9 +80,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             },
         },
         paper: {
-            height: 50,
-            maxHeight: "10vh",
-            maxWidth: 150,
+            padding: 15,
             overflow: 'auto',
             boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.1)"
         },
@@ -94,10 +91,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     }),
 );
 
-const KaohsiungMetro = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [clickedStationName, setClickedStationName] = useState("");
-    const [hoverStationName, setHoverStationName] = useState("");
+const TaipeiMetro = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [clickedStationName, setClickedStationName] = useState<string>("");
+    const [stationCode, setStationCode] = useState<string>("");
+    const [hoverStationName, setHoverStationName] = useState<string>("");
 
     const [mapAreas, setMapAreas] = useState<any>(MapAreas);
 
@@ -106,7 +104,6 @@ const KaohsiungMetro = () => {
     const anchorRef = React.useRef(null);
     const targetRef = useRef<HTMLDivElement>(null)
     const {width} = useWindowSize(targetRef, setMapAreas);
-    // const width2 = 1284;
     const classes = useStyles();
     const [arrowRef] = React.useState(null);
     const [open, setOpen] = React.useState(false);
@@ -118,8 +115,8 @@ const KaohsiungMetro = () => {
 
     const handleClick = (area: any) => {
         setClickedStationName(area.name);
+        setStationCode(area.code);
         setDrawerOpen(true);
-        console.log(width);
     };
 
     const handleDrawerClose = () => {
@@ -189,15 +186,22 @@ const KaohsiungMetro = () => {
                 >
                     <span className={classes.arrow} ref={arrowRef}/>
                     <Paper className={classes.paper}>
-                        <DialogTitle>{hoverStationName}</DialogTitle>
+                        <Typography variant="body1">
+                            {hoverStationName}
+                        </Typography>
                     </Paper>
                 </Popper>
 
             </div>
-            <MetroSideDrawer name={clickedStationName} isOpen={drawerOpen} toggleDrawerOpen={toggleDrawerOpen}/>
+            <MetroSideDrawer city={"taipei"}
+                             stationName={clickedStationName}
+                             isOpen={drawerOpen}
+                             stationCode={stationCode}
+                             toggleDrawerOpen={toggleDrawerOpen}
+            />
         </div>
     );
 
 };
 
-export default KaohsiungMetro;
+export default TaipeiMetro;

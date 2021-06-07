@@ -2,39 +2,39 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
-import MetroStoreCard from "./MetroStoreCard";
 import Typography from "@material-ui/core/Typography";
+import DrawerContent from "./DrawerContent";
+import {Box} from "@material-ui/core";
 
-const drawerWidth = 400;
+const drawerWidth = 350;
 
-const useStyles = (props:Props) => makeStyles( (theme:Theme) => ({
+const useStyles = (props: Props) => makeStyles((theme: Theme) => ({
     drawer: {
         zIndex: 1200,
         width: drawerWidth,
-        display:'inline-flex'
+        display: 'inline-flex'
     },
     drawerPaper: {
-        height:'100%',
+        height: '100%',
         width: drawerWidth,
         top: props.navbarHeight || 64,
         backgroundColor: '#f8f9fa!important'
     },
 
     cardRoot: {
-        margin:"0 auto 60px auto",
+        margin: "0 auto 60px auto",
         overflowY: "scroll",
     },
 
     headerRoot: {
-        margin:"1px 0",
         display: 'flex',
         alignItems: 'center',
-        color:theme.palette.text.secondary,
+        color: theme.palette.text.secondary,
         paddingTop: theme.spacing(1),
-        justifyContent:"space-between",
+        justifyContent: "space-between",
     },
     headerText: {
-        margin:theme.spacing(1, 3),
+        margin: theme.spacing(1, 3),
     },
     closeButton: {
         color: theme.palette.grey[500],
@@ -42,26 +42,30 @@ const useStyles = (props:Props) => makeStyles( (theme:Theme) => ({
     headLabel: {
         display: 'flex',
         alignItems: 'center',
-        color:theme.palette.text.secondary,
+        color: theme.palette.text.secondary,
     },
 
 
 }));
 
 
-
 type Props = {
-    name?:string;
-    isOpen: boolean;
-    toggleDrawerOpen: () => void;
-    navbarHeight?: number;
+    city: string,
+    stationName: string,
+    isOpen: boolean,
+    stationCode: string,
+    toggleDrawerOpen: () => void,
+    navbarHeight?: number
 }
 
 const MetroSideDrawer = (props: Props) => {
     const isDrawerOpen = props.isOpen;
     const classes = useStyles(props)();
     const toggleDrawerOpen = props.toggleDrawerOpen;
-    const stores = ['apple','banana', 'cake', 'dog','eagle']
+    const stationCode = props.stationCode;
+    const stationName = props.stationName;
+    const city = props.city;
+
     return (
         <Drawer
             className={classes.drawer}
@@ -72,17 +76,21 @@ const MetroSideDrawer = (props: Props) => {
                 paper: classes.drawerPaper,
             }}
         >
-            <div className={classes.headerRoot}>
-                <Typography variant="h5" className={classes.headerText}>
-                    {props.name}
+
+            <Box m={2} className={classes.headerRoot}>
+                <Typography gutterBottom variant="h5" className={classes.headerText}>
+                    {stationName}
                 </Typography>
-                <IconButton onClick={toggleDrawerOpen} className={classes.closeButton} >
-                    <CloseIcon />
+                <IconButton onClick={toggleDrawerOpen} className={classes.closeButton}>
+                    <CloseIcon/>
                 </IconButton>
-            </div>
+            </Box>
+            {isDrawerOpen &&
             <div className={classes.cardRoot}>
-                { stores.map(store => <MetroStoreCard store={store}/>) }
+                <DrawerContent stationCode={stationCode} city={city}/>
             </div>
+            }
+
         </Drawer>
 
     );

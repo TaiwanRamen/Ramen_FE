@@ -44,7 +44,7 @@ const StoreModal = (props: Props) => {
                     component="img"
                     alt="Contemplative Reptile"
                     height="140"
-                    image={storeImages[0]}
+                    image={storeImages![0]}
                     title="Contemplative Reptile"
                 />
                 <CardContent>

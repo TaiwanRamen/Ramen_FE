@@ -99,6 +99,7 @@ const StoreCard = (props: Props) => {
     const store = props.store;
     const classes = useStyles();
     const {user} = useUser()!;
+    const rating = store.rating ? store.rating.toFixed(1) : "無評分";
 
     const descriptionTrimmer = (description: string) => {
         if (description.length > 200) {
@@ -109,10 +110,10 @@ const StoreCard = (props: Props) => {
 
     return (
         <Box>
-            <Card elevation={0} className={classes.root} id={store._id}>
+            <Card elevation={0} className={classes.root} id={store._id} key={store._id}>
                 <CardMedia
                     className={classes.cardMedia}
-                    image={store.imageLarge[0]}
+                    image={store.imageSmall![0]}
                 >
                     {user && <FollowBtn store={store}/>}
                 </CardMedia>
@@ -122,10 +123,10 @@ const StoreCard = (props: Props) => {
 
                     <h4 className={classes.title}>{store.name}</h4>
 
-                    <Box display={'flex'} alignItems={'center'} mb={1} mt={1}>
+                    <Box display={'flex'} color={'grey.500'} alignItems={'center'} mb={1} mt={1}>
                         <Rating name={'rating'} value={store.rating} size={'small'} precision={0.1} readOnly/>
                         <Typography variant={'body2'} className={classes.rateValue}>
-                            {store.rating.toFixed(1)}
+                            {rating}
                         </Typography>
                     </Box>
 

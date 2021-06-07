@@ -90,7 +90,6 @@ function StyledTreeItem(props: StyledTreeItemProps) {
     const classes = useTreeItemStyles();
     const {labelIconSVG, labelIconFA, labelText, labelIcon: LabelIcon, labelInfo, to, ...other} = props;
 
-    // @ts-ignore
     return (
         <TreeItem
             label={
