@@ -17,7 +17,7 @@ const NetworkInterceptors = () => {
                     setUser(null);
                     window.localStorage.removeItem("current_user");
                     await Cookies.remove('access_token');
-                    history.push("/unAuthorized");
+                    history.push("/login");
                     break;
                 case 403:
                     history.go(0);
@@ -26,13 +26,13 @@ const NetworkInterceptors = () => {
                     history.push('/notFound');
                     break;
                 case 422:
-                    //history.go(0);
+                    history.go(0);
                     break;
                 case 500:
                     // history.push('/error');
                     break;
                 default:
-                    history.go(0);
+                    //history.go(0);
                     break;
             }
             showSnackBar(message, 'error');

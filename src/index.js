@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {SnackbarProvider} from 'notistack';
-import Grow from '@material-ui/core/Grow';
 import {UserProvider} from "./Context/UserContext";
 import {history} from "./utils/history";
 import {Router} from "react-router";
+import {Grow} from "@material-ui/core";
+import ScrollToTop from "./customHooks/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ ReactDOM.render(
             <QueryClientProvider client={queryClient}>
                 <UserProvider>
                     <Router history={history}>
+                        <ScrollToTop />
                         <App/>
                     </Router>
                 </UserProvider>
@@ -29,7 +31,3 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
