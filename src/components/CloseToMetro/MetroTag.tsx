@@ -4,7 +4,6 @@ import TaipeiMetroIcon from "../../static/taipei_metro_logo.svg";
 import TaichungMetroIcon from "../../static/taichung_metro_logo.svg";
 import KaohsiungMetroIcon from "../../static/kaohsiung_metro_logo.svg";
 import cx from 'clsx';
-import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme: Theme) => ({
     tag: {
@@ -25,11 +24,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize: "10px",
     },
     textStation: {
+        alignItems:"flex-end",
         fontSize: "0.9rem",
         color: theme.palette.text.secondary,
         margin: 10
     },
     textDistance: {
+        justifySelf:"flex-end",
         fontSize: "0.75rem",
         color: theme.palette.text.secondary,
         margin: 10
@@ -37,11 +38,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     container: {
         display:"flex",
         alignItems: "center",
+        justifyContent:"space-between",
         margin: 4
     },
     bg: {
         borderRadius: 10,
-        padding: 8,
         color: "black",
         background: "#f1f1f1"
     },
@@ -119,15 +120,14 @@ const MetroTag = (props: Props) => {
 
 
     return station && <Box mt={1} className={classes.bg}>
-        <Grid container direction="row" justify="space-around" alignItems="center" spacing={3}>
+        <div className={classes.container}>
             <div className={classes.container}>
                 <img className={classes.logoIcon} src={metroIcon} alt="alt"/>
-
                 <Line/>
             </div>
             <span className={classes.textStation}>{station.name}站</span>
             <span className={classes.textDistance}>距離 {distance}</span>
-        </Grid>
+        </div>
     </Box>
 
 };
