@@ -14,8 +14,6 @@ import UserSection from "./UserSection";
 import './RamenNav.css';
 import {useNotification} from "../../Context/NotificationContext";
 import Badge from "@material-ui/core/Badge";
-// import Divider from "@material-ui/core/Divider";
-// import SubCategorySection from "./SubCategorySection";
 import {useUser} from "../../Context/UserContext";
 import axios from "axios";
 import SubCategorySection from "./SubCategorySection";
@@ -76,6 +74,24 @@ const RamenNavbar = () => {
     const toggleDrawerOpen = () => {
         setDrawerOpen(!drawerOpen)
     }
+    //fetch for notification update every 1 minute
+    useEffect(() => {
+        const getNotiCount = () => {
+            const url = process.env.REACT_APP_BE_URL + "/api/v1/user/unReadNotiCount";
+            axios.get(url, {withCredentials: true})
+                .then(response => {
+                    setNotificationCount(response.data.data)
+                })
+                .catch(e => console.log(e));
+     }
+        if (user) {
+            getNotiCount()
+            const intervalId = setInterval(() => {
+                getNotiCount()
+            }, 1000 * 10);
+            return () => clearInterval(intervalId);
+        }
+    },[])
 
     useEffect(() => {
 
@@ -84,22 +100,6 @@ const RamenNavbar = () => {
         if (localUserString != null && localUserString !== "null" && localUserString !== "undefined") {
             const localUser = JSON.parse(localUserString);
             setUser(localUser);
-        }
-    }, [])
-
-
-    //fetch for notification update every 1 minute
-    useEffect(() => {
-        try {
-            if (user) {
-                setInterval(async () => {
-                    const url = process.env.REACT_APP_BE_URL + "/api/v1/user/unReadNotificationCount";
-                    const response = await axios.get(url, {withCredentials: true});
-                    setNotificationCount(response.data.data);
-                }, 1000 * 10);
-            }
-        } catch (e) {
-            console.log(e)
         }
     }, [])
 

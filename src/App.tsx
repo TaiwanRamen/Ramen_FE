@@ -23,6 +23,7 @@ import NetworkInterceptors from "./utils/NetworkInterceptors";
 import UnAuthorized from "./components/ErrorPages/UnAuthorized";
 import ErrorPage from "./components/ErrorPages/ErrorPage";
 import AddReviewPage from "./components/Reviews/AddReviewPage";
+import Notifications from "./components/Notifications/Notifications";
 
 
 const useStyles = makeStyles(() => ({
@@ -81,7 +82,7 @@ function App() {
                                 </Route>
 
                                 {/*user section*/}
-                                <ProtectedRoute path="/notification" component={Profile}/>
+                                <ProtectedRoute path="/notification" component={Notifications}/>
                                 <ProtectedRoute path="/following" component={UserFollowingPage}/>
                                 <ProtectedRoute path="/wishlist" component={Profile}/>
                                 <ProtectedRoute path="/commented" component={Profile}/>

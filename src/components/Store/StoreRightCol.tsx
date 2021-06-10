@@ -13,6 +13,8 @@ import TabPanel from "./TabPanel";
 import {useRef} from "react";
 import StoreIntro from "./StoreIntro";
 import Tags from "./Tags";
+import {useUser} from "../../Context/UserContext";
+import {UserRole} from "../../enums/UserRole";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -68,10 +70,13 @@ const StoreRightCol = (props: Props) => {
     const currentTabNum = props.currentTabNum;
     const setCurrentTabNum = props.setCurrentTabNum;
     const classes = useStyles();
-    const store = props?.data.store;
-    const storeId = store?._id;
-    const storeRating = (store.rating ? store.rating: 0).toFixed(1)
-    const isStoreOwner = true;
+    const store = props.data.store;
+    const reviewLength = store.storeRelations?.reviews.length;
+    const storeId = store._id;
+    const storeRating = (store.rating ? store.rating : 0).toFixed(1);
+    const {user} = useUser()!;
+    const canEdit = user && (user.userRole === UserRole.ADMIN ||
+        (user.userRole === UserRole.STORE_OWNER && store.storeRelations?.owners?.includes(user._id)));
 
     const gotoComment = () => {
         setCurrentTabNum(1);
@@ -80,11 +85,12 @@ const StoreRightCol = (props: Props) => {
         }
     }
 
+
     return (
         <Paper className={classes.root}>
             <Box m={5} mb={1}>
                 <FollowBtn store={store}/>
-                {isStoreOwner && <StoreDropdown store={store}/>}
+                {canEdit && <StoreDropdown store={store}/>}
             </Box>
 
             <Box pt={1} p={5}>
@@ -96,7 +102,7 @@ const StoreRightCol = (props: Props) => {
                     </Typography>
                     <Rating name={'rating'} value={store.rating} size={'small'} precision={0.1} readOnly/>
                     <Typography variant={'body2'} onClick={gotoComment} className={classes.reviewCount}>
-                        {store.reviews.length} 則評論
+                        {reviewLength} 則評論
                     </Typography>
                 </Box>
 

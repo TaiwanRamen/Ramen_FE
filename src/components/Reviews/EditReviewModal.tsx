@@ -68,7 +68,7 @@ const EditReviewModal = (props: Props) => {
         const reqProps = {
             url: process.env.REACT_APP_BE_URL + `/api/v1/reviews`,
             requestBody: {
-                reviewId, review, rating
+                reviewId, review, rating, storeId
             },
         };
         let response = await mutateAsync(reqProps);

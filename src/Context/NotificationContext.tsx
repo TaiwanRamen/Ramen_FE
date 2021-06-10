@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const NotificationProvider = ({ children }: Props) => {
-    const [notificationCount, setNotificationCount] = useState<number>(10);
+    const [notificationCount, setNotificationCount] = useState<number>(0);
 
     return (
         <NotificationContext.Provider value={{ notificationCount, setNotificationCount }}>

@@ -2,7 +2,7 @@ import {Carousel} from "react-bootstrap";
 import {makeStyles} from "@material-ui/core/styles";
 
 type Props = {
-    imageUrls: string[]
+    imageUrls?: string[]
 }
 
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const CarouselImage = (props: Props) => {
-    const imageUrls: string[] = props.imageUrls;
+    const imageUrls = props.imageUrls;
     const classes = useStyles();
 
     const showImages = (url: string) => {

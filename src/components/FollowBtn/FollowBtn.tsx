@@ -41,7 +41,7 @@ const FollowBtn = (props: Props) => {
     const store = props.store;
     const {user} = useUser()!;
 
-    const [isUserFollowStore, setIsUserFollowStore] = useState<boolean | undefined>(store.followers?.includes(user?._id as string));
+    const [isUserFollowStore, setIsUserFollowStore] = useState<boolean | undefined>(store.storeRelations?.followers?.includes(user?._id as string));
 
     const {mutateAsync} = usePut();
     const showSnackBar = useStackedSnackBar();

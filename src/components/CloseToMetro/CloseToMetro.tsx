@@ -35,7 +35,6 @@ const CloseToMetro = (props: Props) => {
             {error?.message}
         </Typography>
     }
-    console.log(data)
     return data?.stations && data?.stations.length > 0 ?
         <Box>
             <Typography color={'textSecondary'} variant={'body2'}>

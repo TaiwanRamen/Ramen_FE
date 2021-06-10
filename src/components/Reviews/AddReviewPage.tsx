@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleDoubleLeft} from "@fortawesome/free-solid-svg-icons";
+import {useParams} from "react-router";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -52,25 +53,28 @@ type StoreResponse = {
     isStoreOwner: boolean,
     store: IStore
 }
+interface ParamTypes {
+    id: string
+}
 
 const AddReviewPage = () => {
     const showSnackBar = useStackedSnackBar();
     const history = useHistory();
     const classes = useStyles();
 
+    const {id} = useParams<ParamTypes>()
 
-    if (!window.location.pathname.match(/\/stores\/[a-fA-F0-9]{24}\/newReview/g)) {
+    if (!id.match(/[a-fA-F0-9]{24}/g)) {
         showSnackBar('新增評論的店家ID錯誤', 'error');
         history.push("/stores");
     }
 
-    const storeId = window.location.pathname.slice(8, 32)
-    const storageKey = `addReview_${storeId}`;
+    const storageKey = `addReview_${id}`;
     const [rating, setRating] = useState<number | null>(null);
 
     const options = {
         key: "store",
-        url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${storeId}`,
+        url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${id}`,
         requestQuery: {}
     }
     const {data, status, error} = useFetch<StoreResponse>(options);
@@ -100,7 +104,7 @@ const AddReviewPage = () => {
             const reqProps = {
                 url: process.env.REACT_APP_BE_URL + `/api/v1/reviews`,
                 requestBody: {
-                    storeId: storeId,
+                    storeId: id,
                     review: review,
                     rating: rating
                 },
@@ -110,7 +114,7 @@ const AddReviewPage = () => {
             if (response.status === 200) {
                 showSnackBar(`上傳評論成功`, 'success');
                 window.localStorage.removeItem(storageKey);
-                history.push(`/stores/${storeId}`)
+                history.push(`/stores/${id}`)
             } else {
                 showSnackBar(`上傳評論失敗`, 'error');
                 return new Error()
@@ -119,7 +123,7 @@ const AddReviewPage = () => {
         }
 
         return <Paper className={classes.root}>
-            <Button variant="outlined" className={classes.goBackBtn} onClick={()=>history.push(`/stores/${storeId}`)}>
+            <Button variant="outlined" className={classes.goBackBtn} onClick={()=>history.push(`/stores/${id}`)}>
                 <FontAwesomeIcon icon={faAngleDoubleLeft}/>
                 <span className={classes.goBackText}>返回店家</span>
             </Button>

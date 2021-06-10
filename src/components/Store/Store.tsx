@@ -31,7 +31,7 @@ const Store = () => {
         requestQuery: {}
     }
 
-    const {data: store, status, error} = useFetch<StoreResponse>(options);
+    const {data, status, error} = useFetch<StoreResponse>(options);
 
 
     if (status === "loading") {
@@ -43,13 +43,13 @@ const Store = () => {
     }
 
 
-    return store ?
+    return data ?
         <Grid container direction="row" justify="space-between" spacing={5}>
             <Grid key={"leftCol"} item sm={4} lg={3}>
-                <StoreLeftCol store={store.store} currentTabNum={currentTabNum} setCurrentTabNum={setCurrentTabNum}/>
+                <StoreLeftCol store={data.store} currentTabNum={currentTabNum} setCurrentTabNum={setCurrentTabNum}/>
             </Grid>
             <Grid key={"rightCol"} item sm={8} lg={9}>
-                <StoreRightCol data={store} currentTabNum={currentTabNum} setCurrentTabNum={setCurrentTabNum}/>
+                <StoreRightCol data={data} currentTabNum={currentTabNum} setCurrentTabNum={setCurrentTabNum}/>
             </Grid>
         </Grid>
         : null;
