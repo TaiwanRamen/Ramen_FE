@@ -46,15 +46,15 @@ type Props = {
 const FollowingStrip = (props: Props) => {
     const classes = useStyles();
     const store = props.store;
-    const dt = DateTime.fromISO(store.updatedAt).setLocale('zh-tw');
+    const dt = DateTime.fromISO(store.updatedAt ? store.updatedAt : store.createdAt).setLocale('zh-tw');
 
     return (
         <>
             <List className={classes.root}>
-                <ListItem button component={Link} to={`/stores/${store._id}`} >
+                <ListItem button component={Link} to={`/stores/${store._id}`}>
                     <ListItemText primary={store.name}
                                   secondary={`更新於 ${dt.toRelative()}`}/>
-                    <ListItemSecondaryAction >
+                    <ListItemSecondaryAction>
                         <FollowBtn store={store}/>
                     </ListItemSecondaryAction>
                 </ListItem>

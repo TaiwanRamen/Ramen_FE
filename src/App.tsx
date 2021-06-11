@@ -24,6 +24,9 @@ import UnAuthorized from "./components/ErrorPages/UnAuthorized";
 import ErrorPage from "./components/ErrorPages/ErrorPage";
 import AddReviewPage from "./components/Reviews/AddReviewPage";
 import Notifications from "./components/Notifications/Notifications";
+import UserReviewed from "./components/UserReviewed/UserReviewed";
+import UserInfo from "./components/SettingAndInfo/UserInfo";
+import UserSetting from "./components/SettingAndInfo/UserSetting";
 
 
 const useStyles = makeStyles(() => ({
@@ -85,15 +88,17 @@ function App() {
                                 <ProtectedRoute path="/notification" component={Notifications}/>
                                 <ProtectedRoute path="/following" component={UserFollowingPage}/>
                                 <ProtectedRoute path="/wishlist" component={Profile}/>
-                                <ProtectedRoute path="/commented" component={Profile}/>
-                                <ProtectedRoute path="/setting" component={Profile}/>
+                                <ProtectedRoute path="/reviewed" component={UserReviewed}/>
+                                <ProtectedRoute path="/setting" component={UserSetting}/>
+                                <ProtectedRoute path="/userInfo" component={UserInfo}/>
+
 
 
                                 <ProtectedRoute path="/stores/:id/newReview" component={AddReviewPage}/>
                                 <ProtectedRoute path="/stores/new" component={Profile}/>
                                 <ProtectedRoute path="/stores/:id" component={Store}/>
 
-
+                                userInfo
 
                                 <Route exact path="/notFound" component={NotFound}/>
                                 <Route exact path="/unAuthorized" component={UnAuthorized}/>

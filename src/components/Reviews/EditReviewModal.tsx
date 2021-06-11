@@ -49,6 +49,7 @@ const EditReviewModal = (props: Props) => {
     const storeId = props.storeId;
     const history = useHistory();
     const storageKey = `editReview_${storeId}`;
+    window.localStorage.setItem(storageKey, props.review.text);
     const [rating, setRating] = useState<number | null>(props.review.rating);
 
 

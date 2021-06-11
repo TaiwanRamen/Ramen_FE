@@ -12,6 +12,7 @@ import {faMapMarkedAlt, faStoreAlt, faStreetView, faUser} from "@fortawesome/fre
 import TaiwanIcon from "../../static/taiwan.svg";
 import TaipeiMetroIcon from "../../static/taipei_metro_logo_gray.svg";
 import KaohsiungMetroIcon from "../../static/kaohsiung_metro_logo_gray.svg";
+import InfoIcon from '@material-ui/icons/Info';
 import SettingsIcon from "@material-ui/icons/Settings";
 import Divider from "@material-ui/core/Divider";
 import {useUser} from "../../Context/UserContext";
@@ -103,6 +104,14 @@ export default function CustomTreeView(props: Props) {
                     >
                         <StyledTreeItem
                             nodeId="21"
+                            labelText="個人資料"
+                            labelIcon={InfoIcon}
+                            to="/userInfo"
+                            onClick={toggleDrawerOpen}
+
+                        />
+                        <StyledTreeItem
+                            nodeId="22"
                             labelText="通知"
                             labelIcon={NotificationsIcon}
                             labelInfo={notificationCount}
@@ -113,28 +122,28 @@ export default function CustomTreeView(props: Props) {
                             to="/notification"
                         />
                         <StyledTreeItem
-                            nodeId="22"
+                            nodeId="23"
                             labelText="追蹤清單"
                             labelIcon={BookmarkIcon}
                             to="/following"
                             onClick={toggleDrawerOpen}
                         />
                         <StyledTreeItem
-                            nodeId="23"
+                            nodeId="24"
                             labelText="願望清單"
                             labelIcon={PlaylistAddIcon}
                             to="/wishlist"
                             onClick={toggleDrawerOpen}
                         />
                         <StyledTreeItem
-                            nodeId="24"
+                            nodeId="25"
                             labelText="已評論店家"
                             labelIcon={CommentIcon}
-                            to="/commented"
+                            to="/reviewed"
                             onClick={toggleDrawerOpen}
                         />
                         <StyledTreeItem
-                            nodeId="25"
+                            nodeId="26"
                             labelText="用戶設定"
                             labelIcon={SettingsIcon}
                             to="/setting"

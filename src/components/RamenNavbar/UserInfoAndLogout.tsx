@@ -66,7 +66,7 @@ const UserInfoAndLogout = () => {
                         {user?.fbName}
                     </Typography>
                 </Box>}
-                {user ? <Avatar alt="Remy Sharp" src={user?.avatar}/> : <AccountCircle/>}
+                {user ? <Avatar src={user?.avatar}/> : <AccountCircle/>}
                 <ExpandMoreIcon/>
             </Button>
 

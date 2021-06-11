@@ -2,9 +2,9 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 import useFetch from "../../customHooks/UseFetch";
 import Pagination from "@material-ui/lab/Pagination";
 import {ChangeEvent, useState} from "react";
-import {IStore} from "../../types/IStore";
-import FollowingStrip from "./FollowingStrip";
 import {withRouter} from "react-router-dom";
+import ReviewStrip from "./ReviewStrip";
+import {IReview} from "../../types/IReview";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -48,9 +48,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 type Stores = {
     current: number;
     pages: number;
-    stores: IStore[]
+    reviews: IReview[]
 };
-const UserFollowingPage = () => {
+const UserReviewed = () => {
     const classes = useStyles();
     const [page, setPage] = useState<number>(1);
     //const {user} = useUser()!;
@@ -60,19 +60,19 @@ const UserFollowingPage = () => {
     };
 
     const options = {
-        key: "stores",
-        url: process.env.REACT_APP_BE_URL + "/api/v1/user/followedStore",
+        key: "reviewedStore",
+        url: process.env.REACT_APP_BE_URL + "/api/v1/user/reviewedStore",
         requestQuery: {
             page: page,
         }
     }
     const {data} = useFetch<Stores>(options);
-    return data?.stores ?
+    return data?.reviews ?
         <>
-            <p className={classes.header}>追蹤清單</p>
+            <p className={classes.header}>使用者評論</p>
             {
-                data.stores.map((store: IStore) => {
-                    return <FollowingStrip store={store}/>
+                data.reviews.map((review: IReview) => {
+                    return <ReviewStrip review={review}/>
                 })
             }
             <div className={classes.root}>
@@ -88,4 +88,4 @@ const UserFollowingPage = () => {
 
 };
 
-export default withRouter(UserFollowingPage);
+export default withRouter(UserReviewed);

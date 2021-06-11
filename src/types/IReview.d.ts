@@ -1,3 +1,5 @@
+import {IStore} from "./IStore";
+
 export interface IReview {
     author: {
         avatar: string,
@@ -10,6 +12,6 @@ export interface IReview {
     createdAt: string,
     updatedAt: string,
     __v: number,
-    store: string
+    store: string | IStore
 }
 
