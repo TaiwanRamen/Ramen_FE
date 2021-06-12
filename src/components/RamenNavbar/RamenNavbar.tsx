@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,7 +15,6 @@ import './RamenNav.css';
 import {useNotification} from "../../Context/NotificationContext";
 import Badge from "@material-ui/core/Badge";
 import {useUser} from "../../Context/UserContext";
-import axios from "axios";
 import SubCategorySection from "./SubCategorySection";
 
 const navbarHeight = 64;
@@ -70,38 +69,39 @@ const RamenNavbar = () => {
     const classes = useStyles();
     const {user, setUser} = useUser()!;
     const {notificationCount, setNotificationCount} = useNotification()!;
-    const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [listening, setListening] = useState(false);
+
     const toggleDrawerOpen = () => {
         setDrawerOpen(!drawerOpen)
     }
-    //fetch for notification update every 1 minute
-    useEffect(() => {
-        const getNotiCount = () => {
-            const url = process.env.REACT_APP_BE_URL + "/api/v1/user/unReadNotiCount";
-            axios.get(url, {withCredentials: true})
-                .then(response => {
-                    setNotificationCount(response.data.data)
-                })
-                .catch(e => console.log(e));
-     }
-        if (user) {
-            getNotiCount()
-            const intervalId = setInterval(() => {
-                getNotiCount()
-            }, 1000 * 10);
-            return () => clearInterval(intervalId);
-        }
-    },[])
 
     useEffect(() => {
-
         const localUserString = window.localStorage.getItem("current_user");
-
         if (localUserString != null && localUserString !== "null" && localUserString !== "undefined") {
             const localUser = JSON.parse(localUserString);
             setUser(localUser);
         }
     }, [])
+
+    useEffect(() => {
+        if (user && !listening) {
+            const url = process.env.REACT_APP_BE_URL + "/api/v1/user/unReadNotiCount";
+
+            const eventSource = new EventSource(url, {withCredentials: true});
+            eventSource.onopen = function () {
+                console.log("Sse connection opened");
+            };
+            eventSource.onmessage = (event) => {
+                const parsedData = event.data;
+                setNotificationCount(parseInt(parsedData))
+                setListening(true);
+            };
+            eventSource.onerror = () => {
+                eventSource.close();
+            }
+        }
+    }, [user, listening])
 
     return (
         <div className={classes.grow}>

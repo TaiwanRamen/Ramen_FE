@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
             flexDirection: "column",
             minHeight: "100vh",
             maxWidth: "1440px",
-            width: "80%",
+            width: "90%",
             padding: "0 15px",
             margin: "100px auto 0 auto",
         }

@@ -1,10 +1,11 @@
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import useFetch from "../../customHooks/UseFetch";
-import Pagination from "@material-ui/lab/Pagination";
 import {ChangeEvent, useState} from "react";
 import {IStore} from "../../types/IStore";
 import FollowingStrip from "./FollowingStrip";
 import {withRouter} from "react-router-dom";
+import CustomPagination from "../CustomPagination";
+import {Box} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -53,7 +54,6 @@ type Stores = {
 const UserFollowingPage = () => {
     const classes = useStyles();
     const [page, setPage] = useState<number>(1);
-    //const {user} = useUser()!;
 
     const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
         setPage(value);
@@ -68,23 +68,15 @@ const UserFollowingPage = () => {
     }
     const {data} = useFetch<Stores>(options);
     return data?.stores ?
-        <>
+        <Box mb={5}>
             <p className={classes.header}>追蹤清單</p>
             {
                 data.stores.map((store: IStore) => {
                     return <FollowingStrip store={store}/>
                 })
             }
-            <div className={classes.root}>
-                <Pagination count={data?.pages}
-                            className={classes.pagination}
-                            page={page}
-                            size="large"
-                            variant="outlined"
-                            shape="rounded"
-                            onChange={handlePageChange}/>
-            </div>
-        </> : null
+            <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>
+        </Box> : null
 
 };
 

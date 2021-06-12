@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.background.paper,
             paddingLeft: 10,
             paddingRight: 10,
-            margin: 5,
+            margin: 10,
             boxShadow: '0 2px 4px -2px rgba(0,0,0,0.24), 0 4px 8px -2px rgba(0, 0, 0, 0.2)',
             color: theme.palette.text.primary,
             "&:hover": {
@@ -49,19 +49,15 @@ const FollowingStrip = (props: Props) => {
     const dt = DateTime.fromISO(store.updatedAt ? store.updatedAt : store.createdAt).setLocale('zh-tw');
 
     return (
-        <>
-            <List className={classes.root}>
-                <ListItem button component={Link} to={`/stores/${store._id}`}>
-                    <ListItemText primary={store.name}
-                                  secondary={`更新於 ${dt.toRelative()}`}/>
-                    <ListItemSecondaryAction>
-                        <FollowBtn store={store}/>
-                    </ListItemSecondaryAction>
-                </ListItem>
-            </List>
-
-        </>
-
+        <List className={classes.root}>
+            <ListItem button component={Link} to={`/stores/${store._id}`}>
+                <ListItemText primary={store.name}
+                              secondary={`更新於 ${dt.toRelative()}`}/>
+                <ListItemSecondaryAction>
+                    <FollowBtn store={store}/>
+                </ListItemSecondaryAction>
+            </ListItem>
+        </List>
     );
 };
 

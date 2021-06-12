@@ -4,45 +4,11 @@ import {useState} from "react";
 import Loading from "../Loading/Loading";
 import StoreCardList from "../StoreCard/StoreCardList";
 import './StoreIndex.css';
-import Pagination from '@material-ui/lab/Pagination';
-import {makeStyles, Theme} from '@material-ui/core/styles';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import {Button} from "react-bootstrap";
 import SearchBar from "../SearchBar/SearchBar";
 import useFetch from "../../customHooks/UseFetch";
-
-
-const useStyles = makeStyles((theme: Theme) => ({
-        root: {
-            justifyContent: "center",
-            margin: "3rem 0",
-            display: "flex",
-        },
-        searchRoot: {
-            padding: '2px 4px',
-            display: 'flex',
-            alignItems: 'center',
-            width: 400,
-        },
-        input: {
-            marginLeft: theme.spacing(1),
-            flex: 1,
-        },
-        iconButton: {
-            padding: 10,
-        },
-        divider: {
-            height: 28,
-            margin: 4,
-        },
-        pagination: {
-            backgroundColor: "transparent",
-            "& ul > li > button": {
-                backgroundColor: "white"
-            }
-        }
-    })
-);
+import CustomPagination from "../CustomPagination";
 
 type Stores = {
     current: number;
@@ -54,7 +20,6 @@ type Stores = {
 const StoreIndex = () => {
     const [page, setPage] = useState<number>(1);
     const [searchInput, setSearchInput] = useState<string | null>(null);
-    const classes = useStyles();
 
     const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
         setPage(value);
@@ -93,17 +58,8 @@ const StoreIndex = () => {
         <>
             <SearchBar setPage={setPage} setSearchInput={setSearchInput}/>
             <StoreCardList stores={data.stores}/>
-            {data &&
-            <div className={classes.root}>
-                <Pagination count={data.pages}
-                            className={classes.pagination}
-                            page={page}
-                            size="large"
-                            variant="outlined"
-                            shape="rounded"
-                            onChange={handlePageChange}/>
-            </div>
-            }
+
+            {data && <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>}
 
         </> : null;
 }

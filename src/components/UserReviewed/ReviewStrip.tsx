@@ -4,12 +4,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {IStore} from "../../types/IStore";
 import {DateTime} from "luxon";
-import {Collapse} from "@material-ui/core";
+import {Box, Collapse, Divider} from "@material-ui/core";
 import {useState} from "react";
 import {ExpandLess, ExpandMore} from "@material-ui/icons";
 import Rating from "@material-ui/lab/Rating";
 import ReviewInfo from "./ReviewInfo";
 import {IReview} from "../../types/IReview";
+import Typography from "@material-ui/core/Typography";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -62,6 +63,12 @@ const ReviewStrip = (props: Props) => {
                     {open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Divider/>
+                    <Box m={2}>
+                        <Typography color={'textPrimary'} variant={'body1'}>
+                            您的評論：
+                        </Typography>
+                    </Box>
                     <List component="div" disablePadding>
                         <ReviewInfo storeId={store._id}/>
                     </List>

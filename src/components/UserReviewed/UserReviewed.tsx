@@ -1,10 +1,10 @@
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import useFetch from "../../customHooks/UseFetch";
-import Pagination from "@material-ui/lab/Pagination";
 import {ChangeEvent, useState} from "react";
 import {withRouter} from "react-router-dom";
 import ReviewStrip from "./ReviewStrip";
 import {IReview} from "../../types/IReview";
+import CustomPagination from "../CustomPagination";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -75,15 +75,7 @@ const UserReviewed = () => {
                     return <ReviewStrip review={review}/>
                 })
             }
-            <div className={classes.root}>
-                <Pagination count={data?.pages}
-                            className={classes.pagination}
-                            page={page}
-                            size="large"
-                            variant="outlined"
-                            shape="rounded"
-                            onChange={handlePageChange}/>
-            </div>
+            <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>
         </> : null
 
 };

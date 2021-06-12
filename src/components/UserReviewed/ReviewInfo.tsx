@@ -3,9 +3,7 @@ import Loading from "../Loading/Loading";
 import {IReview} from "../../types/IReview";
 import ListItem from "@material-ui/core/ListItem";
 import {Link} from "react-router-dom";
-import {Paper} from "@material-ui/core";
 import {makeStyles, Theme} from "@material-ui/core/styles";
-
 import ReactQuill from "react-quill";
 import he from "he";
 
@@ -19,15 +17,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             color: theme.palette.text.primary,
             textDecoration: "none",
         }
-    },
-    paper: {
-        width: "100%",
-        marginTop: 0,
-        backgroundColor: "#f8f6f6",
-        boxShadow: "2px 2px 5px 1px rgba(0, 0, 0, 0.2)",
-        borderRadius: 3,
-        padding: 10,
-        paddingTop: 0
     },
     reviewText: {
         "& > div.ql-editor": {
@@ -68,15 +57,13 @@ const ReviewInfo = (props: Props) => {
 
     return data?.review ? (
         <ListItem component={Link} to={`/stores/${storeId}`} className={classes.selection}>
-            <Paper className={classes.paper}>
-                <ReactQuill
-                    value={he.decode(data.review.text)}
-                    readOnly={true}
-                    theme={"bubble"}
-                >
-                    <div className={classes.reviewText}/>
-                </ReactQuill>
-            </Paper>
+            <ReactQuill
+                value={he.decode(data.review.text)}
+                readOnly={true}
+                theme={"bubble"}
+            >
+                <div className={classes.reviewText}/>
+            </ReactQuill>
         </ListItem>
     ) : null;
 };

@@ -5,9 +5,9 @@ import {useUser} from "../../Context/UserContext";
 import useFetch from "../../customHooks/UseFetch";
 import AddCommentModal from "./AddCommentModal";
 import Comment from './Comment'
-import Pagination from "@material-ui/lab/Pagination";
 import {makeStyles} from "@material-ui/core/styles";
 import {Box, Typography} from "@material-ui/core";
+import CustomPagination from "../CustomPagination";
 
 const useStyles = makeStyles(() => ({
     noComment: {
@@ -82,15 +82,7 @@ const Comments = (props: Props) => {
                             {data.comments.map(comment =>
                                 <Comment comment={comment} storeId={storeId}/>
                             )}
-                            <div className={classes.pages}>
-                                <Pagination count={data.pages}
-                                            className={classes.pagination}
-                                            page={page}
-                                            size="medium"
-                                            variant="outlined"
-                                            shape="rounded"
-                                            onChange={handlePageChange}/>
-                            </div>
+                            <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>
 
                         </div>
                         :

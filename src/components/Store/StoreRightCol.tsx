@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
     locationIcon: {
         marginLeft: 0,
         marginRight: 4,
-        fontSize: 16,
+        fontSize: 18,
     },
     reviewCount: {
         color: "#2589ff",
@@ -96,7 +96,7 @@ const StoreRightCol = (props: Props) => {
             <Box pt={1} p={5}>
                 <h2 className={classes.title}>{store.name}</h2>
 
-                <Box color={'grey.500'} display={'flex'} alignItems={'center'} m={1.5}>
+                <Box color={'grey.500'} display={'flex'} alignItems={'center'} m={2} ml={0.5}>
                     <Typography variant={'body2'} className={classes.rateValue}>
                         {storeRating}
                     </Typography>
@@ -106,7 +106,7 @@ const StoreRightCol = (props: Props) => {
                     </Typography>
                 </Box>
 
-                <Box color={'grey.500'} display={'flex'} alignItems={'center'} mb={1} mt={1} ml={1}>
+                <Box color={'grey.500'} display={'flex'} alignItems={'center'} mb={1} ml={0}>
                     <LocationOn className={classes.locationIcon}/>
                     <span className={classes.locationIcon}>{store.city}</span>
                 </Box>

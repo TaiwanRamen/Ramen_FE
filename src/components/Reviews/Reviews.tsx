@@ -5,9 +5,9 @@ import Review from './Review';
 import {useUser} from "../../Context/UserContext";
 import useFetch from "../../customHooks/UseFetch";
 import {Box, Divider, Typography} from "@material-ui/core";
-import Pagination from "@material-ui/lab/Pagination";
 import {makeStyles} from "@material-ui/core/styles";
 import UserReview from "./UserReview";
+import CustomPagination from "../CustomPagination";
 
 const useStyles = makeStyles(() => ({
     noReview: {
@@ -79,16 +79,7 @@ const Reviews = (props: Props) => {
                         {reviews.map(review =>
                             <Review review={review} key={review._id} storeId={storeId}/>
                         )}
-                        <div className={classes.pages}>
-                            <Pagination count={data.pages}
-                                        className={classes.pagination}
-                                        page={page}
-                                        size="medium"
-                                        variant="outlined"
-                                        shape="rounded"
-                                        onChange={handlePageChange}/>
-                        </div>
-
+                        <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>
                     </div>
                     :
                     <Typography variant="subtitle1" className={classes.noReview}>

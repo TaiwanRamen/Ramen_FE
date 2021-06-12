@@ -29,7 +29,6 @@ const NetworkInterceptors = () => {
                     history.go(0);
                     break;
                 case 500:
-                    // history.push('/error');
                     break;
                 default:
                     //history.go(0);

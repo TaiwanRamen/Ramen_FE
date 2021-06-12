@@ -44,11 +44,11 @@ const Store = () => {
 
 
     return data ?
-        <Grid container direction="row" justify="space-between" spacing={5}>
-            <Grid key={"leftCol"} item sm={4} lg={3}>
+        <Grid container direction="row" justify="space-between" spacing={3}>
+            <Grid key={"leftCol"} item sm={12} md={3}>
                 <StoreLeftCol store={data.store} currentTabNum={currentTabNum} setCurrentTabNum={setCurrentTabNum}/>
             </Grid>
-            <Grid key={"rightCol"} item sm={8} lg={9}>
+            <Grid key={"rightCol"} item sm={12} md={9}>
                 <StoreRightCol data={data} currentTabNum={currentTabNum} setCurrentTabNum={setCurrentTabNum}/>
             </Grid>
         </Grid>

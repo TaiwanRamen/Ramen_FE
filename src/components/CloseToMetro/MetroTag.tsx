@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: "1.5rem",
     },
     line: {
-        textAlign:"center",
+        textAlign: "center",
         width: "20px",
         borderRadius: 5,
         padding: 2,
@@ -24,21 +24,21 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize: "10px",
     },
     textStation: {
-        alignItems:"flex-end",
+        alignItems: "flex-end",
         fontSize: "0.9rem",
         color: theme.palette.text.secondary,
-        margin: 10
+        margin: 5
     },
     textDistance: {
-        justifySelf:"flex-end",
+        justifySelf: "flex-end",
         fontSize: "0.75rem",
         color: theme.palette.text.secondary,
         margin: 10
     },
     container: {
-        display:"flex",
+        display: "flex",
         alignItems: "center",
-        justifyContent:"space-between",
+        justifyContent: "space-between",
         margin: 4
     },
     bg: {
@@ -121,14 +121,16 @@ const MetroTag = (props: Props) => {
 
     return station && <Box mt={1} className={classes.bg}>
         <div className={classes.container}>
+
+            <span className={classes.textStation}>{station.name}站</span>
             <div className={classes.container}>
                 <img className={classes.logoIcon} src={metroIcon} alt="alt"/>
                 <Line/>
             </div>
-            <span className={classes.textStation}>{station.name}站</span>
             <span className={classes.textDistance}>距離 {distance}</span>
         </div>
     </Box>
+
 
 };
 

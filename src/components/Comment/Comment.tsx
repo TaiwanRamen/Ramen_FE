@@ -93,15 +93,11 @@ const Comment = (props: Props) => {
             }
             {!editSectionShow &&
             <Paper className={classes.paper}>
-                {/*<span>{commentText}</span>*/}
-
                 <Typography variant="body1">
                     {commentText}
                 </Typography>
             </Paper>
             }
-
-
         </Box>
     );
 };
