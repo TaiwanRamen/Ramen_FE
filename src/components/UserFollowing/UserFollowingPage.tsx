@@ -17,8 +17,15 @@ const useStyles = makeStyles((theme: Theme) => ({
             textAlign: "left",
             float: "none",
             color: "#323232",
-            margin:16,
+            margin: 16,
             fontSize: 24,
+        },
+        text: {
+            textAlign: "left",
+            float: "none",
+            color: "#323232",
+            margin: 16,
+            fontSize: 20,
         },
         searchRoot: {
             padding: '2px 4px',
@@ -71,9 +78,9 @@ const UserFollowingPage = () => {
         <Box mb={5}>
             <p className={classes.header}>追蹤清單</p>
             {
-                data.stores.map((store: IStore) => {
+                data.stores.length > 0 ? data.stores.map((store: IStore) => {
                     return <FollowingStrip store={store}/>
-                })
+                }) : <p className={classes.text}>沒有追蹤清單</p>
             }
             <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>
         </Box> : null

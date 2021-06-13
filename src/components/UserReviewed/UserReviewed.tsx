@@ -5,6 +5,7 @@ import {withRouter} from "react-router-dom";
 import ReviewStrip from "./ReviewStrip";
 import {IReview} from "../../types/IReview";
 import CustomPagination from "../CustomPagination";
+import {Box} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             textAlign: "left",
             float: "none",
             color: "#323232",
-            margin:16,
+            margin: 16,
             fontSize: 24,
         },
         searchRoot: {
@@ -41,7 +42,14 @@ const useStyles = makeStyles((theme: Theme) => ({
             "& ul > li > button": {
                 backgroundColor: "white"
             }
-        }
+        },
+        text: {
+            textAlign: "left",
+            float: "none",
+            color: "#323232",
+            margin: 16,
+            fontSize: 20,
+        },
     })
 );
 
@@ -68,15 +76,15 @@ const UserReviewed = () => {
     }
     const {data} = useFetch<Stores>(options);
     return data?.reviews ?
-        <>
-            <p className={classes.header}>使用者評論</p>
+        <Box mb={5}>
+            <p className={classes.header}>已評論店家</p>
             {
-                data.reviews.map((review: IReview) => {
+                data.reviews.length > 0 ? data.reviews.map((review: IReview) => {
                     return <ReviewStrip review={review}/>
-                })
+                }) : <p className={classes.text}>沒有評論店家</p>
             }
             <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>
-        </> : null
+        </Box> : null
 
 };
 

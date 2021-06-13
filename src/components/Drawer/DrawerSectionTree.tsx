@@ -102,14 +102,14 @@ export default function CustomTreeView(props: Props) {
                         labelIconFA={faUser}
                         labelInfo={notificationCount}
                     >
-                        <StyledTreeItem
-                            nodeId="21"
-                            labelText="個人資料"
-                            labelIcon={InfoIcon}
-                            to="/userInfo"
-                            onClick={toggleDrawerOpen}
+                        {/*<StyledTreeItem*/}
+                        {/*    nodeId="21"*/}
+                        {/*    labelText="個人資料"*/}
+                        {/*    labelIcon={InfoIcon}*/}
+                        {/*    to="/userInfo"*/}
+                        {/*    onClick={toggleDrawerOpen}*/}
 
-                        />
+                        {/*/>*/}
                         <StyledTreeItem
                             nodeId="22"
                             labelText="通知"
@@ -128,13 +128,13 @@ export default function CustomTreeView(props: Props) {
                             to="/following"
                             onClick={toggleDrawerOpen}
                         />
-                        <StyledTreeItem
-                            nodeId="24"
-                            labelText="願望清單"
-                            labelIcon={PlaylistAddIcon}
-                            to="/wishlist"
-                            onClick={toggleDrawerOpen}
-                        />
+                        {/*<StyledTreeItem*/}
+                        {/*    nodeId="24"*/}
+                        {/*    labelText="願望清單"*/}
+                        {/*    labelIcon={PlaylistAddIcon}*/}
+                        {/*    to="/wishlist"*/}
+                        {/*    onClick={toggleDrawerOpen}*/}
+                        {/*/>*/}
                         <StyledTreeItem
                             nodeId="25"
                             labelText="已評論店家"
@@ -142,13 +142,13 @@ export default function CustomTreeView(props: Props) {
                             to="/reviewed"
                             onClick={toggleDrawerOpen}
                         />
-                        <StyledTreeItem
-                            nodeId="26"
-                            labelText="用戶設定"
-                            labelIcon={SettingsIcon}
-                            to="/setting"
-                            onClick={toggleDrawerOpen}
-                        />
+                        {/*<StyledTreeItem*/}
+                        {/*    nodeId="26"*/}
+                        {/*    labelText="用戶設定"*/}
+                        {/*    labelIcon={SettingsIcon}*/}
+                        {/*    to="/setting"*/}
+                        {/*    onClick={toggleDrawerOpen}*/}
+                        {/*/>*/}
                     </StyledTreeItemHead>
                     <Divider/>
                 </>

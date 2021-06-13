@@ -5,6 +5,7 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 import {INotification} from "../../types/INotification";
 import NotificationStrip from "./NotificationStrip";
 import CustomPagination from "../CustomPagination";
+import {Box} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             textAlign: "left",
             float: "none",
             color: "#323232",
-            margin:16,
+            margin: 16,
             fontSize: 24,
         },
         searchRoot: {
@@ -41,7 +42,14 @@ const useStyles = makeStyles((theme: Theme) => ({
             "& ul > li > button": {
                 backgroundColor: "white"
             }
-        }
+        },
+        text: {
+            textAlign: "left",
+            float: "none",
+            color: "#323232",
+            margin: 16,
+            fontSize: 20,
+        },
     })
 );
 
@@ -69,16 +77,18 @@ const Notifications = () => {
     }
 
     const {data} = useFetch<NotificationsRes>(options);
-    return data?.notifications ?
-        <>
-            <p className={classes.header}>通知</p>
-            {
-                data.notifications.map((notification: INotification) => {
-                    return <NotificationStrip notification={notification}/>
-                })
-            }
-            <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>
-        </> : null
+
+    return data?.notifications ? <Box mb={5}>
+
+        <p className={classes.header}>通知</p>
+        {
+            data.notifications.length > 0 ? data.notifications.map((notification: INotification) => {
+                return <NotificationStrip notification={notification}/>
+            }) : <p className={classes.text}>沒有追蹤清單</p>
+        }
+        <CustomPagination pages={data.pages} page={page} handlePageChange={handlePageChange}/>
+    </Box> : null
+
 
 };
 
