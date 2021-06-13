@@ -3,8 +3,9 @@ import {IStore} from "./IStore";
 export interface IReview {
     author: {
         avatar: string,
-        id: string,
-        username: string
+        _id: string,
+        username: string,
+        email: string
     },
     _id: string,
     rating: number,

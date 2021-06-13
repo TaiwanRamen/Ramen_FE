@@ -50,7 +50,7 @@ const Reviews = (props: Props) => {
     const storeId = props.storeId;
     const options = {
         key: "comments",
-        url: process.env.REACT_APP_BE_URL + `/api/v1/reviews/${storeId}`,
+        url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${storeId}/getReviews`,
         requestQuery: {
             page: page
         }
@@ -67,7 +67,7 @@ const Reviews = (props: Props) => {
     }
     if (!data?.reviews) return <div>系統無法取得評論，請重新整理</div>
 
-    const reviews = data.reviews.filter(review => review.author.id !== user?._id);
+    const reviews = data.reviews.filter(review => review.author._id !== user?._id);
 
     return (
         <div className={classes.reviews}>

@@ -27,13 +27,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: "flex-end",
         fontSize: "0.9rem",
         color: theme.palette.text.secondary,
-        margin: 5
+        margin: 5,
+        width: 65
     },
     textDistance: {
         justifySelf: "flex-end",
         fontSize: "0.75rem",
         color: theme.palette.text.secondary,
-        margin: 10
+        margin: 10,
+        width: 80
     },
     container: {
         display: "flex",

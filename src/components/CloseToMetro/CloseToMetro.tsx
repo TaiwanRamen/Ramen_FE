@@ -21,7 +21,7 @@ const CloseToMetro = (props: Props) => {
 
     const options = {
         key: "stores",
-        url: process.env.REACT_APP_BE_URL + `/api/v1/metro/closeToStore`,
+        url: process.env.REACT_APP_BE_URL + `/api/v1/metro/getMetroCloseToStore`,
         requestQuery: {storeId}
     }
     const {data, status, error} = useFetch<Metros>(options);

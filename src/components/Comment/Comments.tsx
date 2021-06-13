@@ -51,7 +51,7 @@ const Comments = (props: Props) => {
 
         const options = {
             key: "comments",
-            url: process.env.REACT_APP_BE_URL + `/api/v1/comments/${storeId}`,
+            url: process.env.REACT_APP_BE_URL + `/api/v1/stores/${storeId}/getComments`,
             requestQuery: {
                 page: page
             }

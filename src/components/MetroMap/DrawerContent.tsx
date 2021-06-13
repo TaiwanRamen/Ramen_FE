@@ -19,7 +19,7 @@ const DrawerContent = (props: Props) => {
 
     const options = {
         key: "stores",
-        url: process.env.REACT_APP_BE_URL + `/api/v1/metro`,
+        url: process.env.REACT_APP_BE_URL + `/api/v1/metro/getStoresNearMetro`,
         requestQuery: {
             city, stationCode
         }

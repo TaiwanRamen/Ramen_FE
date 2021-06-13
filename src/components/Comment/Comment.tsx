@@ -46,7 +46,7 @@ const Comment = (props: Props) => {
     const comment = props.comment;
     const storeId = props.storeId;
     const [commentText, setCommentText] = useState<string>(comment.text);
-    const commentAuthorId = props.comment?.author?.id;
+    const commentAuthorId = props.comment?.author?._id;
     const [editSectionShow, setEditSectionShow] = useState(false);
     const classes = useStyles();
     const dt = DateTime.fromISO(comment.createdAt).setLocale('zh-tw');

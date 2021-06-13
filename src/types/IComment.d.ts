@@ -5,8 +5,9 @@ export interface IComment {
     rating: number,
     text: string,
     author: {
+        email: string,
         avatar: string,
-        id: string,
+        _id: string,
         username: string
     }
 }
