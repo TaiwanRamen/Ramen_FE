@@ -5,10 +5,11 @@ import Loading from "../Loading/Loading";
 import StoreCardList from "../StoreCard/StoreCardList";
 import './StoreIndex.css';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import {Button} from "react-bootstrap";
+
 import SearchBar from "../SearchBar/SearchBar";
 import useFetch from "../../customHooks/UseFetch";
 import CustomPagination from "../CustomPagination";
+import {Button} from "@material-ui/core";
 
 type Stores = {
     current: number;
@@ -47,7 +48,7 @@ const StoreIndex = () => {
     if (data?.stores?.length === 0) {
         return searchInput ? <div>
             {`搜尋\"${searchInput}\"沒有找到店家`}
-            <Button variant="outline-primary" className="goBack-btn" onClick={() => setSearchInput(null)}>
+            <Button variant="outlined" className="goBack-btn" onClick={() => setSearchInput(null)}>
                 <ArrowLeftIcon/>
                 返回店家列表
             </Button>
