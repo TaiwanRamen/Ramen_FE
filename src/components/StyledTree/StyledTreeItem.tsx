@@ -100,7 +100,7 @@ function StyledTreeItem(props: StyledTreeItemProps) {
                     <Typography className={classes.labelText}>
                         {labelText}
                     </Typography>
-                    {!!labelInfo && labelInfo != 0 && <Chip
+                    {!!labelInfo && labelInfo !== 0 && <Chip
                         variant="outlined"
                         size="small"
                         clickable

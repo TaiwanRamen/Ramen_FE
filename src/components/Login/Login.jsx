@@ -6,7 +6,6 @@ import Cookies from 'js-cookie';
 import {useUser} from "../../Context/UserContext";
 import LoadingIcon from "../Loading/LoadingIcon";
 import Button from "@material-ui/core/Button";
-import {useHistory} from "react-router-dom";
 
 
 type Props = {

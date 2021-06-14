@@ -20,7 +20,7 @@ const useStyles = makeStyles( () => ({
 const LoadingIcon = () => {
     const classes = useStyles();
     return (
-        <img className={classes.spinner} src={loadingSpinner}  />
+        <img className={classes.spinner} src={loadingSpinner} alt="" />
     );
 };
 

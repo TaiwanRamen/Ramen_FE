@@ -15,7 +15,7 @@ const LoadingSpinner = ({...props}: any) => {
 
     return (
         <div {...props}>
-            <img className={classes.spinner} src={loadingSpinner} />
+            <img className={classes.spinner} src={loadingSpinner} alt="" />
         </div>
     );
 };
