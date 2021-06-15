@@ -11,7 +11,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:latest
+      - image: circleci/node:latest
     environment:
       REACT_APP_DOMAIN: $REACT_APP_DOMAIN
       REACT_APP_BE_URL: $REACT_APP_BE_URL
@@ -22,6 +22,9 @@ jobs:
     working_directory: ~/repo
 
     steps:
+      - run:
+            name: "Setup custom environment variables"
+            command: echo 'export MY_ENV_VAR="FOO"' >> $REACT_APP_DOMAIN echo 'export MY_ENV_VAR="FOO"' >> $REACT_APP_FB_ID
       - checkout
 
       - restore_cache:
