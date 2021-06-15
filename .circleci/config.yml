@@ -12,13 +12,18 @@ jobs:
   build:
     docker:
       - image: node:latest
+    environment:
+      REACT_APP_DOMAIN: $REACT_APP_DOMAIN
+      REACT_APP_BE_URL: $REACT_APP_BE_URL
+      REACT_APP_FB_ID: $REACT_APP_FB_ID
+      REACT_APP_MAPBOX_TOKEN: $REACT_APP_MAPBOX_TOKEN
+      REACT_APP_SUPPORT_EMAIL: $REACT_APP_SUPPORT_EMAIL
 
     working_directory: ~/repo
 
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
