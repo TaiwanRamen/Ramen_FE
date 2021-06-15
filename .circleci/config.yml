@@ -22,9 +22,6 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      - run:
-            name: "Setup custom environment variables"
-            command: echo 'export MY_ENV_VAR="FOO"' >> $REACT_APP_DOMAIN echo 'export MY_ENV_VAR="FOO"' >> $REACT_APP_FB_ID
       - checkout
 
       - restore_cache:
@@ -34,6 +31,10 @@ jobs:
             - v1-dependencies-
 
       - run: yarn install
+      - run:
+          name: "Setup custom environment variables"
+          command: echo "REACT_APP_DOMAIN=$REACT_APP_DOMAIN";
+            echo "REACT_APP_BE_URL=$REACT_APP_BE_URL";
 
       - save_cache:
           paths:
