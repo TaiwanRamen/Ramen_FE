@@ -98,12 +98,12 @@ function App() {
                                 <ProtectedRoute path="/stores/new" component={Profile}/>
                                 <ProtectedRoute path="/stores/:id" component={Store}/>
 
-                                userInfo
 
                                 <Route exact path="/notFound" component={NotFound}/>
                                 <Route exact path="/unAuthorized" component={UnAuthorized}/>
                                 <Route exact path="/error" component={ErrorPage}/>
                                 <Redirect from='*' to="/notFound"/>
+                                <Route component={NotFound} />
                             </Switch>
 
 

@@ -25,22 +25,13 @@ const useStyles = makeStyles(() => ({
         margin: 15
     },
     content: {
-        height: "60vh",
+        height: "50vh",
         position: "relative",
         overflowY: "scroll",
         fontSize: "1rem",
         fontWeight: 400,
-        margin: "10px 50px",
+        margin: "50px",
         whiteSpace: "pre-line"
-    },
-    container: {
-        display: "flex",
-        flexWrap: "wrap",
-        flexDirection: "column",
-        maxWidth: "1440px",
-        width: "80%",
-        padding: "0 15px",
-        margin: "100px auto 0 auto"
     },
     checkBox: {
         margin: "10px 30px",
@@ -95,9 +86,7 @@ const LoginPage = () => {
                         使用者登入即代表同意本網站之使用者規範:使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範::使用者登入即代表同意本網站之使用者規範: \n
                         使用者登入即代表同意本網站之使用者規範:使用者登入即代表同意本網站之使用者規範: \n
                         使用者登入即代表同意本網站之使用者規範:使用者登入即代表同意本網站之使用者規範: \n
-                        使用者登入即代表同意本網站之使用者規範:使用者登入即代表同意本網站之使用者規範: \n
                         使用者登入即代表同意本網站之使用者規範:使用者登入即代表同意本網站之使用者規範: \n\n\n
-                        使用者登入即代表同意本網站之使用者規範:使用者登入即代表同意本網站之使用者規範:
                         `}
 
                     </Typography>
