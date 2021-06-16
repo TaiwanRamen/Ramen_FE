@@ -4,8 +4,8 @@ import useFetch from "../../customHooks/UseFetch";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {INotification} from "../../types/INotification";
 import NotificationStrip from "./NotificationStrip";
-import CustomPagination from "../CustomPagination";
 import {Box} from "@material-ui/core";
+import CustomPagination from "../CustomerPagination/CustomPagination";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {

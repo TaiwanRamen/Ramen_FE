@@ -8,8 +8,8 @@ import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 
 import SearchBar from "../SearchBar/SearchBar";
 import useFetch from "../../customHooks/UseFetch";
-import CustomPagination from "../CustomPagination";
 import {Button} from "@material-ui/core";
+import CustomPagination from "../CustomerPagination/CustomPagination";
 
 type Stores = {
     current: number;

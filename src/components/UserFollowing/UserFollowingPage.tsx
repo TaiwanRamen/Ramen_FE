@@ -4,8 +4,8 @@ import {ChangeEvent, useState} from "react";
 import {IStore} from "../../types/IStore";
 import FollowingStrip from "./FollowingStrip";
 import {withRouter} from "react-router-dom";
-import CustomPagination from "../CustomPagination";
 import {Box} from "@material-ui/core";
+import CustomPagination from "../CustomerPagination/CustomPagination";
 
 const useStyles = makeStyles((theme: Theme) => ({
         root: {

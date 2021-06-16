@@ -7,7 +7,7 @@ import AddCommentModal from "./AddCommentModal";
 import Comment from './Comment'
 import {makeStyles} from "@material-ui/core/styles";
 import {Box, Typography} from "@material-ui/core";
-import CustomPagination from "../CustomPagination";
+import CustomPagination from "../CustomerPagination/CustomPagination";
 
 const useStyles = makeStyles(() => ({
     noComment: {

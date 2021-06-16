@@ -5,6 +5,7 @@ import {useUser} from "../../Context/UserContext";
 
 const UserSection = () => {
     const { user } = useUser()! ;
+    console.log(user)
     return (
         <>
             { !user && <LoginAndRegisterBtn/>}

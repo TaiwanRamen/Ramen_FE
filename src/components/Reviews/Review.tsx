@@ -85,7 +85,7 @@ const Review = (props: Props) => {
                             </Box>
                         </Grid>
                     </Grid>
-                    {user && review && (user._id === author.id) &&
+                    {user && review && (user._id === author._id) &&
                     <Grid item>
                         <Typography variant="body2">
                             <ReviewDropdown review={review}

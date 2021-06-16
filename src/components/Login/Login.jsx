@@ -1,6 +1,5 @@
 import FacebookLogin from "react-facebook-login";
 import {useState} from "react";
-import './Login.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {useUser} from "../../Context/UserContext";

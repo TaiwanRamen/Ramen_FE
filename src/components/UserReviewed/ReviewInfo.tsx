@@ -43,8 +43,9 @@ const ReviewInfo = (props: Props) => {
     const options = {
         key: "userReview",
         url: process.env.REACT_APP_BE_URL + `/api/v1/reviews/userReview/${storeId}`,
-        requestQuery: {}
+        requestQuery: {},
     }
+
     const {data, status, error} = useFetch<UserReviewRes>(options);
 
     if (status === "loading") {
